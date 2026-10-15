@@ -1,15 +1,15 @@
 import { Project } from '../types';
-import realEstateAiImg from '../assets/images/real_estate_agent_1790275435285.jpg';
-import financehubImg from '../assets/images/financehub.jpg';
-import aspToAngularImg from '../assets/images/asptoangular.png';
-import bistroMockupImg from '../assets/images/bistro_tablet_mockup_1790556479120.jpg';
-import documentOcrImg from '../assets/images/document_ocr_pipeline_1790557791118.jpg';
-import fiscalSentinelImg from '../assets/images/fiscal_sentinel_audit_1790558022531.jpg';
+// import realEstateAiImg from '../assets/images/real_estate_agent_1790275435285.jpg';
+// import financehubImg from '../assets/images/financehub.jpg';
+// import aspToAngularImg from '../assets/images/asptoangular.png';
+// import bistroMockupImg from '../assets/images/bistro_tablet_mockup_1790556479120.jpg';
+// import documentOcrImg from '../assets/images/document_ocr_pipeline_1790557791118.jpg';
+// import fiscalSentinelImg from '../assets/images/fiscal_sentinel_audit_1790558022531.jpg';
 
 export const projectsPt: Project[] = [
   {
     id: '01',
-    title: 'Agente de IA & Pipeline Autônomo de Qualificação Imobiliária',
+    title: 'Agente de IA & Pipeline de Qualificação Imobiliária',
     tagline: 'Qualificação autônoma de leads imobiliários com CRM, agenda, APIs, OCR e atendimento 24/7.',
     category: 'integration_api',
     role: 'Engenheiro de IA & Automação de Sistemas',
@@ -18,7 +18,7 @@ export const projectsPt: Project[] = [
     solution: 'Desenvolvi um agente autônomo de IA integrado em tempo real ao CRM ARBO Imóveis (fonte da verdade de clientes, imóveis e anúncios) e captura de leads via webhooks da OLX. A solução qualifica a intenção (compra, aluguel, dúvidas ou inquilinos buscando boletos/manutenção com transbordo humano seguro). Ao detectar interesse, verifica a disponibilidade no ARBO, consulta a agenda dos corretores para propor horários de visita e dispara notificações instantâneas à equipe e por e-mail com confirmação. Conta ainda com processamento multimodal: o cliente pode enviar endereço ou a foto da placa do imóvel na rua, que o agente localiza no inventário do CRM e engaja o atendimento de imediato.',
     impact: 'Eliminação do tempo de espera com atendimento 24/7 em segundos, automação completa do ciclo pré-visita (qualificação + agendamento no calendário), suporte automatizado a inquilinos e liberação total dos corretores para negociações de alto valor e visitas presenciais.',
     technologies: ['n8n', 'LLM', 'APIs REST & Webhooks', 'CRM ARBO Imóveis', 'Visão Computacional & OCR', 'Google Calendar API', 'PostgreSQL / Supabase', 'Disparo de E-mail', 'OLX Ingestion'],
-    imageUrl: realEstateAiImg,
+    // imageUrl: realEstateAiImg,
     featured: true,
     workflow: [
       {
@@ -55,7 +55,7 @@ export const projectsPt: Project[] = [
   },
   {
     id: '02',
-    title: 'FinanceHub: Plataforma de Consolidação de Investimentos',
+    title: 'Plataforma de Consolidação de Investimentos',
     tagline: '(Estudo de Caso) Consolidação de investimentos em tempo real com arquitetura offline-first e persistência dual-engine.',
     category: 'web_product',
     role: 'Desenvolvedor Full Stack & Arquiteto UI',
@@ -65,7 +65,7 @@ export const projectsPt: Project[] = [
     impact: 'Eliminação total de telas travadas por espera de rede, resposta gráfica imediata e retenção integral do estado da carteira mesmo em modo desconectado.',
     technologies: ['React', 'TypeScript', 'Vite', 'Zustand', 'Supabase', 'PostgreSQL', 'Tailwind CSS', 'Recharts', 'D3'],
     liveUrl: 'https://fin-hub-black.vercel.app/',
-    imageUrl: financehubImg,
+    // imageUrl: financehubImg,
     featured: true,
     workflow: [
       {
@@ -96,7 +96,7 @@ export const projectsPt: Project[] = [
     solution: 'Migração colaborativa de uma aplicação corporativa desenvolvida em ASP para uma arquitetura modular baseada em Angular e TypeScript. Participei da reestruturação das interfaces, componentização, integração com APIs e evolução gradual do sistema, mantendo a continuidade da operação durante a transição.',
     impact: 'O projeto reduziu o tempo de carregamento em mais de 70% e estabeleceu uma base mais moderna, manutenível e preparada para novas funcionalidades, além de melhorar a acessibilidade e escalabilidade.',
     technologies: ['Angular', 'TypeScript', 'ASP Clássico / Legado', 'Arquitetura SPA', 'REST APIs', 'Componentização', 'Clean Code'],
-    imageUrl: aspToAngularImg,
+    // imageUrl: aspToAngularImg,
     featured: true,
     workflow: [
       {
@@ -147,7 +147,7 @@ export const projectsPt: Project[] = [
     solution: 'Desenvolvi uma aplicação web fluida otimizada para tablets de salão, com arquitetura de estado preditiva para controle de comandas e mesas. Integrei a API do WhatsApp Business para disparo automático e padronizado de ordens de produção diretamente para o ponto de preparo da cozinha.',
     impact: 'Redução drástica no tempo de fechamento de pedidos de mesa e sincronização transparente entre atendimento e produção.',
     technologies: ['React', 'TypeScript', 'Tailwind CSS', 'WhatsApp Business API', 'Context API', 'Mobile UX'],
-    imageUrl: bistroMockupImg,
+    // imageUrl: bistroMockupImg,
     liveUrl: 'https://bistro-cardapio.vercel.app/',
   },
   {
@@ -161,7 +161,7 @@ export const projectsPt: Project[] = [
     solution: 'Desenvolvi um pipeline estruturado utilizando Gemini 2.0 Flash como motor analítico de visão documental, acoplado a uma camada rigorosa de parsing tipado em TypeScript com validações de esquema via Zod antes da persistência downstream em banco relacional.',
     impact: 'Redução de retrabalho operacional e garantia de integridade estrutural no banco de dados corporativo.',
     technologies: ['TypeScript', 'Node.js', 'Gemini 2.0 Flash', 'Zod Schemas', 'Python', 'PostgreSQL'],
-    imageUrl: documentOcrImg,
+    // imageUrl: documentOcrImg,
   },
   {
     id: '07',
@@ -174,7 +174,7 @@ export const projectsPt: Project[] = [
     solution: 'Criei um motor de auditoria contínua em Node.js e PostgreSQL que cruza registros de emissão, parâmetros de alíquotas e histórico de transações, emitindo relatórios de inconformidade e notificações proativas para a equipe contábil.',
     impact: 'Detecção antecipada de divergências cadastrais e diminuição do risco de passivos fiscais.',
     technologies: ['Node.js', 'PostgreSQL', 'React', 'TypeScript', 'Jest', 'CI/CD Pipelines'],
-    imageUrl: fiscalSentinelImg,
+    // imageUrl: fiscalSentinelImg,
   },
 ];
 
@@ -190,7 +190,7 @@ export const projectsEn: Project[] = [
     solution: 'Architected an autonomous AI agent directly integrated with ARBO CRM (single source of truth for clients, properties, and listings) and OLX lead webhooks. The system classifies intent (purchase, rental, support inquiries, or existing tenant requests like invoice duplicates and maintenance tickets with graceful human hand-off). Upon qualifying buyers/renters, it verifies real-time unit availability in ARBO, queries broker calendars to propose visit slots, and dispatches automated team alerts and confirmation emails. Additionally supports multimodal lookup: clients can text an address or snap a photo of a street sign, which the agent identifies within ARBO inventory to initiate immediate triage.',
     impact: 'Zero response latency with 24/7 instant lead triage, end-to-end automation of the pre-visit lifecycle (intent qualification + calendar booking), automated tenant service, and freeing brokers to focus exclusively on high-conversion deals and on-site visits.',
     technologies: ['n8n', 'LLM', 'REST APIs & Webhooks', 'ARBO Real Estate CRM', 'Computer Vision & OCR', 'Google Calendar API', 'PostgreSQL / Supabase', 'Email Notifications', 'OLX Lead Ingestion'],
-    imageUrl: realEstateAiImg,
+    // imageUrl: realEstateAiImg,
     featured: true,
     workflow: [
       {
@@ -227,7 +227,7 @@ export const projectsEn: Project[] = [
   },
   {
     id: '02',
-    title: 'FinanceHub: SaaS Investment Consolidation Platform',
+    title: 'SaaS Investment Consolidation Platform',
     tagline: '(Case Study) Consolidation of investments in real time with offline-first architecture and dual-engine persistence.',
     category: 'web_product',
     role: 'Full Stack Software Engineer & UI Architect',
@@ -237,7 +237,7 @@ export const projectsEn: Project[] = [
     impact: 'Zero network-wait UI freezing, immediate charts responsiveness, and continuous portfolio availability even when offline.',
     technologies: ['React', 'TypeScript', 'Vite', 'Zustand', 'Supabase', 'PostgreSQL', 'Tailwind CSS', 'Recharts', 'D3'],
     liveUrl: 'https://fin-hub-black.vercel.app/',
-    imageUrl: financehubImg,
+    // imageUrl: financehubImg,
     featured: true,
     workflow: [
       {
@@ -268,7 +268,7 @@ export const projectsEn: Project[] = [
     solution: 'Collaborative migration of a corporate application built on ASP to a modern modular architecture powered by Angular and TypeScript. Actively contributed to UI restructuring, componentization, REST API integration, and progressive system rollout while preserving uninterrupted operations during the transition.',
     impact: 'Reduced page loading times by over 70% and established a modernized, maintainable codebase ready for feature scalability, enhanced accessibility, and seamless long-term maintenance.',
     technologies: ['Angular', 'TypeScript', 'Legacy ASP', 'SPA Architecture', 'REST APIs', 'Component Design', 'Clean Code'],
-    imageUrl: aspToAngularImg,
+    // imageUrl: aspToAngularImg,
     featured: true,
     workflow: [
       {
@@ -319,7 +319,7 @@ export const projectsEn: Project[] = [
     solution: 'Created an offline-first responsive web client tailored for restaurant floor tablets, engineered around predictive table states and instantaneous kitchen dispatch over the WhatsApp Business API.',
     impact: 'Dramatic reduction in table turnaround latency and harmonious order synchronization between dining hall and kitchen line.',
     technologies: ['React', 'TypeScript', 'Tailwind CSS', 'WhatsApp Business API', 'Context API', 'Mobile UX'],
-    imageUrl: bistroMockupImg,
+    // imageUrl: bistroMockupImg,
     liveUrl: 'https://bistro-cardapio.vercel.app/',
   },
   {
@@ -333,7 +333,7 @@ export const projectsEn: Project[] = [
     solution: 'Engineered an automated parsing engine utilizing Gemini 2.0 Flash for visual token extraction, coupled with rigorous TypeScript Zod schema casting before downstream relational storage.',
     impact: 'Substantial reduction in clerical processing cycles and 100% type-safe data ingress into enterprise systems.',
     technologies: ['TypeScript', 'Node.js', 'Gemini 2.0 Flash', 'Zod Schemas', 'Python', 'PostgreSQL'],
-    imageUrl: documentOcrImg,
+    // imageUrl: documentOcrImg,
   },
   {
     id: '07',
@@ -346,6 +346,6 @@ export const projectsEn: Project[] = [
     solution: 'Built an autonomous transaction inspection daemon in Node.js and PostgreSQL that evaluates transaction histories and tax brackets, generating automated compliance reports and alerts.',
     impact: 'Early detection of reconciliation inconsistencies, lowering fiscal exposure and penalty liabilities.',
     technologies: ['Node.js', 'PostgreSQL', 'React', 'TypeScript', 'Jest', 'CI/CD Pipelines'],
-    imageUrl: fiscalSentinelImg,
+    // imageUrl: fiscalSentinelImg,
   },
 ];
