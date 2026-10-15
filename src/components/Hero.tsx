@@ -176,7 +176,7 @@ export default function Hero() {
               <div className="pt-0.5">
                 <h1 className="sr-only">Wallace Pereira - {language === 'pt' ? 'Desenvolvedor Full Stack' : 'Full Stack Developer'}</h1>
                 <p className="text-[11px] font-mono uppercase tracking-[0.18em] text-theme-muted mb-4">
-                  Wallace Pereira · Full Stack · Rio de Janeiro
+                  Wallace Pereira · Full Stack · RJ
                 </p>
                 <h2 className="font-serif text-[clamp(1.9rem,3.8vw,3.1rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text max-w-[20ch] sm:max-w-[24ch]">
                   {language === 'pt'
