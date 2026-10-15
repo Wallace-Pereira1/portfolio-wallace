@@ -245,7 +245,7 @@ export default function HomePage() {
                   e.stopPropagation();
                 }
               }}
-              className={`flex gap-3 sm:gap-5 lg:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-5 sm:pb-6 pt-1 pr-3 items-stretch select-none ${
+              className={`flex gap-3 sm:gap-5 lg:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-5 sm:pb-6 pt-2 pl-3 sm:pl-4 pr-3 -ml-3 sm:-ml-4 scroll-pl-3 sm:scroll-pl-4 items-stretch select-none ${
                 isDragging ? 'cursor-grabbing' : 'cursor-grab'
               }`}
               style={{
