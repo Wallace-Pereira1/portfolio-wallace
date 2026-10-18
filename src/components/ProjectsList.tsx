@@ -30,8 +30,11 @@ export default function ProjectsList({ projects, language, onOpen }: ProjectsLis
       <ol className="offset-static mb-2 border border-theme-border bg-theme-surface rounded-[2px] divide-y divide-theme-border">
         {projects.map((project, index) => {
           const highlight = getProjectHighlight(project.id, language) ?? project.tagline;
-          const techs = project.technologies.slice(0, 3);
-          const extra = project.technologies.length - techs.length;
+          // Ensure ribbon is wide enough to continuously slide across any column width
+          const techList =
+            project.technologies.length < 8
+              ? [...project.technologies, ...project.technologies]
+              : project.technologies;
 
           return (
             <li key={project.id} className="relative group/row">
@@ -39,7 +42,7 @@ export default function ProjectsList({ projects, language, onOpen }: ProjectsLis
                 type="button"
                 onClick={() => onOpen(project)}
                 aria-label={`${pt ? 'Abrir estudo de caso' : 'Open case study'}: ${project.title}`}
-                className="w-full text-left grid grid-cols-[auto_1fr] md:grid-cols-[3rem_minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1.1fr)] gap-x-4 md:gap-x-6 gap-y-1.5 items-baseline px-4 sm:px-6 py-4 sm:py-5 pr-14 sm:pr-28 transition-colors duration-150 hover:bg-theme-border/25 focus-visible:bg-theme-border/25 outline-none focus-visible:ring-1 focus-visible:ring-theme-text/40"
+                className="w-full text-left grid grid-cols-[auto_1fr] md:grid-cols-[3rem_minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1.1fr)] gap-x-4 md:gap-x-6 gap-y-1.5 items-baseline px-4 sm:px-6 py-4 sm:py-5 pr-14 sm:pr-28 transition-colors duration-150 hover:bg-theme-border/25 focus-visible:bg-theme-border/25 outline-none focus-visible:ring-1 focus-visible:ring-theme-text/40 overflow-hidden"
               >
                 <span className="font-mono text-[11px] text-theme-muted transition-colors group-hover/row:text-theme-text">
                   {String(index + 1).padStart(2, '0')}
@@ -50,9 +53,25 @@ export default function ProjectsList({ projects, language, onOpen }: ProjectsLis
                 <span className="col-start-2 md:col-start-auto font-mono text-[12px] text-theme-dim leading-snug">
                   {highlight}
                 </span>
-                <span className="col-start-2 md:col-start-auto font-mono text-[11px] text-theme-muted truncate">
-                  {techs.join(' · ')}
-                  {extra > 0 ? ` +${extra}` : ''}
+                <span className="col-start-2 md:col-start-auto overflow-hidden relative max-w-full font-mono text-[11px] text-theme-muted select-none [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+                  <span className="animate-tech-marquee">
+                    <span className="inline-flex items-center gap-2 pr-3">
+                      {techList.map((tech, idx) => (
+                        <span key={idx} className="inline-flex items-center gap-2">
+                          <span className="whitespace-nowrap">{tech}</span>
+                          <span className="opacity-30 select-none">·</span>
+                        </span>
+                      ))}
+                    </span>
+                    <span className="inline-flex items-center gap-2 pr-3" aria-hidden="true">
+                      {techList.map((tech, idx) => (
+                        <span key={`dup-${idx}`} className="inline-flex items-center gap-2">
+                          <span className="whitespace-nowrap">{tech}</span>
+                          <span className="opacity-30 select-none">·</span>
+                        </span>
+                      ))}
+                    </span>
+                  </span>
                 </span>
               </button>
 

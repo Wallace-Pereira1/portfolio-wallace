@@ -163,6 +163,38 @@ img, svg, video {
   will-change: transform;
 }
 
+/* Infinite sliding ticker for project tech stacks */
+@keyframes techMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-tech-marquee {
+  display: inline-flex;
+  width: max-content;
+  animation: techMarquee 26s linear infinite;
+  will-change: transform;
+}
+
+/* Pause sliding ticker on hover */
+li:hover .animate-tech-marquee,
+button:hover .animate-tech-marquee,
+.group\/row:hover .animate-tech-marquee,
+.animate-tech-marquee:hover {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-tech-marquee {
+    animation: none;
+    transform: none;
+  }
+}
+
 /* Ensure hovered or active project card lifts above sibling cards */
 [data-project-card]:hover,
 [data-project-card]:focus-within,

@@ -50,7 +50,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       location: 'Rio de Janeiro, RJ · Remoto',
       summary: 'Responsável técnico pelo e-commerce e pelas integrações que conectam ERP, CRM, WhatsApp e as 10 lojas da marca, mantendo pedidos, estoque e cadastros de clientes sincronizados.',
       impact: 'Pedidos, estoque e clientes de 10 lojas e do e-commerce conectados por APIs e webhooks, com tratamento de erros e monitoramento das sincronizações.',
-      technologies: ['Olist', 'APIs REST', 'Webhooks', 'WhatsApp API', 'GA4 & GTM', 'Cloudflare'],
+      technologies: ['Olist', 'APIs REST', 'Webhooks', 'WhatsApp API', 'GA4', 'Cloudflare', 'Mysql', 'Estruturas de Dados', 'n8n', 'LLMs'],
       buttonText: 'VER EXPERIÊNCIA ↗',
       isCurrent: true,
       description: [
