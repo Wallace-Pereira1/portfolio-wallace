@@ -174,14 +174,14 @@ export default function Hero() {
             <div className="space-y-3">
               {/* Título editorial: nome como assinatura discreta + frase de posicionamento */}
               <div className="pt-0.5">
-                <h1 className="sr-only">Wallace Pereira - {language === 'pt' ? 'Desenvolvedor Full Stack' : 'Full Stack Developer'}</h1>
+                <h1 className="sr-only">Wallace Pereira</h1>
                 <p className="text-[11px] font-mono uppercase tracking-[0.18em] text-theme-muted mb-4">
-                  Wallace Pereira · Full Stack · RJ
+                Dev full stack
                 </p>
                 <h2 className="font-serif text-[clamp(1.9rem,3.8vw,3.1rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text max-w-[20ch] sm:max-w-[24ch]">
                   {language === 'pt'
-                    ? 'Dev full stack'
-                    : 'Full stack developer'}
+                    ? 'Wallace Pereira'
+                    : 'Wallace Pereira'}
                 </h2>
               </div>
 

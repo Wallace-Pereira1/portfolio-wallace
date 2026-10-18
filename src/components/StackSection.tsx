@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import TiltDomainCard, { DomainItem } from './TiltDomainCard';
+import type { DomainItem } from './TiltDomainCard';
+import DomainsList from './DomainsList';
 import DomainStudyModal from './DomainStudyModal';
 
 interface StackSectionProps {
@@ -183,17 +184,8 @@ export default function StackSection({ showHeader = true }: StackSectionProps) {
           </div>
         )}
 
-        {/* 2x2 Grid on Desktop / Single Column on Mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-          {domains.map((item) => (
-            <TiltDomainCard
-              key={item.index}
-              item={item}
-              onOpenDetails={handleOpenDomainModal}
-              language={language}
-            />
-          ))}
-        </div>
+        {/* Índice editorial de domínios */}
+        <DomainsList domains={domains} language={language} onOpen={handleOpenDomainModal} />
 
         {/* Modal de Detalhes do Domínio com Ícones */}
         <DomainStudyModal
