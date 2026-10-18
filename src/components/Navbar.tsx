@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, ArrowUpRight, Sun, Moon, FileDown } from 'lucide-react';
@@ -10,6 +10,9 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
+  const isClickScrollingRef = useRef(false);
+  const clickTimeoutRef = useRef<number | null>(null);
+  const scrollRafRef = useRef<number | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -33,42 +36,55 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      // Top of page -> inicio has absolute priority on page load and top position
-      if (window.scrollY < 120) {
-        setActiveSection('inicio');
-        return;
-      }
+      // If user clicked a nav tab, do not let scroll events jitter the active tab
+      if (isClickScrollingRef.current) return;
 
-      // Bottom of page -> contact only if scrolled significantly and truly at footer
-      const scrollHeight = document.documentElement.scrollHeight;
-      const clientHeight = window.innerHeight;
-      if (
-        scrollHeight > clientHeight + 300 &&
-        window.scrollY > 400 &&
-        clientHeight + window.scrollY >= scrollHeight - 70
-      ) {
-        setActiveSection('contato');
-        return;
-      }
+      if (scrollRafRef.current) return;
+      scrollRafRef.current = requestAnimationFrame(() => {
+        scrollRafRef.current = null;
+        if (isClickScrollingRef.current) return;
 
-      const triggerPoint = window.innerHeight * 0.35;
-      let current = 'inicio';
+        // Top of page -> inicio has absolute priority on page load and top position
+        if (window.scrollY < 120) {
+          setActiveSection('inicio');
+          return;
+        }
 
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= triggerPoint && rect.bottom > 0) {
-            current = id;
+        // Bottom of page -> contact only if scrolled significantly and truly at footer
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = window.innerHeight;
+        if (
+          scrollHeight > clientHeight + 300 &&
+          window.scrollY > 400 &&
+          clientHeight + window.scrollY >= scrollHeight - 70
+        ) {
+          setActiveSection('contato');
+          return;
+        }
+
+        const triggerPoint = window.innerHeight * 0.4;
+        let current = 'inicio';
+
+        for (const id of sectionIds) {
+          const el = document.getElementById(id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= triggerPoint && rect.bottom > 0) {
+              current = id;
+            }
           }
         }
-      }
-      setActiveSection(current);
+        setActiveSection(current);
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollRafRef.current) cancelAnimationFrame(scrollRafRef.current);
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    };
   }, [location.pathname]);
 
   // Handle hash scrolling only on dynamic route navigation, NEVER on initial mount
@@ -143,13 +159,20 @@ export default function Navbar() {
       return;
     }
 
+    // Lock scroll listener immediately so intermediate sections don't cause the indicator to shake/jump
+    isClickScrollingRef.current = true;
+    setActiveSection(targetId);
+    if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    clickTimeoutRef.current = window.setTimeout(() => {
+      isClickScrollingRef.current = false;
+    }, 850);
+
     if (targetId === 'inicio') {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
       window.history.pushState(null, '', '#inicio');
-      setActiveSection('inicio');
       return;
     }
 
@@ -164,7 +187,6 @@ export default function Navbar() {
         behavior: 'smooth',
       });
       window.history.pushState(null, '', `#${targetId}`);
-      setActiveSection(targetId);
     }
   };
 
@@ -201,11 +223,11 @@ export default function Navbar() {
                     {isActive && (
                       <motion.span
                         layoutId="navbar-indicator"
-                        className="absolute bottom-0 left-0 right-0 h-[1px] bg-theme-text"
+                        className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-theme-text pointer-events-none"
                         transition={{
-                          type: 'spring',
-                          stiffness: 400,
-                          damping: 35,
+                          type: 'tween',
+                          duration: 0.22,
+                          ease: [0.25, 1, 0.5, 1],
                         }}
                       />
                     )}

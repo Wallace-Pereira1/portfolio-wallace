@@ -53,6 +53,17 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+html.snap-active {
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 4.75rem;
+}
+
+@media (min-width: 768px) {
+  html.snap-active {
+    scroll-snap-type: y mandatory;
+  }
+}
+
 html, body {
   background-color: var(--bg-color);
   color: var(--text-color);

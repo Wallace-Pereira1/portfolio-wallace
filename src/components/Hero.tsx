@@ -131,7 +131,7 @@ export default function Hero() {
     <section
       id="inicio"
       ref={heroRef}
-      className="relative pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-10 sm:pb-12 md:pb-14 lg:pb-16 bg-transparent px-6 md:px-12 transition-colors overflow-hidden"
+      className="relative min-h-[100dvh] flex flex-col justify-center pt-20 sm:pt-24 pb-8 sm:pb-12 bg-transparent px-6 md:px-12 transition-colors overflow-hidden snap-start snap-always scroll-mt-0"
     >
       {/* Camada Decorativa de Parallax Sutil de Fundo */}
       <div

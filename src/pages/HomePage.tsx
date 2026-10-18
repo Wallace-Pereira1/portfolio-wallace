@@ -23,32 +23,42 @@ export default function HomePage() {
     setIsStudyModalOpen(true);
   };
 
+  // Ativa o scroll snap exclusivo na HomePage
+  React.useEffect(() => {
+    document.documentElement.classList.add('snap-active');
+    return () => {
+      document.documentElement.classList.remove('snap-active');
+    };
+  }, []);
+
   return (
     <div className="w-full">
-      {/* Hero as Editorial Cover */}
+      {/* 1. Hero as Editorial Cover (Tela 1) */}
       <Hero />
 
-      {/* Selected Works: índice editorial */}
+      {/* 2. Selected Works: índice editorial (Tela 2) */}
       <section
         id="projetos"
-        className="py-12 md:py-16 bg-transparent px-6 md:px-12 transition-colors relative z-10"
+        className="min-h-[100dvh] flex flex-col justify-center py-16 sm:py-20 md:py-24 bg-transparent px-6 md:px-12 transition-colors relative z-10 snap-start snap-always scroll-mt-6 sm:scroll-mt-10"
       >
         <div className="max-w-6xl mx-auto w-full relative z-10">
           <ProjectsList projects={projects} language={language} onOpen={handleOpenProjectDetails} />
         </div>
       </section>
 
-      {/* Professional Trajectory & Experience */}
+      {/* 3. Professional Trajectory & Experience (Tela 3) */}
       <ExperienceSection showHeader={true} />
 
-      {/* Technical Domains & Capabilities */}
+      {/* 4. Technical Domains & Capabilities (Tela 4) */}
       <StackSection showHeader={true} />
 
-      {/* Direct Contact & Collaboration */}
-      <ContactSection showHeader={true} />
-
-      {/* Editorial Colophon */}
-      <EditorialColophon />
+      {/* 5. Direct Contact & Collaboration + Colophon (Tela 5) */}
+      <div className="min-h-[100dvh] flex flex-col justify-between snap-start snap-always scroll-mt-6 sm:scroll-mt-10 pt-16 sm:pt-20">
+        <div className="flex-1 flex flex-col justify-center">
+          <ContactSection showHeader={true} />
+        </div>
+        <EditorialColophon />
+      </div>
 
       {/* Project Detailed Study Modal */}
       <ProjectStudyModal
