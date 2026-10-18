@@ -27,7 +27,7 @@ export default function ProjectsList({ projects, language, onOpen }: ProjectsLis
         </span>
       </div>
 
-      <ol className="offset-static mr-2 mb-2 border border-theme-border bg-theme-surface rounded-[2px] divide-y divide-theme-border">
+      <ol className="offset-static mb-2 border border-theme-border bg-theme-surface rounded-[2px] divide-y divide-theme-border">
         {projects.map((project, index) => {
           const highlight = getProjectHighlight(project.id, language) ?? project.tagline;
           const techs = project.technologies.slice(0, 3);

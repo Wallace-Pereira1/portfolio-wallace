@@ -22,7 +22,7 @@ export default function DomainsList({ domains, language, onOpen }: DomainsListPr
         {pt ? 'clique em um domínio para ver os detalhes' : 'click a domain for details'}
       </p>
 
-      <ol className="offset-static mr-2 mb-2 border border-theme-border bg-theme-surface rounded-[2px] divide-y divide-theme-border">
+      <ol className="offset-static mb-2 border border-theme-border bg-theme-surface rounded-[2px] divide-y divide-theme-border">
         {domains.map((item) => (
           <li key={item.index} className="relative group/row">
             <button

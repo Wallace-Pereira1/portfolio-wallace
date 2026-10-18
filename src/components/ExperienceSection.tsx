@@ -307,10 +307,10 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
               <motion.article
                 key={exp.company}
                 variants={timelineItemVariants}
-                className="flex gap-4 sm:gap-6 md:gap-8 items-start group/exp"
+                className="flex gap-0 md:gap-6 items-start md:-ml-10 group/exp"
               >
                 {/* Timeline Spine Column (Fine vertical line + Marker node) */}
-                <div className="relative flex flex-col items-center self-stretch shrink-0 w-4 sm:w-5">
+                <div className="relative hidden md:flex flex-col items-center self-stretch shrink-0 w-4">
                   {/* Timeline Marker Node */}
                   <div className="pt-6 sm:pt-7">
                     <div className="w-2.5 h-2.5 rounded-full bg-theme-surface border border-theme-border group-hover/exp:border-theme-text/80 group-hover/exp:bg-theme-muted/40 transition-colors" />

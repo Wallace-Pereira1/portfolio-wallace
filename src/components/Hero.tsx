@@ -131,7 +131,7 @@ export default function Hero() {
     <section
       id="inicio"
       ref={heroRef}
-      className="relative pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-10 sm:pb-12 md:pb-14 lg:pb-16 bg-transparent px-4 sm:px-6 md:px-8 lg:px-10 transition-colors overflow-hidden"
+      className="relative pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-10 sm:pb-12 md:pb-14 lg:pb-16 bg-transparent px-6 md:px-12 transition-colors overflow-hidden"
     >
       {/* Camada Decorativa de Parallax Sutil de Fundo */}
       <div
@@ -165,7 +165,7 @@ export default function Hero() {
       </div>
 
       {/* Conteúdo Principal — Bento Grid Editorial com escala calibrada (-15% zoom feel) */}
-      <div className="max-w-5xl mx-auto w-full relative z-10 space-y-3 sm:space-y-3.5">
+      <div className="max-w-6xl mx-auto w-full relative z-10 space-y-3 sm:space-y-3.5">
         {/* Bento Grid (5 Blocos Harmônicos e Perfeitamente Proporcionados) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 landscape:grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-3.5 items-stretch">
           

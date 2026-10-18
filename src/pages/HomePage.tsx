@@ -31,7 +31,7 @@ export default function HomePage() {
       {/* Selected Works: índice editorial */}
       <section
         id="projetos"
-        className="py-12 md:py-16 bg-transparent px-6 md:px-10 lg:px-12 transition-colors relative z-10"
+        className="py-12 md:py-16 bg-transparent px-6 md:px-12 transition-colors relative z-10"
       >
         <div className="max-w-6xl mx-auto w-full relative z-10">
           <ProjectsList projects={projects} language={language} onOpen={handleOpenProjectDetails} />
