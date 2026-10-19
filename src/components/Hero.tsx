@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import TypewriterTitle from './TypewriterTitle';
-import { FileDown, Mail, ArrowRight, MapPin, Activity, Layers, Cpu, Compass } from 'lucide-react';
+import { FileDown, Mail, MessageCircle, ArrowRight, MapPin, Activity, Layers, Cpu, Compass } from 'lucide-react';
 import { downloadResumePdf } from '../utils/generateResumePdf';
 import { getTechIcon } from './TechIcon';
 import TechBadge from './TechBadge';
@@ -191,8 +191,8 @@ export default function Hero() {
                     : 'I build web applications and integrations with React, Angular, Node.js, and PostgreSQL. I also develop automations with n8n and AI agents to eliminate manual tasks and streamline operations.'}
                 </p>
 
-                {/* Ações: Currículo e Contato na mesma altura */}
-                <div className="flex items-center gap-2 shrink-0">
+                {/* Ações: Currículo, Contato e WhatsApp */}
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
                   <button
                     type="button"
                     onClick={() => {
@@ -218,6 +218,22 @@ export default function Hero() {
                   >
                     <Mail className="w-3.5 h-3.5 opacity-80 group-hover/contact:opacity-100 transition-opacity" />
                     <span>{language === 'pt' ? 'Contato' : 'Contact'}</span>
+                  </a>
+
+                  <a
+                    href={`https://wa.me/5521999688381?text=${encodeURIComponent(
+                      language === 'pt'
+                        ? 'Olá, Wallace! Vi seu portfólio e gostaria de conversar sobre uma oportunidade / projeto.'
+                        : 'Hello, Wallace! I came across your portfolio and would like to talk about an opportunity / project.'
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent('whatsapp_click')}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-dim hover:text-theme-text bg-theme-bg/50 hover:bg-theme-bg border border-theme-border hover:border-theme-muted rounded-[2px] transition-colors cursor-pointer group/wa whitespace-nowrap"
+                    title={language === 'pt' ? 'Conversar no WhatsApp com texto pronto' : 'Chat on WhatsApp with preset message'}
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 opacity-80 group-hover/wa:opacity-100 transition-opacity" />
+                    <span>WhatsApp</span>
                   </a>
                 </div>
               </div>

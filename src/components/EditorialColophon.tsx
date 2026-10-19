@@ -52,11 +52,15 @@ export default function EditorialColophon({ nextRoute: _nextRoute }: EditorialCo
             </a>
 
             <a
-              href="https://wa.me/5521999688381"
+              href={`https://wa.me/5521999688381?text=${encodeURIComponent(
+                language === 'pt'
+                  ? 'Olá, Wallace! Vi seu portfólio e gostaria de conversar sobre uma oportunidade / projeto.'
+                  : 'Hello, Wallace! I came across your portfolio and would like to talk about an opportunity / project.'
+              )}`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
-              title="WhatsApp: +55 (21) 99968-8381"
+              title={language === 'pt' ? 'WhatsApp: Iniciar conversa' : 'WhatsApp: Start chat'}
               className="p-2 border border-theme-border rounded-[2px] bg-theme-surface hover:border-theme-text hover:text-theme-text text-theme-dim transition-colors inline-flex items-center justify-center cursor-pointer"
             >
               <MessageCircle className="w-4 h-4" />

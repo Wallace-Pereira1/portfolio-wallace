@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Send, Check, Loader2 } from 'lucide-react';
+import { ArrowUpRight, Send, Check, Loader2, MessageCircle } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { trackEvent } from '../utils/analytics';
 
@@ -155,7 +155,11 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
               </a>
 
               <a
-                href="https://wa.me/5521999688381"
+                href={`https://wa.me/5521999688381?text=${encodeURIComponent(
+                  language === 'pt'
+                    ? 'Olá, Wallace! Vi seu portfólio e gostaria de conversar sobre uma oportunidade / projeto.'
+                    : 'Hello, Wallace! I came across your portfolio and would like to talk about an opportunity / project.'
+                )}`}
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => trackEvent('whatsapp_click')}
@@ -301,6 +305,28 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                     </>
                   )}
                 </button>
+
+                <div className="pt-2 text-center">
+                  <a
+                    href={`https://wa.me/5521999688381?text=${encodeURIComponent(
+                      language === 'pt'
+                        ? 'Olá, Wallace! Vi seu portfólio e gostaria de conversar sobre uma oportunidade / projeto.'
+                        : 'Hello, Wallace! I came across your portfolio and would like to talk about an opportunity / project.'
+                    )}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => trackEvent('whatsapp_click')}
+                    className="inline-flex items-center gap-1.5 text-xs font-mono text-theme-dim hover:text-theme-text transition-colors group/wa cursor-pointer py-1"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 opacity-80 group-hover/wa:opacity-100" />
+                    <span>
+                      {language === 'pt'
+                        ? 'Prefere resposta imediata? Conversar no WhatsApp'
+                        : 'Prefer immediate reply? Chat on WhatsApp'}
+                    </span>
+                    <ArrowUpRight className="w-3 h-3 opacity-70 group-hover/wa:translate-x-0.5 group-hover/wa:-translate-y-0.5 transition-transform" />
+                  </a>
+                </div>
               </form>
             </div>
           </div>

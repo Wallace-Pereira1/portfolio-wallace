@@ -1,11 +1,26 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Send, Check, Mail, Linkedin, Github, Loader2 } from 'lucide-react';
+import { ArrowUpRight, Send, Check, Mail, Linkedin, Github, Loader2, MessageCircle } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import EditorialColophon from '../components/EditorialColophon';
 import { useApp } from '../context/AppContext';
+import { usePageSeo } from '../utils/usePageSeo';
+import { trackEvent } from '../utils/analytics';
 
 export default function ContatoPage() {
   const { language, t } = useApp();
+
+  usePageSeo({
+    title:
+      language === 'pt'
+        ? 'Contato | Wallace Pereira - Desenvolvedor Full Stack'
+        : 'Contact | Wallace Pereira - Full Stack Developer',
+    description:
+      language === 'pt'
+        ? 'Entre em contato com Wallace Pereira para oportunidades profissionais, desenvolvimento full stack, integrações de APIs e automações com IA.'
+        : 'Get in touch with Wallace Pereira for software engineering opportunities, full stack web development, API integrations, and AI automations.',
+    path: '/contato',
+  });
+
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -49,6 +64,7 @@ export default function ContatoPage() {
 
       if (response.ok && data.success) {
         setSuccess(true);
+        trackEvent('form_submit_success', { subject: formData.recompensa });
         setFormData({ nome: '', email: '', recompensa: 'Recrutamento / Oportunidade', mensagem: '' });
         setTimeout(() => setSuccess(false), 6000);
       } else {
@@ -147,9 +163,14 @@ export default function ContatoPage() {
               </a>
 
               <a
-                href="https://wa.me/5521999688381"
+                href={`https://wa.me/5521999688381?text=${encodeURIComponent(
+                  language === 'pt'
+                    ? 'Olá, Wallace! Vi seu portfólio e gostaria de conversar sobre uma oportunidade / projeto.'
+                    : 'Hello, Wallace! I came across your portfolio and would like to talk about an opportunity / project.'
+                )}`}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => trackEvent('whatsapp_click')}
                 className="py-4 flex items-center justify-between group"
               >
                 <div className="space-y-0.5">
@@ -290,6 +311,28 @@ export default function ContatoPage() {
                     </>
                   )}
                 </button>
+
+                <div className="pt-2 text-center">
+                  <a
+                    href={`https://wa.me/5521999688381?text=${encodeURIComponent(
+                      language === 'pt'
+                        ? 'Olá, Wallace! Vi seu portfólio e gostaria de conversar sobre uma oportunidade / projeto.'
+                        : 'Hello, Wallace! I came across your portfolio and would like to talk about an opportunity / project.'
+                    )}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => trackEvent('whatsapp_click')}
+                    className="inline-flex items-center gap-1.5 text-xs font-mono text-theme-dim hover:text-theme-text transition-colors group/wa cursor-pointer py-1"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 opacity-80 group-hover/wa:opacity-100" />
+                    <span>
+                      {language === 'pt'
+                        ? 'Prefere resposta imediata? Conversar no WhatsApp'
+                        : 'Prefer immediate reply? Chat on WhatsApp'}
+                    </span>
+                    <ArrowUpRight className="w-3 h-3 opacity-70 group-hover/wa:translate-x-0.5 group-hover/wa:-translate-y-0.5 transition-transform" />
+                  </a>
+                </div>
               </form>
             </div>
           </div>
