@@ -1,18 +1,38 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, ChevronDown, ChevronUp, ExternalLink, Code2, ChevronLeft, ChevronRight } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import EditorialColophon from '../components/EditorialColophon';
 import { useApp } from '../context/AppContext';
 import { projectsPt, projectsEn } from '../data/projects';
+import { usePageSeo } from '../utils/usePageSeo';
 
 export default function EstudosPage() {
   const { language, t } = useApp();
   const [searchParams] = useSearchParams();
-  const initialParamId = searchParams.get('id');
+  const { id: routeProjectId } = useParams<{ id?: string }>();
+  const initialParamId = routeProjectId || searchParams.get('id');
   const [activeFilter, setActiveFilter] = useState<'all' | 'web' | 'api' | 'data'>('all');
   const [expandedId, setExpandedId] = useState<string | null>(initialParamId || '01');
+
+  const rawProjects = language === 'pt' ? projectsPt : projectsEn;
+  const projects = rawProjects.filter((p) => !p.disabled);
+  const currentProject = routeProjectId ? projects.find((p) => p.id === routeProjectId) : null;
+
+  usePageSeo({
+    title: currentProject
+      ? `${currentProject.title} | Wallace Pereira - ${language === 'pt' ? 'Desenvolvedor Full Stack' : 'Full Stack Developer'}`
+      : language === 'pt'
+        ? 'Estudos de Caso e Projetos | Wallace Pereira - Desenvolvedor Full Stack'
+        : 'Case Studies & Projects | Wallace Pereira - Full Stack Developer',
+    description: currentProject
+      ? currentProject.tagline
+      : language === 'pt'
+        ? 'Estudos de caso detalhados de projetos full stack desenvolvidos por Wallace Pereira: arquitetura, desafios superados, tecnologias e resultados.'
+        : 'In-depth case studies and full stack projects developed by Wallace Pereira: architecture, solved challenges, tech stack, and deliverables.',
+    path: routeProjectId ? `/projetos/${routeProjectId}` : '/estudos',
+  });
 
   // Slider & Drag state for Filter Tabs (Desktop & Mobile)
   const tabsContainerRef = useRef<HTMLDivElement>(null);
@@ -168,18 +188,17 @@ export default function EstudosPage() {
   };
 
   useEffect(() => {
-    const idFromUrl = searchParams.get('id');
-    if (idFromUrl) {
-      setExpandedId(idFromUrl);
-      const element = document.getElementById(`estudo-${idFromUrl}`) || document.getElementById(`projeto-${idFromUrl}`);
+    const idToFocus = routeProjectId || searchParams.get('id');
+    if (idToFocus) {
+      setExpandedId(idToFocus);
+      const element = document.getElementById(`estudo-${idToFocus}`) || document.getElementById(`projeto-${idToFocus}`);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 120);
       }
     }
-  }, [searchParams]);
-
-  const rawProjects = language === 'pt' ? projectsPt : projectsEn;
-  const projects = rawProjects.filter((p) => !p.disabled);
+  }, [routeProjectId, searchParams]);
 
   const filteredProjects = projects.filter((project) => {
     if (activeFilter === 'all') return true;

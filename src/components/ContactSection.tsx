@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowUpRight, Send, Check, Loader2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { trackEvent } from '../utils/analytics';
 
 interface ContactSectionProps {
   showHeader?: boolean;
@@ -51,6 +52,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
 
       if (response.ok && data.success) {
         setSuccess(true);
+        trackEvent('form_submit_success', { subject: formData.recompensa });
         setFormData({ nome: '', email: '', recompensa: 'Recrutamento / Oportunidade', mensagem: '' });
         setTimeout(() => setSuccess(false), 6000);
       } else {
@@ -71,7 +73,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
     <section
       id="contato"
       className={`${
-        showHeader ? 'py-12 md:py-16' : 'py-8 md:py-12'
+        showHeader ? 'py-6 sm:py-8 md:py-10' : 'py-6 md:py-8'
       } px-6 md:px-12 bg-transparent transition-colors`}
     >
       <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
@@ -80,9 +82,9 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
             <span className="text-[11px] font-mono text-theme-muted uppercase tracking-widest block">
               {language === 'pt' ? 'Contato & Disponibilidade' : 'Contact & Availability'}
             </span>
-            <h3 className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]">
               {language === 'pt' ? 'Comunicação Direta' : 'Direct Contact'}
-            </h3>
+            </h2>
             <p className="text-sm sm:text-base text-theme-dim max-w-2xl leading-relaxed">
               {language === 'pt'
                 ? 'Pronto para colaborar em novos desafios de engenharia full-time (remoto/híbrido no RJ) ou estruturação de produtos web e integrações complexas.'
@@ -156,6 +158,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                 href="https://wa.me/5521999688381"
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => trackEvent('whatsapp_click')}
                 className="py-4 flex items-center justify-between group"
               >
                 <div className="space-y-0.5">
@@ -222,7 +225,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder="email@empresa.com"
+                      placeholder="seu@email.com"
                       required
                       className="w-full bg-theme-bg border border-theme-border focus:border-theme-text focus:outline-none text-theme-text text-base sm:text-sm px-3.5 py-2.5 rounded-[2px] transition-colors font-sans"
                     />

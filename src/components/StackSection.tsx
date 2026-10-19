@@ -165,19 +165,19 @@ export default function StackSection({ showHeader = true }: StackSectionProps) {
   return (
     <section
       id="tecnologias"
-      className={`${showHeader ? 'py-12 md:py-16' : 'py-8 md:py-12'} bg-transparent px-6 md:px-12 transition-colors relative`}
+      className={`min-h-[100dvh] flex flex-col justify-center ${showHeader ? 'py-16 sm:py-20 md:py-24' : 'py-8 md:py-12'} bg-transparent px-6 md:px-12 transition-colors relative snap-start snap-always scroll-mt-6 sm:scroll-mt-10`}
     >
       <div id="competencias" className="absolute -top-20 opacity-0 pointer-events-none" />
-      <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
+      <div className="max-w-6xl mx-auto w-full space-y-6 md:space-y-8">
         {/* Section Header */}
         {showHeader && (
           <div className="space-y-2 pb-5">
             <span className="text-[11px] font-mono text-theme-muted uppercase tracking-widest block">
               {language === 'pt' ? 'Competências & Arquitetura' : 'Skills & Architecture'}
             </span>
-            <h3 className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]">
               {t('tech.title')}
-            </h3>
+            </h2>
             <p className="text-sm sm:text-base text-theme-dim max-w-2xl leading-relaxed">
               {t('tech.desc')}
             </p>

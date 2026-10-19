@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Página Inicial -->
+  <url>
+    <loc>https://wallacepereiradev.vercel.app/</loc>
+    <lastmod>2026-10-19</lastmod>
+  </url>
+
+  <!-- URLs Individuais dos Projetos para Indexação SEO -->
+  <url>
+    <loc>https://wallacepereiradev.vercel.app/projetos/01</loc>
+    <lastmod>2026-10-19</lastmod>
+  </url>
+  <url>
+    <loc>https://wallacepereiradev.vercel.app/projetos/02</loc>
+    <lastmod>2026-10-19</lastmod>
+  </url>
+  <url>
+    <loc>https://wallacepereiradev.vercel.app/projetos/03</loc>
+    <lastmod>2026-10-19</lastmod>
+  </url>
+  <url>
+    <loc>https://wallacepereiradev.vercel.app/projetos/05</loc>
+    <lastmod>2026-10-19</lastmod>
+  </url>
+  <url>
+    <loc>https://wallacepereiradev.vercel.app/projetos/06</loc>
+    <lastmod>2026-10-19</lastmod>
+  </url>
+  <url>
+    <loc>https://wallacepereiradev.vercel.app/projetos/07</loc>
+    <lastmod>2026-10-19</lastmod>
+  </url>
+
+  <!-- Páginas Estruturais -->
+  <url>
+    <loc>https://wallacepereiradev.vercel.app/estudos</loc>
+    <lastmod>2026-10-19</lastmod>
+  </url>
+  <url>
+    <loc>https://wallacepereiradev.vercel.app/trajetoria</loc>
+    <lastmod>2026-10-19</lastmod>
+  </url>
+  <url>
+    <loc>https://wallacepereiradev.vercel.app/competencias</loc>
+    <lastmod>2026-10-19</lastmod>
+  </url>
+  <url>
+    <loc>https://wallacepereiradev.vercel.app/contato</loc>
+    <lastmod>2026-10-19</lastmod>
+  </url>
+</urlset>

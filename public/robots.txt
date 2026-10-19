@@ -1,0 +1,7 @@
+# robots.txt for Wallace Pereira - Portfolio
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://wallacepereiradev.vercel.app/sitemap.xml
+Host: https://wallacepereiradev.vercel.app

@@ -66,9 +66,11 @@ export default function EditorialColophon({ nextRoute: _nextRoute }: EditorialCo
           <div className="md:col-span-3 flex items-center justify-between md:justify-end gap-4 text-theme-muted">
             <span className="text-[11px]">© 2026 Rio de Janeiro</span>
             <button
+              type="button"
               onClick={handleBackToTop}
               className="inline-flex items-center gap-1 text-theme-dim hover:text-theme-text transition-colors p-1 cursor-pointer"
-              title="Voltar ao topo"
+              title={language === 'pt' ? 'Voltar ao topo' : 'Back to top'}
+              aria-label={language === 'pt' ? 'Voltar ao topo' : 'Back to top'}
             >
               <ArrowUp className="w-3.5 h-3.5" />
             </button>

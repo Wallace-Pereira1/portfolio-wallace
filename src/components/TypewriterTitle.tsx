@@ -96,7 +96,7 @@ export default function TypewriterTitle({
   const lastWord = lastSpaceIndex !== -1 ? displayed.slice(lastSpaceIndex + 1) : displayed;
 
   return (
-    <Component className={className}>
+    <Component className={className} aria-label={cleanTarget}>
       <span>{firstPart}</span>
       <span className="inline-block whitespace-nowrap">
         <span>{lastWord}</span>

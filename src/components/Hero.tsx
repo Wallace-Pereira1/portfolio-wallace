@@ -6,6 +6,7 @@ import { downloadResumePdf } from '../utils/generateResumePdf';
 import { getTechIcon } from './TechIcon';
 import TechBadge from './TechBadge';
 import ServiceAreaModal from './ServiceAreaModal';
+import { trackEvent } from '../utils/analytics';
 
 export default function Hero() {
   const { t, language } = useApp();
@@ -174,30 +175,30 @@ export default function Hero() {
             <div className="space-y-3">
               {/* Título editorial: nome como assinatura discreta + frase de posicionamento */}
               <div className="pt-0.5">
-                <h1 className="sr-only">Wallace Pereira</h1>
                 <p className="text-[11px] font-mono uppercase tracking-[0.18em] text-theme-muted mb-4">
-                Dev full stack
+                  {language === 'pt' ? 'Desenvolvedor Full Stack & Automações' : 'Full Stack Developer & Automations'}
                 </p>
-                <h2 className="font-serif text-[clamp(1.9rem,3.8vw,3.1rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text max-w-[20ch] sm:max-w-[24ch]">
-                  {language === 'pt'
-                    ? 'Wallace Pereira'
-                    : 'Wallace Pereira'}
-                </h2>
+                <h1 className="font-serif text-[clamp(1.9rem,3.8vw,3.1rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text max-w-[20ch] sm:max-w-[24ch]">
+                  Wallace Pereira
+                </h1>
               </div>
 
               {/* Texto Editorial e Ações na Mesma Altura */}
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 pt-3">
                 <p className="text-sm sm:text-[15px] text-theme-dim leading-relaxed font-normal max-w-xl">
                   {language === 'pt'
-                    ? 'Trabalho com React, Angular, Node e PostgreSQL e, quando o processo pede, com automações e agentes de IA. Já construí fluxos que tiram gargalo do processamento de leads e deixam o atendimento ao cliente mais fluido.'
-                    : "I work with React, Angular, Node and PostgreSQL and, when the process calls for it, with automation and AI agents. I've built flows that remove bottlenecks from lead processing and make customer support smoother."}
+                    ? 'Desenvolvo aplicações web e integrações com React, Angular, Node.js e PostgreSQL. Também construo automações com n8n e agentes de IA para reduzir tarefas manuais e melhorar operações.'
+                    : 'I build web applications and integrations with React, Angular, Node.js, and PostgreSQL. I also develop automations with n8n and AI agents to eliminate manual tasks and streamline operations.'}
                 </p>
 
                 {/* Ações: Currículo e Contato na mesma altura */}
                 <div className="flex items-center gap-2 shrink-0">
                   <button
                     type="button"
-                    onClick={() => downloadResumePdf(language)}
+                    onClick={() => {
+                      trackEvent('resume_download');
+                      downloadResumePdf(language);
+                    }}
                     className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-bg bg-theme-text hover:opacity-90 rounded-[2px] transition-opacity font-semibold cursor-pointer shadow-sm group/btn whitespace-nowrap"
                     title={language === 'pt' ? 'Baixar Currículo em PDF' : 'Download Resume as PDF'}
                   >
@@ -205,15 +206,19 @@ export default function Hero() {
                     <span>{language === 'pt' ? 'Currículo' : 'Resume'}</span>
                   </button>
 
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('contato')}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-dim hover:text-theme-text bg-theme-bg/50 hover:bg-theme-bg border border-theme-border hover:border-theme-muted rounded-[2px] transition-colors cursor-pointer group/contact whitespace-nowrap"
+                  <a
+                    href="#contato"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      trackEvent('contact_click');
+                      scrollToSection('contato');
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-dim hover:text-theme-text bg-theme-bg/50 hover:bg-theme-bg border border-theme-border hover:border-theme-muted rounded-[2px] transition-colors cursor-pointer group/contact whitespace-nowrap"
                     title={language === 'pt' ? 'Ir para a seção de Contato' : 'Go to Contact section'}
                   >
                     <Mail className="w-3.5 h-3.5 opacity-80 group-hover/contact:opacity-100 transition-opacity" />
                     <span>{language === 'pt' ? 'Contato' : 'Contact'}</span>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>

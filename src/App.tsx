@@ -10,6 +10,7 @@ import EstudosPage from './pages/EstudosPage';
 import TrajetoriaPage from './pages/TrajetoriaPage';
 import CompetenciasPage from './pages/CompetenciasPage';
 import ContatoPage from './pages/ContatoPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -44,10 +45,11 @@ function AnimatedRoutes() {
     [
       { path: '/', element: <HomePage /> },
       { path: '/estudos', element: <EstudosPage /> },
+      { path: '/projetos/:id', element: <EstudosPage /> },
       { path: '/trajetoria', element: <TrajetoriaPage /> },
       { path: '/competencias', element: <CompetenciasPage /> },
       { path: '/contato', element: <ContatoPage /> },
-      { path: '*', element: <Navigate to="/" replace /> },
+      { path: '*', element: <NotFoundPage /> },
     ],
     location
   );

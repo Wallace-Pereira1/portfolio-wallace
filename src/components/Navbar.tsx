@@ -210,8 +210,8 @@ export default function Navbar() {
 
               return (
                 <li key={link.id}>
-                  <button
-                    type="button"
+                  <a
+                    href={`/#${link.id}`}
                     onClick={(e) => scrollToSection(link.id, e)}
                     className={`transition-colors duration-150 relative py-1 cursor-pointer bg-transparent border-none ${
                       isActive
@@ -231,7 +231,7 @@ export default function Navbar() {
                         }}
                       />
                     )}
-                  </button>
+                  </a>
                 </li>
               );
             })}
@@ -293,8 +293,8 @@ export default function Navbar() {
             <span>{language === 'pt' ? 'Currículo' : 'Resume'}</span>
           </button>
 
-          <button
-            type="button"
+          <a
+            href="/#contato"
             onClick={(e) => scrollToSection('contato', e)}
             className="group inline-flex items-center gap-1.5 text-[12px] font-mono uppercase tracking-wider text-theme-text hover:text-theme-dim transition-colors cursor-pointer bg-transparent border-none"
           >
@@ -302,7 +302,7 @@ export default function Navbar() {
               {t('nav.cta')}
             </span>
             <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </button>
+          </a>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -357,8 +357,8 @@ export default function Navbar() {
 
                     return (
                       <li key={link.id} className="py-3">
-                        <button
-                          type="button"
+                        <a
+                          href={`/#${link.id}`}
                           onClick={(e) => scrollToSection(link.id, e)}
                           className="w-full flex items-center justify-between text-left cursor-pointer group bg-transparent border-none"
                         >
@@ -372,7 +372,7 @@ export default function Navbar() {
                           {isActive && (
                             <span className="w-1.5 h-1.5 rounded-full bg-theme-text" />
                           )}
-                        </button>
+                        </a>
                       </li>
                     );
                   })}
@@ -410,14 +410,14 @@ export default function Navbar() {
                   <span>{language === 'pt' ? 'Baixar Currículo (PDF)' : 'Download Resume (PDF)'}</span>
                 </button>
 
-                <button
-                  type="button"
+                <a
+                  href="/#contato"
                   onClick={(e) => scrollToSection('contato', e)}
                   className="flex items-center justify-center gap-1.5 w-full py-2.5 bg-theme-text text-theme-bg text-xs font-mono uppercase tracking-wider rounded-[2px] transition-opacity hover:opacity-90 cursor-pointer font-medium border-none"
                 >
                   {t('nav.cta')}
                   <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
+                </a>
               </div>
             </motion.div>
           </div>
