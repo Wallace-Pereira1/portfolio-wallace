@@ -176,7 +176,7 @@ export default function Hero() {
               {/* Título editorial: nome como assinatura discreta + frase de posicionamento */}
               <div className="pt-0.5">
                 <p className="text-[11px] font-mono uppercase tracking-[0.18em] text-theme-muted mb-4">
-                  {language === 'pt' ? 'Desenvolvedor Full Stack & Automações' : 'Full Stack Developer & Automations'}
+                  {language === 'pt' ? 'Dev Full Stack & Automações' : 'Full Stack Dev & Automations'}
                 </p>
                 <h1 className="font-serif text-[clamp(1.9rem,3.8vw,3.1rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text max-w-[20ch] sm:max-w-[24ch]">
                   Wallace Pereira
@@ -199,7 +199,7 @@ export default function Hero() {
                       trackEvent('resume_download');
                       downloadResumePdf(language);
                     }}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-bg bg-theme-text hover:opacity-90 rounded-[2px] transition-opacity font-semibold cursor-pointer shadow-sm group/btn whitespace-nowrap"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-dim hover:text-theme-text bg-theme-bg/50 hover:bg-theme-bg border border-theme-border hover:border-theme-muted rounded-[2px] transition-colors cursor-pointer group/contact whitespace-nowrap"
                     title={language === 'pt' ? 'Baixar Currículo em PDF' : 'Download Resume as PDF'}
                   >
                     <FileDown className="w-3.5 h-3.5 transition-transform group-hover/btn:-translate-y-0.5" />
@@ -229,7 +229,7 @@ export default function Hero() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackEvent('whatsapp_click')}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-dim hover:text-theme-text bg-theme-bg/50 hover:bg-theme-bg border border-theme-border hover:border-theme-muted rounded-[2px] transition-colors cursor-pointer group/wa whitespace-nowrap"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-bg bg-theme-text hover:opacity-90 rounded-[2px] transition-opacity font-semibold cursor-pointer shadow-sm group/btn whitespace-nowrap"
                     title={language === 'pt' ? 'Conversar no WhatsApp com texto pronto' : 'Chat on WhatsApp with preset message'}
                   >
                     <MessageCircle className="w-3.5 h-3.5 opacity-80 group-hover/wa:opacity-100 transition-opacity" />
