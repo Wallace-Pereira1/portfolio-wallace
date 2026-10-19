@@ -205,7 +205,7 @@ export default function Hero() {
                     <FileDown className="w-3.5 h-3.5 transition-transform group-hover/btn:-translate-y-0.5" />
                     <span>{language === 'pt' ? 'Currículo' : 'Resume'}</span>
                   </button>
-
+{/* 
                   <a
                     href="#contato"
                     onClick={(e) => {
@@ -218,7 +218,7 @@ export default function Hero() {
                   >
                     <Mail className="w-3.5 h-3.5 opacity-80 group-hover/contact:opacity-100 transition-opacity" />
                     <span>{language === 'pt' ? 'Contato' : 'Contact'}</span>
-                  </a>
+                  </a> */}
 
                   <a
                     href={`https://wa.me/5521999688381?text=${encodeURIComponent(
