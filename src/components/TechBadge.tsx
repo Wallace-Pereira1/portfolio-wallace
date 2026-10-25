@@ -677,6 +677,8 @@ interface TechBadgeProps {
   size?: 'xs' | 'sm' | 'md';
   className?: string;
   fullWidth?: boolean;
+  iconOnly?: boolean;
+  expandOnHover?: boolean;
 }
 
 export default function TechBadge({
@@ -685,6 +687,8 @@ export default function TechBadge({
   size = 'sm',
   className = '',
   fullWidth = false,
+  iconOnly = false,
+  expandOnHover = false,
 }: TechBadgeProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -743,7 +747,7 @@ export default function TechBadge({
       // Caret arrow position pointing directly to badge center
       const caretLeft = Math.max(16, Math.min(tooltipWidth - 16, badgeCenterX - left));
 
-      // Decide whether to show above or below based on viewport space
+      // Prefer showing above by default ("em cima um pouco da legenda")
       const showBelow = rect.top < tooltipHeight + 20;
       const top = showBelow ? rect.bottom + 8 : rect.top - tooltipHeight - 8;
 
@@ -752,10 +756,21 @@ export default function TechBadge({
 
     updatePosition();
     const rafId = requestAnimationFrame(updatePosition);
+
+    // Track dynamic element expansion smoothly via ResizeObserver
+    let resizeObserver: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined' && containerRef.current) {
+      resizeObserver = new ResizeObserver(() => {
+        updatePosition();
+      });
+      resizeObserver.observe(containerRef.current);
+    }
+
     window.addEventListener('resize', updatePosition);
     window.addEventListener('scroll', updatePosition, true);
     return () => {
       cancelAnimationFrame(rafId);
+      if (resizeObserver) resizeObserver.disconnect();
       window.removeEventListener('resize', updatePosition);
       window.removeEventListener('scroll', updatePosition, true);
     };
@@ -776,7 +791,7 @@ export default function TechBadge({
   return (
     <div
       ref={containerRef}
-      className={`tech-stack-item relative ${fullWidth ? 'w-full block' : 'inline-block'} ${isOpen ? 'is-open z-40' : 'z-0'} transition-all duration-300 ease-out overflow-visible ${className}`}
+      className={`tech-stack-item group/badge relative ${fullWidth ? 'w-full block' : 'inline-block'} ${isOpen ? 'is-open z-40' : 'z-0'} transition-all duration-300 ease-out overflow-visible ${className}`}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
@@ -788,13 +803,32 @@ export default function TechBadge({
         }}
         onFocus={() => setIsOpen(true)}
         onBlur={() => setIsOpen(false)}
-        className={`${fullWidth ? 'w-full flex justify-start' : 'inline-flex'} items-center whitespace-nowrap font-mono rounded-[2px] transition-all duration-300 ease-out cursor-help border leading-none text-left bg-theme-bg border-theme-border text-theme-text hover:border-theme-muted hover:bg-theme-surface/70 focus:outline-none focus-visible:ring-1 focus-visible:ring-theme-text overflow-visible ${sizeClasses}`}
+        className={`${fullWidth ? 'w-full flex justify-start' : 'inline-flex'} items-center justify-center whitespace-nowrap font-mono rounded-[2px] transition-all duration-300 ease-out cursor-help border leading-none text-left bg-theme-bg border-theme-border text-theme-text hover:border-theme-muted hover:bg-theme-surface/70 focus:outline-none focus-visible:ring-1 focus-visible:ring-theme-text overflow-hidden ${
+          expandOnHover
+            ? (isOpen ? 'px-2 py-1' : 'px-1.5 py-1 hover:px-2')
+            : (iconOnly ? 'p-1.5' : sizeClasses)
+        }`}
         aria-label={`${tech}: ${info.fullName}`}
+        title={!expandOnHover && iconOnly ? tech : undefined}
       >
         <TechIcon name={tech} className={`${iconSize} shrink-0`} />
-        <span className="text-[10.5px] font-mono text-left whitespace-nowrap transition-all duration-300 ease-out overflow-visible">
-          {tech}
-        </span>
+        {expandOnHover ? (
+          <span
+            className={`font-mono text-[11px] whitespace-nowrap overflow-hidden transition-all duration-300 ease-out select-none ${
+              isOpen
+                ? 'max-w-[220px] opacity-100 ml-1.5'
+                : 'max-w-0 opacity-0 ml-0 group-hover/badge:max-w-[220px] group-hover/badge:opacity-100 group-hover/badge:ml-1.5'
+            }`}
+          >
+            {tech}
+          </span>
+        ) : (
+          !iconOnly && (
+            <span className="text-[10.5px] font-mono text-left whitespace-nowrap transition-all duration-300 ease-out overflow-visible">
+              {tech}
+            </span>
+          )
+        )}
       </button>
 
       {/* Popover Legend / Tooltip: Renderizado via Portal diretamente no document.body para NUNCA ser cortado por overflow ou outros cards */}

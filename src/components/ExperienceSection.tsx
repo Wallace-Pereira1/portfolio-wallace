@@ -50,7 +50,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       location: 'Rio de Janeiro, RJ · Remoto',
       summary: 'Responsável técnico pelo e-commerce e pelas integrações que conectam ERP, CRM, WhatsApp e as 10 lojas da marca, mantendo pedidos, estoque e cadastros de clientes sincronizados.',
       impact: 'Pedidos, estoque e clientes de 10 lojas e do e-commerce conectados por APIs e webhooks, com tratamento de erros e monitoramento das sincronizações.',
-      technologies: ['Olist', 'APIs REST', 'Webhooks', 'WhatsApp API', 'GA4', 'Cloudflare', 'Mysql', 'Estruturas de Dados', 'n8n', 'LLMs'],
+      technologies: ['Olist', 'APIs REST', 'Webhooks', 'WhatsApp API', 'GA4 & GTM', 'Cloudflare'],
       buttonText: 'VER EXPERIÊNCIA ↗',
       isCurrent: true,
       description: [
@@ -215,9 +215,9 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
   return (
     <section
       id="experiencia"
-      className={`${showHeader ? 'py-12 md:py-16' : 'py-8 md:py-12'} bg-transparent px-6 md:px-12 transition-colors`}
+      className={`min-h-[100dvh] flex flex-col justify-center ${showHeader ? 'py-16 sm:py-20 md:py-24' : 'py-8 md:py-12'} bg-transparent px-6 md:px-12 transition-colors snap-start snap-always scroll-mt-6 sm:scroll-mt-10`}
     >
-      <div className="max-w-6xl mx-auto space-y-8 md:space-y-12">
+      <div className="max-w-6xl mx-auto w-full space-y-6 md:space-y-8">
         {/* Section Header or Tabs Bar */}
         {showHeader ? (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pb-5">
@@ -225,9 +225,9 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
               <span className="text-[11px] font-mono text-theme-muted uppercase tracking-widest block">
                 {language === 'pt' ? 'Trajetória Profissional' : 'Professional Trajectory'}
               </span>
-              <h3 className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]">
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]">
                 {t('exp.title')}
-              </h3>
+              </h2>
             </div>
 
             {/* Minimalist Monospace Tab Toggle */}

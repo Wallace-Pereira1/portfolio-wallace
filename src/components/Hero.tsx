@@ -176,7 +176,7 @@ export default function Hero() {
               {/* Título editorial: nome como assinatura discreta + frase de posicionamento */}
               <div className="pt-0.5">
                 <p className="text-[11px] font-mono uppercase tracking-[0.18em] text-theme-muted mb-4">
-                  {language === 'pt' ? 'Dev Full Stack & Automações' : 'Full Stack Dev & Automations'}
+                  {language === 'pt' ? 'Desenvolvedor Full Stack & Automações' : 'Full Stack Developer & Automations'}
                 </p>
                 <h1 className="font-serif text-[clamp(1.9rem,3.8vw,3.1rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text max-w-[20ch] sm:max-w-[24ch]">
                   Wallace Pereira
@@ -192,20 +192,37 @@ export default function Hero() {
                 </p>
 
                 {/* Ações: Currículo, Contato e WhatsApp */}
+                {/* Ações: WhatsApp (destaque principal), Currículo e Contato */}
                 <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  <a
+                    href={`https://wa.me/5521999688381?text=${encodeURIComponent(
+                      language === 'pt'
+                        ? 'Olá, Wallace! Vi seu portfólio e gostaria de conversar sobre uma oportunidade / projeto.'
+                        : 'Hello, Wallace! I came across your portfolio and would like to talk about an opportunity / project.'
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent('whatsapp_click')}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-bg bg-theme-text hover:opacity-90 rounded-[2px] transition-opacity font-semibold cursor-pointer shadow-sm group/wa whitespace-nowrap"
+                    title={language === 'pt' ? 'Conversar no WhatsApp com texto pronto' : 'Chat on WhatsApp with preset message'}
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 transition-transform group-hover/wa:-translate-y-0.5" />
+                    <span>WhatsApp</span>
+                  </a>
+
                   <button
                     type="button"
                     onClick={() => {
                       trackEvent('resume_download');
                       downloadResumePdf(language);
                     }}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-dim hover:text-theme-text bg-theme-bg/50 hover:bg-theme-bg border border-theme-border hover:border-theme-muted rounded-[2px] transition-colors cursor-pointer group/contact whitespace-nowrap"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-dim hover:text-theme-text bg-theme-bg/50 hover:bg-theme-bg border border-theme-border hover:border-theme-muted rounded-[2px] transition-colors cursor-pointer group/btn whitespace-nowrap"
                     title={language === 'pt' ? 'Baixar Currículo em PDF' : 'Download Resume as PDF'}
                   >
-                    <FileDown className="w-3.5 h-3.5 transition-transform group-hover/btn:-translate-y-0.5" />
+                    <FileDown className="w-3.5 h-3.5 opacity-80 group-hover/btn:opacity-100 transition-opacity" />
                     <span>{language === 'pt' ? 'Currículo' : 'Resume'}</span>
                   </button>
-{/* 
+
                   <a
                     href="#contato"
                     onClick={(e) => {
@@ -218,22 +235,6 @@ export default function Hero() {
                   >
                     <Mail className="w-3.5 h-3.5 opacity-80 group-hover/contact:opacity-100 transition-opacity" />
                     <span>{language === 'pt' ? 'Contato' : 'Contact'}</span>
-                  </a> */}
-
-                  <a
-                    href={`https://wa.me/5521999688381?text=${encodeURIComponent(
-                      language === 'pt'
-                        ? 'Olá, Wallace! Vi seu portfólio e gostaria de conversar sobre uma oportunidade / projeto.'
-                        : 'Hello, Wallace! I came across your portfolio and would like to talk about an opportunity / project.'
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent('whatsapp_click')}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-bg bg-theme-text hover:opacity-90 rounded-[2px] transition-opacity font-semibold cursor-pointer shadow-sm group/btn whitespace-nowrap"
-                    title={language === 'pt' ? 'Conversar no WhatsApp com texto pronto' : 'Chat on WhatsApp with preset message'}
-                  >
-                    <MessageCircle className="w-3.5 h-3.5 opacity-80 group-hover/wa:opacity-100 transition-opacity" />
-                    <span>WhatsApp</span>
                   </a>
                 </div>
               </div>

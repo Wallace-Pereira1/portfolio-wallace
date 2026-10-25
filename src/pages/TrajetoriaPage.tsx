@@ -3,9 +3,22 @@ import PageHeader from '../components/PageHeader';
 import ExperienceSection from '../components/ExperienceSection';
 import EditorialColophon from '../components/EditorialColophon';
 import { useApp } from '../context/AppContext';
+import { usePageSeo } from '../utils/usePageSeo';
 
 export default function TrajetoriaPage() {
   const { language } = useApp();
+
+  usePageSeo({
+    title:
+      language === 'pt'
+        ? 'Trajetória Profissional | Wallace Pereira - Desenvolvedor Full Stack'
+        : 'Career Trajectory | Wallace Pereira - Full Stack Developer',
+    description:
+      language === 'pt'
+        ? 'Trajetória profissional e formação de Wallace Pereira: mais de 4 anos de experiência com TypeScript, React, Angular, Node.js, APIs e automações.'
+        : 'Professional career and education of Wallace Pereira: over 4 years of experience with TypeScript, React, Angular, Node.js, APIs, and automations.',
+    path: '/trajetoria',
+  });
 
   return (
     <div className="w-full">

@@ -180,11 +180,9 @@ img, svg, video {
   will-change: transform;
 }
 
-/* Pause sliding ticker on hover */
-li:hover .animate-tech-marquee,
-button:hover .animate-tech-marquee,
-.group\/row:hover .animate-tech-marquee,
-.animate-tech-marquee:hover {
+/* Pause sliding ticker when hovering directly on the marquee */
+.animate-tech-marquee:hover,
+[data-marquee]:hover .animate-tech-marquee {
   animation-play-state: paused !important;
 }
 

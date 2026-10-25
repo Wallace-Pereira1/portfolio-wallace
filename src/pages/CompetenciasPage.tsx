@@ -3,9 +3,22 @@ import PageHeader from '../components/PageHeader';
 import StackSection from '../components/StackSection';
 import EditorialColophon from '../components/EditorialColophon';
 import { useApp } from '../context/AppContext';
+import { usePageSeo } from '../utils/usePageSeo';
 
 export default function CompetenciasPage() {
   const { language } = useApp();
+
+  usePageSeo({
+    title:
+      language === 'pt'
+        ? 'Competências e Tecnologias | Wallace Pereira - Desenvolvedor Full Stack'
+        : 'Skills & Technologies | Wallace Pereira - Full Stack Developer',
+    description:
+      language === 'pt'
+        ? 'Domínios técnicos de Wallace Pereira: TypeScript, React, Angular, Node.js, PostgreSQL, Supabase, n8n, webhooks e APIs REST.'
+        : 'Technical domains and skill architecture of Wallace Pereira: TypeScript, React, Angular, Node.js, PostgreSQL, Supabase, n8n, webhooks, and REST APIs.',
+    path: '/competencias',
+  });
 
   return (
     <div className="w-full">

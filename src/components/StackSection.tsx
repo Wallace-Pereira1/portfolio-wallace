@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useApp } from '../context/AppContext';
 import type { DomainItem } from './TiltDomainCard';
 import DomainsList from './DomainsList';
-import DomainStudyModal from './DomainStudyModal';
 
 interface StackSectionProps {
   showHeader?: boolean;
@@ -10,13 +9,6 @@ interface StackSectionProps {
 
 export default function StackSection({ showHeader = true }: StackSectionProps) {
   const { language, t } = useApp();
-  const [selectedDomain, setSelectedDomain] = useState<DomainItem | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenDomainModal = (domain: DomainItem) => {
-    setSelectedDomain(domain);
-    setIsModalOpen(true);
-  };
 
   const domainsPt: DomainItem[] = [
     {
@@ -184,18 +176,8 @@ export default function StackSection({ showHeader = true }: StackSectionProps) {
           </div>
         )}
 
-        {/* Índice editorial de domínios */}
-        <DomainsList domains={domains} language={language} onOpen={handleOpenDomainModal} />
-
-        {/* Modal de Detalhes do Domínio com Ícones */}
-        <DomainStudyModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          domain={selectedDomain}
-          allDomains={domains}
-          onSelectDomain={(d) => setSelectedDomain(d)}
-          language={language}
-        />
+        {/* Índice editorial de domínios com gaveta expansível inline */}
+        <DomainsList domains={domains} language={language} />
       </div>
     </section>
   );
