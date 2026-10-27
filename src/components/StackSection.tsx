@@ -1,6 +1,5 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
-import type { DomainItem } from './TiltDomainCard';
 import DomainsList from './DomainsList';
 
 interface StackSectionProps {
@@ -10,174 +9,30 @@ interface StackSectionProps {
 export default function StackSection({ showHeader = true }: StackSectionProps) {
   const { language, t } = useApp();
 
-  const domainsPt: DomainItem[] = [
-    {
-      index: '01',
-      title: 'Front-end & Produtos Web',
-      description: 'Interfaces em React e Angular, com TypeScript do começo ao fim, pensadas para quem usa e para quem vai manter o código.',
-      primarySkills: [
-        'TypeScript',
-        'React',
-        'Angular',
-        'Tailwind CSS'
-      ],
-      secondarySkills: [
-        'Vite',
-        'Zustand',
-        'Design Systems',
-        'Interfaces responsivas'
-      ]
-    },
-    {
-      index: '02',
-      title: 'APIs & Dados',
-      description: 'APIs em Node.js e bancos relacionais: Supabase e PostgreSQL para o que precisa sair rápido, MySQL quando o projeto pede um banco mais robusto.',
-      primarySkills: [
-        'Node.js',
-        'APIs REST',
-        'Webhooks',
-        'PostgreSQL',
-        'MySQL',
-        'Supabase'
-      ],
-      secondarySkills: [
-        'Row Level Security (RLS)',
-        'Modelagem relacional',
-        'Autenticação'
-      ]
-    },
-    {
-      index: '03',
-      title: 'Integrações, Automações & IA',
-      description: 'Conecto ERP, CRM e WhatsApp, automatizo rotinas com n8n e coloco agentes de IA onde eles realmente ajudam.',
-      primarySkills: [
-        'n8n',
-        'LLMs',
-        'WhatsApp Business API',
-        'Integrações com CRM',
-        'OCR'
-      ],
-      secondarySkills: [
-        'Salesforce',
-        'RD Station',
-        'Gemini',
-        'Transbordo para atendimento humano'
-      ]
-    },
-    {
-      index: '04',
-      title: 'Entrega & Qualidade',
-      description: 'Versionamento, deploy e documentação para entregar software que dá para manter.',
-      primarySkills: [
-        'Git',
-        'GitHub',
-        'GitHub Actions',
-        'Vercel'
-      ],
-      secondarySkills: [
-        'CI/CD',
-        'Documentação técnica'
-      ]
-    }
-  ];
-
-  const domainsEn: DomainItem[] = [
-    {
-      index: '01',
-      title: 'Front-end & Web Products',
-      description: 'Interfaces in React and Angular, with TypeScript end to end, built for the people who use them and the people who will maintain the code.',
-      primarySkills: [
-        'TypeScript',
-        'React',
-        'Angular',
-        'Tailwind CSS'
-      ],
-      secondarySkills: [
-        'Vite',
-        'Zustand',
-        'Design Systems',
-        'Responsive interfaces'
-      ]
-    },
-    {
-      index: '02',
-      title: 'APIs & Data',
-      description: 'APIs in Node.js and relational databases: Supabase and PostgreSQL for what has to ship fast, MySQL when the project needs a more robust database.',
-      primarySkills: [
-        'Node.js',
-        'REST APIs',
-        'Webhooks',
-        'PostgreSQL',
-        'MySQL',
-        'Supabase'
-      ],
-      secondarySkills: [
-        'Row Level Security (RLS)',
-        'Relational modeling',
-        'Authentication'
-      ]
-    },
-    {
-      index: '03',
-      title: 'Integrations, Automations & AI',
-      description: 'I connect ERP, CRM and WhatsApp, automate routines with n8n, and put AI agents where they actually help.',
-      primarySkills: [
-        'n8n',
-        'LLMs',
-        'WhatsApp Business API',
-        'CRM Integrations',
-        'OCR'
-      ],
-      secondarySkills: [
-        'Salesforce',
-        'RD Station',
-        'Gemini',
-        'Handoff to human support'
-      ]
-    },
-    {
-      index: '04',
-      title: 'Delivery & Quality',
-      description: 'Version control, deployment and documentation to ship software that can be maintained.',
-      primarySkills: [
-        'Git',
-        'GitHub',
-        'GitHub Actions',
-        'Vercel'
-      ],
-      secondarySkills: [
-        'CI/CD',
-        'Technical documentation'
-      ]
-    }
-  ];
-
-  const domains = language === 'pt' ? domainsPt : domainsEn;
-
   return (
     <section
       id="tecnologias"
-      className={`min-h-[100dvh] flex flex-col justify-center ${showHeader ? 'py-16 sm:py-20 md:py-24' : 'py-8 md:py-12'} bg-transparent px-6 md:px-12 transition-colors relative snap-start snap-always scroll-mt-6 sm:scroll-mt-10`}
+      className={`min-h-[100dvh] flex flex-col justify-center ${showHeader ? 'py-8 sm:py-12 md:py-16' : 'py-6 md:py-10'} bg-transparent px-4 sm:px-6 md:px-12 transition-colors relative snap-start snap-always scroll-mt-6 sm:scroll-mt-10`}
     >
       <div id="competencias" className="absolute -top-20 opacity-0 pointer-events-none" />
-      <div className="max-w-6xl mx-auto w-full space-y-6 md:space-y-8">
+      <div className="max-w-6xl mx-auto w-full space-y-5 sm:space-y-7">
         {/* Section Header */}
         {showHeader && (
-          <div className="space-y-2 pb-5">
-            <span className="text-[11px] font-mono text-theme-muted uppercase tracking-widest block">
-              {language === 'pt' ? 'Competências & Arquitetura' : 'Skills & Architecture'}
+          <div className="space-y-1.5 pb-1">
+            <span className="text-[10.5px] font-mono text-theme-muted uppercase tracking-widest block font-medium">
+              {language === 'pt' ? 'Competências & Tecnologias' : 'Skills & Technologies'}
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl leading-[1.15] font-medium text-theme-text tracking-[-0.015em]">
               {t('tech.title')}
             </h2>
-            <p className="text-sm sm:text-base text-theme-dim max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-theme-dim max-w-2xl leading-relaxed">
               {t('tech.desc')}
             </p>
           </div>
         )}
 
-        {/* Índice editorial de domínios com gaveta expansível inline */}
-        <DomainsList domains={domains} language={language} />
+        {/* Lista editorial compacta de 4 domínios */}
+        <DomainsList language={language} />
       </div>
     </section>
   );

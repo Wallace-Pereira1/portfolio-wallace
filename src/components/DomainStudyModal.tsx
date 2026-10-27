@@ -104,11 +104,11 @@ export default function DomainStudyModal({
             {/* Top Bar with Domain Identifier & Close Button */}
             <div className="shrink-0 flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 border-b border-theme-border/70 bg-theme-bg/60">
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[2px] bg-theme-text text-theme-bg font-mono text-[10.5px] uppercase tracking-wider font-semibold">
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[2px] bg-theme-text text-theme-bg font-mono text-[10px] uppercase tracking-wider font-semibold">
                   <Layers className="w-3 h-3" />
-                  <span>{domain.index}</span>
+                  <span>{language === 'pt' ? 'ESPECIFICAÇÃO' : 'SPECIFICATION'}</span>
                 </span>
-                <span className="text-[11px] font-mono text-theme-muted uppercase tracking-wider">
+                <span className="text-[10.5px] font-mono text-theme-muted uppercase tracking-wider">
                   {language === 'pt' ? 'DOMÍNIO TÉCNICO' : 'TECHNICAL DOMAIN'}
                 </span>
               </div>
@@ -195,8 +195,8 @@ export default function DomainStudyModal({
 
             {/* Modal Footer */}
             <div className="shrink-0 flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 border-t border-theme-border/70 bg-theme-bg/60 text-xs font-mono">
-              <span className="text-theme-muted text-[11px]">
-                {domain.index} / {String(allDomains.length).padStart(2, '0')}
+              <span className="text-theme-muted text-[10.5px]">
+                {language === 'pt' ? 'Visão de Arquitetura' : 'Architecture Specifications'}
               </span>
 
               <div className="flex items-center gap-2">

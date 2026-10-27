@@ -1,232 +1,405 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import {
-  ArrowRight,
-  ArrowUpRight,
-  ExternalLink,
-  Code2,
-} from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion } from 'motion/react';
+import { ArrowUpRight, ExternalLink, Code2 } from 'lucide-react';
 import { Project } from '../types';
 import { getProjectHighlight } from '../data/projectHighlights';
+import { useApp } from '../context/AppContext';
 import TechBadge from './TechBadge';
 import ProjectStudyModal from './ProjectStudyModal';
+import ProjectMinimalCover from './ProjectMinimalCover';
 
 interface ProjectsListProps {
   projects: Project[];
   language: string;
 }
 
+const AUTOPLAY_INTERVAL_MS = 4000;
+
 /**
- * Índice editorial de projetos com gaveta expansível inline compacta.
- * Ao clicar na linha, desce uma gaveta rápida e resumida com o resumo,
- * as stacks usadas e o botão "Ler mais" que abre o modal com o estudo completo.
- * Ao clicar em outro ou fora, a gaveta fecha automaticamente.
+ * Retorna a menor distância circular entre dois índices em um anel de tamanho `total`.
+ * Ex: para total=7, index=0 e current=6 -> diff = +1 (à direita).
+ */
+function getCircularDiff(index: number, current: number, total: number): number {
+  if (total <= 0) return 0;
+  let diff = (index - current) % total;
+  if (diff > total / 2) diff -= total;
+  if (diff < -total / 2) diff += total;
+  return diff;
+}
+
+/**
+ * Carrossel em pirâmide de 3 cards para a seção de Projetos:
+ * - Rotação automática suave a cada 4 segundos
+ * - Pausa automática no hover ou quando o modal está aberto
+ * - Transição fluida de encolhimento do card central e crescimento do novo central
+ * - Capas vetoriais ultra-minimalistas sob medida para cada projeto
+ * - Navegação via clique nos cards laterais, pills circulares, touch e setas
  */
 export default function ProjectsList({ projects, language }: ProjectsListProps) {
+  const { theme } = useApp();
+  const isLight = theme === 'light';
   const pt = language !== 'en';
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const total = projects.length;
+
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [modalProjectId, setModalProjectId] = useState<string | null>(null);
-  const listRef = useRef<HTMLOListElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
-  // Fecha a gaveta ao clicar fora ou ao pressionar Escape
+  const touchStartX = useRef<number | null>(null);
+
+  // Navegação
+  const handleNext = useCallback(() => {
+    if (total === 0) return;
+    setCurrentIndex((prev) => (prev + 1) % total);
+  }, [total]);
+
+  const handlePrev = useCallback(() => {
+    if (total === 0) return;
+    setCurrentIndex((prev) => (prev - 1 + total) % total);
+  }, [total]);
+
+  const handleSelectIndex = useCallback((idx: number) => {
+    setCurrentIndex(idx);
+  }, []);
+
+  // Autoplay de 4 segundos, pausado no hover ou com modal aberto
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
-      // Se um modal estiver aberto, não interfere
-      if (modalProjectId) return;
+    if (isHovered || modalProjectId || total <= 1) return;
 
-      if (listRef.current && !listRef.current.contains(e.target as Node)) {
-        setExpandedId(null);
-      }
-    };
+    const timer = setInterval(() => {
+      handleNext();
+    }, AUTOPLAY_INTERVAL_MS);
 
+    return () => clearInterval(timer);
+  }, [isHovered, modalProjectId, total, handleNext]);
+
+  // Teclado (setas)
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !modalProjectId) {
-        setExpandedId(null);
+      if (modalProjectId) return;
+      if (e.key === 'ArrowLeft') {
+        handlePrev();
+      } else if (e.key === 'ArrowRight') {
+        handleNext();
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('touchstart', handleClickOutside);
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [modalProjectId]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalProjectId, handleNext, handlePrev]);
 
-  const handleToggle = (projectId: string) => {
-    setExpandedId((prev) => (prev === projectId ? null : projectId));
+  // Gestos de Touch / Swipe mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
   };
 
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    if (deltaX > 40) {
+      handlePrev();
+    } else if (deltaX < -40) {
+      handleNext();
+    }
+    touchStartX.current = null;
+  };
+
+  if (total === 0) return null;
+
   return (
-    <div className="space-y-5 md:space-y-6">
-      <div className="flex items-end justify-between gap-3">
-        <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]">
-          {pt ? 'Projetos' : 'Projects'}
-        </h2>
-        <span className="text-[11px] font-mono text-theme-muted tracking-tight select-none pb-1.5">
-          {String(projects.length).padStart(2, '0')} {pt ? 'projetos' : 'projects'}
+    <div className="space-y-4 sm:space-y-6 select-none">
+      {/* 1. Cabeçalho da Seção */}
+      <div className="pb-3 border-b border-theme-border/60">
+        <span className="text-[11px] font-mono text-theme-muted uppercase tracking-widest block mb-1">
+          {pt ? 'Estudos de Caso & Portfólio' : 'Case Studies & Portfolio'}
         </span>
+        <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]">
+          {pt ? 'Projetos Selecionados' : 'Selected Projects'}
+        </h2>
       </div>
 
-      <ol
-        ref={listRef}
-        className="offset-static mb-2 border border-theme-border bg-theme-surface rounded-[2px] divide-y divide-theme-border overflow-hidden"
+      {/* 2. Palco do Carrossel Pirâmide com Animação Fluida Sem Travamentos */}
+      <div
+        className="relative w-full h-[400px] sm:h-[430px] md:h-[450px] overflow-hidden sm:overflow-visible py-2 flex items-center justify-center"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
-        {projects.map((project, index) => {
-          const isExpanded = expandedId === project.id;
-          const highlight = getProjectHighlight(project.id, language) ?? project.tagline;
-          const primaryTechs = project.technologies.slice(0, 4);
+        <div className="relative w-full h-full max-w-6xl mx-auto flex items-center justify-center">
+          {projects.map((project, index) => {
+            const diff = getCircularDiff(index, currentIndex, total);
+            const isCenter = diff === 0;
+            const isLeft = diff === -1;
+            const isRight = diff === 1;
+            const isFarLeft = diff === -2;
+            const isFarRight = diff === 2;
+            const isVisible = Math.abs(diff) <= 2;
 
-          return (
-            <li key={project.id} className="relative group/row">
-              {/* Linha Principal do Projeto */}
-              <button
-                type="button"
-                onClick={() => handleToggle(project.id)}
-                aria-expanded={isExpanded}
-                aria-label={`${isExpanded ? (pt ? 'Fechar gaveta' : 'Close drawer') : (pt ? 'Abrir gaveta de detalhes' : 'Open details drawer')}: ${project.title}`}
-                className={`w-full text-left grid grid-cols-[auto_1fr] md:grid-cols-[3rem_minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1.1fr)] gap-x-4 md:gap-x-6 gap-y-1.5 items-baseline px-4 sm:px-6 py-4 sm:py-5 pr-14 sm:pr-28 transition-colors duration-150 outline-none focus-visible:ring-1 focus-visible:ring-theme-text/40 overflow-hidden cursor-pointer ${
-                  isExpanded ? 'bg-theme-border/30' : 'hover:bg-theme-border/25 focus-visible:bg-theme-border/25'
+            // Se estiver fora do alcance dos 5 cards renderizados, não desenha
+            if (!isVisible) return null;
+
+            // Posição horizontal calculada responsiva
+            // O centro fica em -50% (ancorado em left: 50%)
+            let targetX = '-50%';
+            let scale = 1;
+            let opacity = 1;
+            let zIndex = 10;
+            let pointerEvents: 'auto' | 'none' = 'none';
+
+            if (isCenter) {
+              targetX = '-50%';
+              scale = 1.02;
+              opacity = 1;
+              zIndex = 30;
+              pointerEvents = 'auto';
+            } else if (isLeft) {
+              targetX = 'calc(-50% - 78%)';
+              scale = 0.86;
+              opacity = 0.45;
+              zIndex = 15;
+              pointerEvents = 'auto';
+            } else if (isRight) {
+              targetX = 'calc(-50% + 78%)';
+              scale = 0.86;
+              opacity = 0.45;
+              zIndex = 15;
+              pointerEvents = 'auto';
+            } else if (isFarLeft) {
+              targetX = 'calc(-50% - 150%)';
+              scale = 0.74;
+              opacity = 0;
+              zIndex = 0;
+              pointerEvents = 'none';
+            } else if (isFarRight) {
+              targetX = 'calc(-50% + 150%)';
+              scale = 0.74;
+              opacity = 0;
+              zIndex = 0;
+              pointerEvents = 'none';
+            }
+
+            return (
+              <motion.div
+                key={project.id}
+                initial={false}
+                animate={{
+                  x: targetX,
+                  scale,
+                  opacity,
+                  zIndex,
+                }}
+                transition={{
+                  duration: 0.65,
+                  ease: [0.25, 1, 0.5, 1], // Desaceleração suave estilo editorial
+                }}
+                style={{
+                  position: 'absolute',
+                  left: '50%',
+                  top: 0,
+                  pointerEvents,
+                }}
+                className={`w-[80vw] max-w-[335px] sm:w-[350px] md:w-[380px] lg:w-[395px] origin-center ${
+                  !isCenter ? 'cursor-pointer hover:opacity-80 transition-opacity' : ''
                 }`}
+                onClick={() => {
+                  if (isLeft) handlePrev();
+                  else if (isRight) handleNext();
+                }}
               >
-                <span
-                  className={`font-mono text-[11px] transition-colors ${
-                    isExpanded ? 'text-theme-text font-bold' : 'text-theme-muted group-hover/row:text-theme-text'
-                  }`}
-                >
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span className="text-base sm:text-[17px] font-medium text-theme-text leading-snug transition-transform duration-200 group-hover/row:translate-x-1">
-                  {project.title}
-                </span>
-                <span className="col-start-2 md:col-start-auto font-mono text-[12px] text-theme-dim leading-snug">
-                  {highlight}
-                </span>
-                <span className="col-start-2 md:col-start-auto font-mono text-[11px] text-theme-muted truncate select-none">
-                  {primaryTechs.join(' · ')}
-                </span>
-              </button>
-
-              {/* Ações Rápidas no Canto Direito da Linha */}
-              <div className="absolute right-4 sm:right-6 top-4 sm:top-1/2 sm:-translate-y-1/2 flex items-center gap-3">
-                {project.liveUrl && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    aria-label={`${pt ? 'Abrir site' : 'Open live site'}: ${project.title}`}
-                    className="hidden sm:inline-flex items-center gap-1 font-mono text-[11px] text-theme-muted hover:text-theme-text transition-colors"
-                  >
-                    Live <ArrowUpRight className="w-3 h-3" />
-                  </a>
-                )}
-                <ArrowRight
-                  className={`w-4 h-4 pointer-events-none transition-all duration-200 ${
-                    isExpanded
-                      ? 'rotate-90 text-theme-text'
-                      : 'rotate-0 text-theme-muted group-hover/row:translate-x-1 group-hover/row:text-theme-text'
-                  }`}
+                <ProjectCardItem
+                  project={project}
+                  index={index}
+                  isCenter={isCenter}
+                  position={isLeft ? 'left' : isRight ? 'right' : 'center'}
+                  language={language}
+                  pt={pt}
+                  isLight={isLight}
+                  onOpenModal={() => setModalProjectId(project.id)}
                 />
-              </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
 
-              {/* Gavetinha Expansível Compacta e Rápida */}
-              <AnimatePresence initial={false}>
-                {isExpanded && (
-                  <motion.div
-                    key={`drawer-${project.id}`}
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                    className="overflow-hidden border-t border-theme-border bg-theme-bg/60"
-                  >
-                    <div className="p-3 sm:p-4 space-y-2.5">
-                      {/* Descrição / Tagline direta em poucas linhas para evitar scroll no mobile */}
-                      <p className="text-xs sm:text-[13px] text-theme-text font-normal leading-relaxed line-clamp-2 sm:line-clamp-3">
-                        {project.tagline}
-                      </p>
-
-                      {/* Stacks Utilizadas (Exibição compacta e responsiva de ícones com tooltip interativo) */}
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-theme-muted shrink-0 select-none">
-                          Stack:
-                        </span>
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          {project.technologies.slice(0, 8).map((tech) => (
-                            <TechBadge
-                              key={tech}
-                              tech={tech}
-                              language={pt ? 'pt' : 'en'}
-                              size="sm"
-                              expandOnHover={true}
-                            />
-                          ))}
-                          {project.technologies.length > 8 && (
-                            <span className="text-[10px] font-mono text-theme-muted select-none">
-                              +{project.technologies.length - 8}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Botão de "Ler mais" que abre o Modal + Ações Live/GitHub */}
-                      <div className="flex flex-wrap items-center gap-2 pt-1.5 border-t border-theme-border/40">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setModalProjectId(project.id);
-                          }}
-                          className="inline-flex items-center gap-1.5 px-3 py-1 bg-theme-text text-theme-bg hover:opacity-90 rounded-[2px] transition-opacity font-semibold uppercase tracking-wider text-[11px] font-mono cursor-pointer shadow-sm group/btn"
-                        >
-                          <span>{pt ? 'Ler mais / Estudo completo' : 'Read more / Full case study'}</span>
-                          <ArrowUpRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                        </button>
-
-                        {project.liveUrl && (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 border border-theme-border bg-theme-surface hover:border-theme-muted text-theme-text rounded-[2px] transition-colors font-mono uppercase tracking-wider text-[11px]"
-                          >
-                            <span>Live</span>
-                            <ExternalLink className="w-3 h-3 text-theme-muted" />
-                          </a>
-                        )}
-
-                        {project.githubUrl && (
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 border border-theme-border bg-theme-surface hover:border-theme-muted text-theme-text rounded-[2px] transition-colors font-mono uppercase tracking-wider text-[11px]"
-                          >
-                            <Code2 className="w-3 h-3 text-theme-muted" />
-                            <span>GitHub</span>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </li>
+      {/* 3. Indicador de Paginação Circular (Pills clicáveis) */}
+      <div className="flex items-center justify-center gap-1.5 pt-1">
+        {projects.map((proj, idx) => {
+          const isActive = idx === currentIndex;
+          return (
+            <button
+              key={`pill-${proj.id}`}
+              type="button"
+              onClick={() => handleSelectIndex(idx)}
+              aria-label={`${pt ? 'Ir para projeto' : 'Go to project'} ${proj.title}`}
+              className={`h-1 transition-all duration-300 rounded-[1px] cursor-pointer ${
+                isActive
+                  ? 'w-7 bg-theme-text shadow-sm'
+                  : 'w-2 bg-theme-border hover:bg-theme-muted'
+              }`}
+            />
           );
         })}
-      </ol>
+      </div>
 
-      {/* Modal Detalhado Acionado Exclusivamente pelo Botão "Ler Mais" */}
+      {/* 4. Modal de Estudo de Caso Completo */}
       <ProjectStudyModal
         isOpen={Boolean(modalProjectId)}
         onClose={() => setModalProjectId(null)}
         initialProjectId={modalProjectId}
       />
     </div>
+  );
+}
+
+interface ProjectCardItemProps {
+  project: Project;
+  index: number;
+  isCenter: boolean;
+  position: 'left' | 'center' | 'right';
+  language: string;
+  pt: boolean;
+  isLight: boolean;
+  onOpenModal?: () => void;
+}
+
+/**
+ * Card individual com capa ultra-minimalista sob medida,
+ * acabamento editorial fino, stacks compactas e link para estudo completo.
+ */
+function ProjectCardItem({
+  project,
+  index,
+  isCenter,
+  position,
+  language,
+  pt,
+  isLight,
+  onOpenModal,
+}: ProjectCardItemProps) {
+  const highlight = getProjectHighlight(project.id, language) ?? project.tagline;
+
+  return (
+    <article
+      data-project-card
+      className={`relative w-full rounded-[2px] border bg-white dark:bg-theme-surface flex flex-col justify-between overflow-hidden transition-all duration-300 ${
+        isCenter
+          ? 'border-slate-400 dark:border-theme-muted/80 shadow-xl shadow-slate-900/10 dark:shadow-2xl dark:shadow-black/70 ring-1 ring-slate-900/10 dark:ring-white/10'
+          : 'border-slate-200 dark:border-theme-border/70 hover:border-slate-300 dark:hover:border-theme-muted/60 shadow-sm'
+      }`}
+    >
+      {/* Capa do Projeto: Capa Vetorial Ultra Minimalista customizada por projeto */}
+      <div className="relative w-full aspect-[16/9] max-h-[140px] sm:max-h-[155px] overflow-hidden bg-slate-50 dark:bg-[#090a0e] shrink-0 border-b border-slate-200 dark:border-theme-border/60">
+        <ProjectMinimalCover
+          projectId={project.id}
+          isCenter={isCenter}
+          category={project.category}
+          isLight={isLight}
+        />
+
+        {/* Gradiente sutil para fusão limpa com o corpo */}
+        <div className="absolute inset-0 bg-gradient-to-t from-white/90 dark:from-theme-surface/85 via-transparent to-transparent pointer-events-none" />
+
+        {/* Selo de Categoria (Alto Contraste em Modo Claro e Escuro) */}
+        <div className="absolute top-2 left-2 flex items-center gap-1.5 z-10">
+          <span className="font-mono text-[9px] uppercase tracking-wider px-2 py-0.5 bg-white dark:bg-[#12141c] text-slate-950 dark:text-zinc-100 font-bold rounded-[2px] shadow-sm border border-slate-300 dark:border-white/20">
+            {project.category.replace('_', ' ')}
+          </span>
+        </div>
+      </div>
+
+      {/* Conteúdo do Card */}
+      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2">
+        <div className="space-y-1">
+          <h3 className="font-serif text-[15px] sm:text-base font-medium text-slate-900 dark:text-theme-text leading-snug line-clamp-1">
+            {project.title}
+          </h3>
+          <p className="font-mono text-[10.5px] text-slate-700 dark:text-theme-dim line-clamp-1 font-medium">
+            {highlight}
+          </p>
+          <p className="text-xs text-slate-600 dark:text-theme-muted line-clamp-2 leading-relaxed pt-0.5 font-normal">
+            {project.tagline}
+          </p>
+        </div>
+
+        {/* Stacks Compactas com Preview de Ícone */}
+        <div className="flex flex-wrap items-center gap-1 pt-1">
+          {project.technologies.slice(0, isCenter ? 4 : 3).map((tech) => (
+            <TechBadge
+              key={tech}
+              tech={tech}
+              language={pt ? 'pt' : 'en'}
+              size="xs"
+              expandOnHover={isCenter}
+              iconOnly={!isCenter}
+            />
+          ))}
+          {!isCenter && project.technologies.length > 3 && (
+            <span className="text-[9.5px] font-mono text-slate-700 dark:text-theme-muted font-semibold select-none">
+              +{project.technologies.length - 3}
+            </span>
+          )}
+        </div>
+
+        {/* Rodapé / Ações */}
+        {isCenter ? (
+          <div className="pt-2 border-t border-theme-border/50 flex items-center justify-between gap-2">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenModal?.();
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1 bg-theme-text text-theme-bg hover:opacity-90 rounded-[2px] transition-opacity font-semibold uppercase tracking-wider text-[10px] font-mono cursor-pointer shadow-sm group/btn"
+            >
+              <span>{pt ? 'Estudo completo' : 'Full case study'}</span>
+              <ArrowUpRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+            </button>
+
+            <div className="flex items-center gap-1.5">
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  aria-label={`${pt ? 'Abrir site' : 'Open live site'}: ${project.title}`}
+                  className="inline-flex items-center gap-1 px-2 py-0.5 border border-theme-border bg-theme-bg hover:border-theme-muted text-theme-text rounded-[2px] transition-colors font-mono text-[9.5px] uppercase tracking-wider"
+                >
+                  <span>Live</span>
+                  <ExternalLink className="w-2.5 h-2.5 text-theme-muted" />
+                </a>
+              )}
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  aria-label={`${pt ? 'Abrir repositório' : 'Open repository'}: ${project.title}`}
+                  className="inline-flex items-center gap-1 px-2 py-0.5 border border-theme-border bg-theme-bg hover:border-theme-muted text-theme-text rounded-[2px] transition-colors font-mono text-[9.5px] uppercase tracking-wider"
+                >
+                  <Code2 className="w-2.5 h-2.5 text-theme-muted" />
+                  <span>Code</span>
+                </a>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="pt-1 border-t border-theme-border/30 text-center">
+            <span className="font-mono text-[9.5px] uppercase tracking-wider text-theme-muted hover:text-theme-text transition-colors">
+              {position === 'left'
+                ? pt
+                  ? '← Clique para focar'
+                  : '← Click to focus'
+                : pt
+                ? 'Clique para focar →'
+                : 'Click to focus →'}
+            </span>
+          </div>
+        )}
+      </div>
+    </article>
   );
 }

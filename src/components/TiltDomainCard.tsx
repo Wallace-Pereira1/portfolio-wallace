@@ -32,7 +32,7 @@ export default function TiltDomainCard({
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono uppercase tracking-widest text-theme-muted block">
-              {item.index} / {language === 'pt' ? 'DOMÍNIO' : 'DOMAIN'}
+              {language === 'pt' ? 'DOMÍNIO TÉCNICO' : 'TECHNICAL DOMAIN'}
             </span>
             <Layers className="w-3.5 h-3.5 text-theme-muted group-hover:text-theme-text transition-colors" />
           </div>

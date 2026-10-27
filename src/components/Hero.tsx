@@ -223,7 +223,7 @@ export default function Hero() {
                     <span>{language === 'pt' ? 'Currículo' : 'Resume'}</span>
                   </button>
 
-                  <a
+                  {/* <a
                     href="#contato"
                     onClick={(e) => {
                       e.preventDefault();
@@ -235,7 +235,7 @@ export default function Hero() {
                   >
                     <Mail className="w-3.5 h-3.5 opacity-80 group-hover/contact:opacity-100 transition-opacity" />
                     <span>{language === 'pt' ? 'Contato' : 'Contact'}</span>
-                  </a>
+                  </a> */}
                 </div>
               </div>
             </div>

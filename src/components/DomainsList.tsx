@@ -1,183 +1,240 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, ArrowUpRight, Layers, CheckCircle2 } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { ChevronDown, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import type { DomainItem } from './TiltDomainCard';
-import TechBadge from './TechBadge';
-import DomainStudyModal from './DomainStudyModal';
+import { useApp } from '../context/AppContext';
+import DomainDetailModal from './DomainDetailModal';
 
-interface DomainsListProps {
-  domains: DomainItem[];
-  language: string;
+export interface EditorialDomainItem {
+  id: string;
+  name: string;
+  technologies: string;
+  description: string;
+  secondaryLine?: string;
+  projectTitle: string;
+  projectUrl: string;
 }
 
-/**
- * Índice editorial de competências com gaveta expansível inline compacta.
- * Ao clicar na linha, desce uma gaveta rápida e direta com a descrição,
- * stacks usadas e o botão "Ler mais" que abre o modal com o detalhamento completo.
- * Ao clicar em outro ou fora, a gaveta fecha automaticamente.
- */
-export default function DomainsList({ domains, language }: DomainsListProps) {
-  const pt = language !== 'en';
-  const [expandedIndex, setExpandedIndex] = useState<string | null>(null);
-  const [modalDomain, setModalDomain] = useState<DomainItem | null>(null);
-  const listRef = useRef<HTMLOListElement>(null);
+interface DomainsListProps {
+  language?: string;
+}
 
-  // Fecha a gaveta ao clicar fora da lista ou ao pressionar Escape
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
-      // Se um modal estiver aberto, não interfere
-      if (modalDomain) return;
+export default function DomainsList({ language: propLanguage }: DomainsListProps) {
+  const { language: contextLanguage } = useApp();
+  const currentLang = propLanguage || contextLanguage;
+  const pt = currentLang !== 'en';
 
-      if (listRef.current && !listRef.current.contains(e.target as Node)) {
-        setExpandedIndex(null);
-      }
-    };
+  // All accordion items start closed by default
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !modalDomain) {
-        setExpandedIndex(null);
-      }
-    };
+  // Modal state: domain selected for technical details modal
+  const [modalDomainId, setModalDomainId] = useState<string | null>(null);
+  const triggerElementsRef = useRef<Map<string, HTMLButtonElement>>(new Map());
 
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('touchstart', handleClickOutside);
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [modalDomain]);
+  const domainsPt: EditorialDomainItem[] = [
+    {
+      id: 'frontend',
+      name: 'Front-end',
+      technologies: 'React · TypeScript · Angular · Tailwind CSS',
+      description:
+        'Desenvolvimento de interfaces modernas, reativas e com tipagem estrita do início ao fim, pensadas para fluidez de uso e facilidade de manutenção.',
+      projectTitle: 'Plataforma de Investimentos',
+      projectUrl: '/projetos/02',
+    },
+    {
+      id: 'apis-dados',
+      name: 'APIs & Dados',
+      technologies: 'Node.js · PostgreSQL · Supabase · APIs REST',
+      description:
+        'Construção de APIs seguras e idempotentes com persistência relacional, Row Level Security e autenticação robusta.',
+      projectTitle: 'Sentinela Fiscal: Auditoria',
+      projectUrl: '/projetos/06',
+    },
+    {
+      id: 'automacoes-ia',
+      name: 'Integrações, Automações & IA',
+      technologies: 'Crm · n8n · Make · APIs · Webhooks · ERP',
+      description:
+        'Integro CRMs, ERP e plataformas de atendimento para conectar dados, automatizar processos e organizar fluxos comerciais.',
+      secondaryLine: 'Salesforce · RD Station · HubSpot · Olist ERP',
+      projectTitle: 'Agente de Qualificação Imobiliária',
+      projectUrl: '/projetos/01',
+    },
+    {
+      id: 'entrega-qualidade',
+      name: 'Entrega & Qualidade',
+      technologies: 'Git · CI/CD · Vercel · Cloudflare',
+      description:
+        'Versionamento semântico, esteiras de validação automatizada e deploy global na edge com alta disponibilidade e zero downtime.',
+      projectTitle: 'Modernização ASP → Angular',
+      projectUrl: '/projetos/03',
+    },
+  ];
 
-  const handleToggle = (index: string) => {
-    setExpandedIndex((prev) => (prev === index ? null : index));
+  const domainsEn: EditorialDomainItem[] = [
+    {
+      id: 'frontend',
+      name: 'Front-end',
+      technologies: 'React · TypeScript · Angular · Tailwind CSS',
+      description:
+        'High-performance reactive user interfaces with end-to-end static typing, built for responsive user experience and clean code maintenance.',
+      projectTitle: 'Investment Portfolio Platform',
+      projectUrl: '/projetos/02',
+    },
+    {
+      id: 'apis-dados',
+      name: 'APIs & Data',
+      technologies: 'Node.js · PostgreSQL · Supabase · REST APIs',
+      description:
+        'Resilient and idempotent REST APIs with relational schema modeling, Row Level Security, and secure authentication.',
+      projectTitle: 'Fiscal Sentinel Audit System',
+      projectUrl: '/projetos/06',
+    },
+    {
+      id: 'automacoes-ia',
+      name: 'Integrations, Automations & AI',
+      technologies: 'n8n · Make · APIs · Webhooks',
+      description:
+        'I integrate CRMs, ERP, and customer service platforms to connect data, automate processes, and organize commercial workflows.',
+      secondaryLine: 'Salesforce · RD Station · HubSpot · Olist ERP',
+      projectTitle: 'Real Estate Autonomous Agent',
+      projectUrl: '/projetos/01',
+    },
+    {
+      id: 'entrega-qualidade',
+      name: 'Delivery & Quality',
+      technologies: 'Git · GitHub Actions · CI/CD · Vercel',
+      description:
+        'Semantic versioning, automated quality test gates, and continuous edge deployments with high availability and zero downtime.',
+      projectTitle: 'Legacy ASP → Angular Overhaul',
+      projectUrl: '/projetos/03',
+    },
+  ];
+
+  const domains = pt ? domainsPt : domainsEn;
+
+  const handleToggle = (id: string) => {
+    // Only one item open at a time; clicking an open item closes it.
+    // No automatic scroll upon expanding.
+    setExpandedId((prev) => (prev === id ? null : id));
   };
 
   return (
-    <div className="space-y-3">
-      <p className="text-[11px] font-mono text-theme-muted tracking-tight select-none md:text-right">
-        {pt ? 'clique em um domínio para expandir' : 'click a domain to expand'}
-      </p>
+    <div className="w-full max-w-full divide-y divide-theme-border/60 border-y border-theme-border/60">
+      {domains.map((item) => {
+        const isOpen = expandedId === item.id;
+        const headerId = `domain-header-${item.id}`;
+        const contentId = `domain-content-${item.id}`;
 
-      <ol
-        ref={listRef}
-        className="offset-static mb-2 border border-theme-border bg-theme-surface rounded-[2px] divide-y divide-theme-border overflow-hidden"
-      >
-        {domains.map((item) => {
-          const isExpanded = expandedIndex === item.index;
+        return (
+          <div key={item.id} className="w-full">
+            {/* Real button trigger for accessibility */}
+            <button
+              type="button"
+              id={headerId}
+              aria-expanded={isOpen}
+              aria-controls={contentId}
+              onClick={() => handleToggle(item.id)}
+              className="w-full text-left py-4 sm:py-4.5 md:py-5 flex items-start sm:items-center justify-between gap-3 sm:gap-4 transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-text rounded-[2px]"
+            >
+              <div className="min-w-0 flex-1 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4 sm:pr-4">
+                {/* Domain Name */}
+                <span className="text-base sm:text-lg font-serif font-medium text-theme-text group-hover:text-theme-accent transition-colors leading-snug">
+                  {item.name}
+                </span>
 
-          return (
-            <li key={item.index} className="relative group/row">
-              {/* Linha Principal do Domínio */}
-              <button
-                type="button"
-                onClick={() => handleToggle(item.index)}
-                aria-expanded={isExpanded}
-                aria-label={`${isExpanded ? (pt ? 'Fechar gaveta' : 'Close drawer') : (pt ? 'Abrir gaveta de detalhes' : 'Open details drawer')}: ${item.title}`}
-                className={`w-full text-left grid grid-cols-[auto_1fr] md:grid-cols-[3rem_minmax(0,1.15fr)_minmax(0,1fr)] gap-x-4 md:gap-x-8 gap-y-3 items-start px-4 sm:px-6 py-5 sm:py-6 pr-12 sm:pr-16 transition-colors duration-150 outline-none focus-visible:ring-1 focus-visible:ring-theme-text/40 cursor-pointer ${
-                  isExpanded ? 'bg-theme-border/30' : 'hover:bg-theme-border/25 focus-visible:bg-theme-border/25'
-                }`}
+                {/* Short line of primary technologies */}
+                <span className="text-xs sm:text-[13px] font-mono text-theme-muted group-hover:text-theme-dim transition-colors leading-relaxed break-words">
+                  {item.technologies}
+                </span>
+              </div>
+
+              {/* Expand / Collapse Icon */}
+              <span
+                className="p-1 text-theme-muted group-hover:text-theme-text transition-colors shrink-0 mt-0.5 sm:mt-0"
+                aria-hidden="true"
               >
-                <span
-                  className={`font-mono text-[11px] pt-1.5 transition-colors ${
-                    isExpanded ? 'text-theme-text font-bold' : 'text-theme-muted group-hover/row:text-theme-text'
+                <ChevronDown
+                  className={`w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform duration-200 ease-out ${
+                    isOpen ? 'rotate-180 text-theme-text' : 'rotate-0'
                   }`}
+                />
+              </span>
+            </button>
+
+            {/* Expanded Content Region */}
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  id={contentId}
+                  role="region"
+                  aria-labelledby={headerId}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="overflow-hidden"
                 >
-                  {item.index}
-                </span>
+                  <div className="pb-4 sm:pb-5 pt-0.5 space-y-3">
+                    {/* 1 or 2 sentence description */}
+                    <p className="text-xs sm:text-sm text-theme-dim leading-relaxed max-w-3xl font-normal">
+                      {item.description}
+                    </p>
 
-                <span className="block space-y-1.5 transition-transform duration-200 group-hover/row:translate-x-1">
-                  <span className="block text-base sm:text-[17px] font-medium text-theme-text leading-snug">
-                    {item.title}
-                  </span>
-                  <span className="block text-sm text-theme-dim leading-relaxed">{item.description}</span>
-                </span>
-
-                <span className="col-start-2 md:col-start-auto block space-y-1.5 font-mono md:pt-1">
-                  <span className="block text-[12px] leading-relaxed text-theme-text">
-                    {item.primarySkills.join(' · ')}
-                  </span>
-                  <span className="block text-[11px] leading-relaxed text-theme-muted">
-                    {item.secondarySkills.join(' · ')}
-                  </span>
-                </span>
-              </button>
-
-              {/* Ícone de Flecha com Rotação Animada */}
-              <ArrowRight
-                className={`absolute right-4 sm:right-6 top-6 sm:top-7 w-4 h-4 pointer-events-none transition-all duration-200 ${
-                  isExpanded
-                    ? 'rotate-90 text-theme-text'
-                    : 'rotate-0 text-theme-muted group-hover/row:translate-x-1 group-hover/row:text-theme-text'
-                }`}
-              />
-
-              {/* Gaveta Expansível Compacta e Rápida */}
-              <AnimatePresence initial={false}>
-                {isExpanded && (
-                  <motion.div
-                    key={`drawer-${item.index}`}
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                    className="overflow-hidden border-t border-theme-border bg-theme-bg/60"
-                  >
-                    <div className="p-3 sm:p-4 space-y-2.5 text-theme-text">
-                      {/* Descrição Direta em poucas linhas para evitar scroll no mobile */}
-                      <p className="text-xs sm:text-[13px] text-theme-dim leading-relaxed font-normal line-clamp-2 sm:line-clamp-3">
-                        {item.description}
+                    {/* Discrete secondary tools / platforms line */}
+                    {item.secondaryLine && (
+                      <p className="text-[11.5px] sm:text-xs font-mono text-theme-muted tracking-wide break-words">
+                        {item.secondaryLine}
                       </p>
+                    )}
 
-                      {/* Stacks Principais (Ícones compactos com expansão suave ao passar o mouse e legenda no topo) */}
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-theme-muted shrink-0 select-none">
-                          Core:
+                    {/* Discrete project and technical specs links */}
+                    <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-1 text-xs sm:text-[12.5px] font-mono">
+                      {/* Real related project link */}
+                      <Link
+                        to={item.projectUrl}
+                        className="inline-flex items-center gap-1.5 text-theme-text hover:text-theme-accent transition-colors underline decoration-theme-border hover:decoration-theme-accent underline-offset-4"
+                      >
+                        <span>
+                          {pt ? 'Projeto relacionado:' : 'Related project:'} {item.projectTitle}
                         </span>
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          {item.primarySkills.map((skill) => (
-                            <TechBadge
-                              key={`${item.index}-${skill}`}
-                              tech={skill}
-                              language={pt ? 'pt' : 'en'}
-                              size="sm"
-                              expandOnHover={true}
-                            />
-                          ))}
-                        </div>
-                      </div>
+                        <ArrowUpRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                      </Link>
 
-                        {/* Botão de "Ler mais" para abrir o Modal de Estudo de Domínio */}
-                        <div className="pt-1.5 border-t border-theme-border/40 flex items-center">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setModalDomain(item);
-                            }}
-                            className="inline-flex items-center gap-1.5 px-3 py-1 bg-theme-text text-theme-bg hover:opacity-90 rounded-[2px] transition-opacity font-semibold uppercase tracking-wider text-[11px] font-mono cursor-pointer shadow-sm group/btn"
-                          >
-                            <span>{pt ? 'Ler mais / Detalhes de arquitetura' : 'Read more / Architecture specs'}</span>
-                            <ArrowUpRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                          </button>
-                        </div>
-                      </div>
-                    </motion.div>
-                )}
-              </AnimatePresence>
-            </li>
-          );
-        })}
-      </ol>
+                      {/* Technical details button that opens the modal in-place */}
+                      <button
+                        type="button"
+                        ref={(el) => {
+                          if (el) {
+                            triggerElementsRef.current.set(item.id, el);
+                          } else {
+                            triggerElementsRef.current.delete(item.id);
+                          }
+                        }}
+                        onClick={() => setModalDomainId(item.id)}
+                        className="inline-flex items-center gap-1.5 text-theme-muted hover:text-theme-text transition-colors underline decoration-theme-border/60 hover:decoration-theme-text underline-offset-4 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-text rounded-[2px]"
+                        aria-haspopup="dialog"
+                        aria-expanded={modalDomainId === item.id}
+                      >
+                        <span>{pt ? 'Ver detalhes técnicos' : 'View technical specs'}</span>
+                        <ArrowUpRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
 
-      {/* Modal Detalhado Acionado Exclusivamente pelo Botão "Ler Mais" */}
-      <DomainStudyModal
-        isOpen={Boolean(modalDomain)}
-        onClose={() => setModalDomain(null)}
-        domain={modalDomain}
-        allDomains={domains}
-        onSelectDomain={(d) => setModalDomain(d)}
-        language={pt ? 'pt' : 'en'}
+      {/* Accessible In-Place Technical Domain Details Modal */}
+      <DomainDetailModal
+        isOpen={Boolean(modalDomainId)}
+        onClose={() => setModalDomainId(null)}
+        domainId={modalDomainId}
+        language={currentLang}
+        triggerElement={modalDomainId ? triggerElementsRef.current.get(modalDomainId) : null}
       />
     </div>
   );
