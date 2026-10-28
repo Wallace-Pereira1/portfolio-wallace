@@ -111,10 +111,10 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
       {/* 1. Cabeçalho da Seção */}
       <div className="pb-3 border-b border-theme-border/60">
         <span className="text-[11px] font-mono text-theme-muted uppercase tracking-widest block mb-1">
-          {pt ? 'Cases e Estudos' : 'Case Studies'}
+          {pt ? 'Estudos de Caso & Portfólio' : 'Case Studies & Portfolio'}
         </span>
         <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]">
-          {pt ? 'Projetos' : 'Projects'}
+          {pt ? 'Projetos Selecionados' : 'Selected Projects'}
         </h2>
       </div>
 
@@ -353,7 +353,7 @@ function ProjectCardItem({
               }}
               className="inline-flex items-center gap-1.5 px-3 py-1 bg-theme-text text-theme-bg hover:opacity-90 rounded-[2px] transition-opacity font-semibold uppercase tracking-wider text-[10px] font-mono cursor-pointer shadow-sm group/btn"
             >
-              <span>{pt ? 'Ver mais' : 'Show more'}</span>
+              <span>{pt ? 'Estudo completo' : 'Full case study'}</span>
               <ArrowUpRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
             </button>
 
