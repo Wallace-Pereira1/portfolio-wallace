@@ -11,6 +11,8 @@ const highlights: Record<string, { pt: string; en: string }> = {
   '05': { pt: 'Pedidos da mesa direto à cozinha', en: 'Table orders straight to the kitchen' },
   '06': { pt: 'Extração validada com Zod', en: 'Extraction validated with Zod' },
   '07': { pt: 'Auditoria fiscal preventiva', en: 'Preventive tax auditing' },
+  '08': { pt: 'Engenharia elétrica traduzida em uma experiência digital.', en: 'Electrical engineering in a digital experience.' },
+  capcrj: { pt: 'Engenharia elétrica traduzida em uma experiência digital.', en: 'Electrical engineering in a digital experience.' },
 };
 
 export function getProjectHighlight(id: string, language: string): string | undefined {

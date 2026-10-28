@@ -105,7 +105,7 @@ export default function ProjectStudyModal({
                   {language === 'pt' ? 'Estudo Detalhado de Sistema' : 'Detailed System Study'}
                 </span>
                 <span className="text-xs sm:text-sm font-semibold text-theme-text truncate block">
-                  {currentProject.title}
+                  {currentProject.modalTitle || currentProject.title}
                 </span>
               </div>
 
@@ -134,15 +134,23 @@ export default function ProjectStudyModal({
                     </span>
                     <span className="text-theme-border">/</span>
                     <span className="text-[11px] text-theme-muted uppercase tracking-wider">
-                      {currentProject.category === 'web_product' && (language === 'pt' ? 'Produto Web & SaaS' : 'Web & SaaS Product')}
-                      {currentProject.category === 'integration_api' && (language === 'pt' ? 'Agente de IA & Integrações' : 'AI Agent & Integrations')}
-                      {currentProject.category === 'data_backend' && (language === 'pt' ? 'Dados & Backend' : 'Data & Backend')}
+                      {currentProject.customCategory || (
+                        <>
+                          {currentProject.category === 'web_product' && (language === 'pt' ? 'Produto Web & SaaS' : 'Web & SaaS Product')}
+                          {currentProject.category === 'integration_api' && (language === 'pt' ? 'Agente de IA & Integrações' : 'AI Agent & Integrations')}
+                          {currentProject.category === 'data_backend' && (language === 'pt' ? 'Dados & Backend' : 'Data & Backend')}
+                        </>
+                      )}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-3">
                     <span className="text-[11px] text-theme-muted">{currentProject.period}</span>
-                    {currentProject.featured && (
+                    {currentProject.status ? (
+                      <span className="text-[10px] uppercase tracking-widest text-emerald-400 border border-emerald-400/30 px-1.5 py-0.5 rounded-[2px]">
+                        {currentProject.status}
+                      </span>
+                    ) : currentProject.featured && (
                       <span className="text-[10px] uppercase tracking-widest text-brand-blue border border-brand-blue/30 px-1.5 py-0.5 rounded-[2px]">
                         {language === 'pt' ? 'Em Produção' : 'In Production'}
                       </span>
@@ -150,12 +158,34 @@ export default function ProjectStudyModal({
                   </div>
                 </div>
 
+                {/* Cliente / Ano */}
+                {(currentProject.client || currentProject.year) && (
+                  <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs font-mono pt-1">
+                    {currentProject.client && (
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-theme-muted uppercase tracking-wider text-[10.5px]">
+                          {language === 'pt' ? 'Cliente:' : 'Client:'}
+                        </span>
+                        <span className="text-theme-text font-medium">{currentProject.client}</span>
+                      </div>
+                    )}
+                    {currentProject.year && (
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-theme-muted uppercase tracking-wider text-[10.5px]">
+                          {language === 'pt' ? 'Ano:' : 'Year:'}
+                        </span>
+                        <span className="text-theme-text font-medium">{currentProject.year}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div className="space-y-2">
                   <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-theme-text tracking-tight leading-tight">
-                    {currentProject.title}
+                    {currentProject.modalTitle || currentProject.title}
                   </h1>
                   <p className="text-sm sm:text-base text-theme-dim leading-relaxed max-w-4xl">
-                    {currentProject.tagline}
+                    {currentProject.modalIntroduction || currentProject.tagline}
                   </p>
                 </div>
 
@@ -255,7 +285,7 @@ export default function ProjectStudyModal({
                     <div className="flex items-center gap-2">
                       <Layers className="w-4 h-4 text-theme-text" />
                       <h2 className="text-xs sm:text-sm font-mono uppercase tracking-widest text-theme-text font-semibold">
-                        {language === 'pt' ? 'Pipeline Operacional & Fluxo Arquitetural' : 'Operational Pipeline & Architecture Flow'}
+                        {currentProject.blocksTitle || (language === 'pt' ? 'Pipeline Operacional & Fluxo Arquitetural' : 'Operational Pipeline & Architecture Flow')}
                       </h2>
                     </div>
                     <span className="text-[10px] font-mono text-theme-muted">
@@ -314,7 +344,7 @@ export default function ProjectStudyModal({
                 <div className="flex items-center gap-2 pb-2 border-b border-theme-border/60">
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
                   <h2 className="text-xs font-mono uppercase tracking-widest text-theme-text font-semibold">
-                    {language === 'pt' ? 'Impacto nos Resultados & Negócio' : 'Business Impact & Deliverables'}
+                    {currentProject.id === '08' ? (language === 'pt' ? 'Entregas Comprovadas & Resultados' : 'Verified Deliverables & Results') : (language === 'pt' ? 'Impacto nos Resultados & Negócio' : 'Business Impact & Deliverables')}
                   </h2>
                 </div>
                 <p className="text-xs sm:text-sm text-theme-dim leading-relaxed">

@@ -22,6 +22,15 @@ export interface Project {
   disabled?: boolean;
   workflow?: ProjectWorkflowStep[];
   highlights?: string[];
+  subtitle?: string;
+  description?: string;
+  modalTitle?: string;
+  modalIntroduction?: string;
+  customCategory?: string;
+  client?: string;
+  year?: string;
+  status?: string;
+  blocksTitle?: string;
 }
 
 export interface Experience {

@@ -536,6 +536,214 @@ function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
           </svg>
         </div>
       );
+
+    case '08':
+    case 'capcrj':
+      // CAPCRJ: Miniatura Estilizada da Home do Site Real (Navbar, Hero com Transformador e 3 Cards de Serviços)
+      return (
+        <div className="relative w-full h-full bg-[#f1f5f9] flex items-center justify-center overflow-hidden">
+          {/* Grade de fundo blueprint suave */}
+          <svg className="absolute inset-0 w-full h-full opacity-35 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid-08-light" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#0284c7" strokeWidth="0.5" strokeOpacity="0.3" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid-08-light)" />
+          </svg>
+
+          <svg viewBox="0 0 380 180" className="w-full h-full p-2.5 relative z-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Janela de Site Principal */}
+            <g transform="translate(15, 8)">
+              {/* Moldura da Janela */}
+              <rect x="0" y="0" width="350" height="164" rx="4" fill="#ffffff" stroke="#0369a1" strokeWidth="1.4" />
+
+              {/* Barra Superior do Navegador */}
+              <rect x="0" y="0" width="350" height="18" rx="4" fill="#f8fafc" stroke="#0369a1" strokeWidth="1.4" />
+              <line x1="0" y1="18" x2="350" y2="18" stroke="#cbd5e1" strokeWidth="1" />
+              {/* Pontos de controle da janela */}
+              <circle cx="12" cy="9" r="2.5" fill="#ef4444" opacity="0.8" />
+              <circle cx="20" cy="9" r="2.5" fill="#f59e0b" opacity="0.8" />
+              <circle cx="28" cy="9" r="2.5" fill="#10b981" opacity="0.8" />
+              {/* Barra de Endereço URL */}
+              <rect x="42" y="3.5" width="135" height="11" rx="2" fill="#ffffff" stroke="#cbd5e1" strokeWidth="0.8" />
+              <text x="50" y="11.5" fill="#64748b" fontSize="6.5" fontFamily="monospace">
+                https://capcrj.pages.dev
+              </text>
+
+              {/* 1. NAVBAR DA CAPCRJ */}
+              <g transform="translate(14, 20)">
+                <rect x="0" y="0" width="322" height="18" fill="#ffffff" />
+                <line x1="0" y1="18" x2="322" y2="18" stroke="#e2e8f0" strokeWidth="1" />
+                
+                {/* Logo / Identificação CAPCRJ à esquerda */}
+                <path d="M 0 11 L 4 5 L 6 9 L 9 3" stroke="#0284c7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                <text x="13" y="12" fill="#0369a1" fontSize="9" fontFamily="monospace" fontWeight="800" letterSpacing="0.05em">
+                  CAPCRJ
+                </text>
+                <text x="54" y="12" fill="#94a3b8" fontSize="6" fontFamily="monospace" fontWeight="500">
+                  | ENGENHARIA
+                </text>
+
+                {/* Traços representando links do menu à direita */}
+                <line x1="195" y1="9" x2="215" y2="9" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="223" y1="9" x2="245" y2="9" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="253" y1="9" x2="275" y2="9" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" />
+                {/* Botão de contato na navbar */}
+                <rect x="283" y="3.5" width="38" height="11" rx="2" fill="#0284c7" />
+                <text x="302" y="11" textAnchor="middle" fill="#ffffff" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                  CONTATO
+                </text>
+              </g>
+
+              {/* 2. HERO EM DUAS COLUNAS */}
+              <g transform="translate(14, 40)">
+                {/* COLUNA ESQUERDA: TÍTULO, SUBTEXTO E BOTÕES */}
+                <g transform="translate(4, 4)">
+                  {/* Eyebrow badge */}
+                  <rect x="0" y="0" width="94" height="10" rx="2" fill="#e0f2fe" stroke="#7dd3fc" strokeWidth="0.8" />
+                  <text x="47" y="7" textAnchor="middle" fill="#0369a1" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                    MANUTENÇÃO ESPECIALIZADA
+                  </text>
+
+                  {/* Título Principal */}
+                  <text x="0" y="22" fill="#0f172a" fontSize="10.5" fontFamily="sans-serif" fontWeight="800" letterSpacing="-0.02em">
+                    Alta e Média Tensão
+                  </text>
+                  {/* Linha de acento azul sob o título */}
+                  <rect x="0" y="27" width="112" height="2" rx="1" fill="#0284c7" />
+
+                  {/* Traços representando textos de apoio */}
+                  <line x1="0" y1="36" x2="135" y2="36" stroke="#64748b" strokeWidth="1.6" strokeLinecap="round" />
+                  <line x1="0" y1="42" x2="120" y2="42" stroke="#94a3b8" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="0" y1="48" x2="105" y2="48" stroke="#cbd5e1" strokeWidth="1.4" strokeLinecap="round" />
+
+                  {/* Dois Botões de Ação */}
+                  <g transform="translate(0, 56)">
+                    {/* Botão Primário: Solicitar Orçamento */}
+                    <rect x="0" y="0" width="68" height="15" rx="2" fill="#0284c7" />
+                    <text x="34" y="10" textAnchor="middle" fill="#ffffff" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                      ORÇAMENTO ↗
+                    </text>
+
+                    {/* Botão Secundário: Ver Serviços */}
+                    <rect x="74" y="0" width="58" height="15" rx="2" fill="#ffffff" stroke="#0284c7" strokeWidth="1" />
+                    <text x="103" y="10" textAnchor="middle" fill="#0369a1" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                      SERVIÇOS
+                    </text>
+                  </g>
+                </g>
+
+                {/* COLUNA DIREITA: TRANSFORMADOR / SUBESTAÇÃO VETORIAL RECONHECÍVEL */}
+                <g transform="translate(170, 0)">
+                  {/* Base / Piso da subestação */}
+                  <rect x="10" y="68" width="134" height="4" rx="1" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="0.8" />
+
+                  {/* Tanque Principal do Transformador */}
+                  <rect x="25" y="22" width="104" height="46" rx="2" fill="#f8fafc" stroke="#0284c7" strokeWidth="1.4" />
+
+                  {/* Aletas de Resfriamento / Radiador frontal */}
+                  <line x1="33" y1="28" x2="33" y2="62" stroke="#93c5fd" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="41" y1="28" x2="41" y2="62" stroke="#93c5fd" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="49" y1="28" x2="49" y2="62" stroke="#93c5fd" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="57" y1="28" x2="57" y2="62" stroke="#93c5fd" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="65" y1="28" x2="65" y2="62" stroke="#93c5fd" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="73" y1="28" x2="73" y2="62" stroke="#93c5fd" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="81" y1="28" x2="81" y2="62" stroke="#93c5fd" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="89" y1="28" x2="89" y2="62" stroke="#93c5fd" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="97" y1="28" x2="97" y2="62" stroke="#93c5fd" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="105" y1="28" x2="105" y2="62" stroke="#93c5fd" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="113" y1="28" x2="113" y2="62" stroke="#93c5fd" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="121" y1="28" x2="121" y2="62" stroke="#93c5fd" strokeWidth="1.4" strokeLinecap="round" />
+
+                  {/* Tanque de Expansão / Conservador de Óleo no topo */}
+                  <rect x="44" y="10" width="66" height="9" rx="4.5" fill="#e0f2fe" stroke="#0284c7" strokeWidth="1.2" />
+                  <line x1="77" y1="19" x2="77" y2="22" stroke="#0284c7" strokeWidth="1.6" />
+
+                  {/* Buchas Isoladoras Cerâmicas de Alta Tensão (Fases A, B, C) */}
+                  {/* Bucha 1 */}
+                  <g transform="translate(38, 2)">
+                    <rect x="0" y="4" width="7" height="4" rx="1" fill="#bae6fd" stroke="#0369a1" strokeWidth="0.8" />
+                    <rect x="1" y="1" width="5" height="3" rx="1" fill="#7dd3fc" stroke="#0369a1" strokeWidth="0.8" />
+                    <line x1="3.5" y1="1" x2="3.5" y2="-4" stroke="#0284c7" strokeWidth="1.4" />
+                    <circle cx="3.5" cy="-4" r="1.5" fill="#f59e0b" />
+                  </g>
+                  {/* Bucha 2 */}
+                  <g transform="translate(74, 2)">
+                    <rect x="0" y="4" width="7" height="4" rx="1" fill="#bae6fd" stroke="#0369a1" strokeWidth="0.8" />
+                    <rect x="1" y="1" width="5" height="3" rx="1" fill="#7dd3fc" stroke="#0369a1" strokeWidth="0.8" />
+                    <line x1="3.5" y1="1" x2="3.5" y2="-4" stroke="#0284c7" strokeWidth="1.4" />
+                    <circle cx="3.5" cy="-4" r="1.5" fill="#f59e0b" />
+                  </g>
+                  {/* Bucha 3 */}
+                  <g transform="translate(110, 2)">
+                    <rect x="0" y="4" width="7" height="4" rx="1" fill="#bae6fd" stroke="#0369a1" strokeWidth="0.8" />
+                    <rect x="1" y="1" width="5" height="3" rx="1" fill="#7dd3fc" stroke="#0369a1" strokeWidth="0.8" />
+                    <line x1="3.5" y1="1" x2="3.5" y2="-4" stroke="#0284c7" strokeWidth="1.4" />
+                    <circle cx="3.5" cy="-4" r="1.5" fill="#f59e0b" />
+                  </g>
+
+                  {/* Barramento / Linha Elétrica Superior */}
+                  <path d="M 41.5 -2 L 77.5 -2 L 113.5 -2 L 138 -2" stroke="#0284c7" strokeWidth="1" strokeDasharray="3 2" />
+
+                  {/* Plaqueta de Identificação Técnica: 13.8 kV */}
+                  <rect x="63" y="38" width="28" height="12" rx="1.5" fill="#ffffff" stroke="#0284c7" strokeWidth="1" />
+                  <text x="77" y="46.5" textAnchor="middle" fill="#0369a1" fontSize="6.5" fontFamily="monospace" fontWeight="800">
+                    13.8 kV
+                  </text>
+                </g>
+              </g>
+
+              {/* 3. TRÊS CARDS DE SERVIÇOS INFERIORES */}
+              <g transform="translate(14, 118)">
+                <line x1="0" y1="0" x2="322" y2="0" stroke="#e2e8f0" strokeWidth="1" />
+
+                {/* Card 1: Subestações */}
+                <g transform="translate(4, 6)">
+                  <rect x="0" y="0" width="98" height="30" rx="2" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="1" />
+                  {/* Ícone */}
+                  <rect x="6" y="6" width="10" height="10" rx="1.5" fill="#e0f2fe" stroke="#0284c7" strokeWidth="0.8" />
+                  <path d="M 8 13 L 11 9 L 14 13" stroke="#0284c7" strokeWidth="1" fill="none" />
+                  {/* Textos */}
+                  <text x="20" y="12" fill="#0f172a" fontSize="6" fontFamily="monospace" fontWeight="700">
+                    SUBESTAÇÕES
+                  </text>
+                  <line x1="20" y1="18" x2="88" y2="18" stroke="#94a3b8" strokeWidth="1.2" strokeLinecap="round" />
+                  <line x1="20" y1="23" x2="72" y2="23" stroke="#cbd5e1" strokeWidth="1.2" strokeLinecap="round" />
+                </g>
+
+                {/* Card 2: Manutenção */}
+                <g transform="translate(112, 6)">
+                  <rect x="0" y="0" width="98" height="30" rx="2" fill="#f8fafc" stroke="#0284c7" strokeWidth="1.2" />
+                  {/* Ícone */}
+                  <rect x="6" y="6" width="10" height="10" rx="1.5" fill="#eff6ff" stroke="#2563eb" strokeWidth="0.8" />
+                  <circle cx="11" cy="11" r="2.5" fill="#2563eb" />
+                  {/* Textos */}
+                  <text x="20" y="12" fill="#0369a1" fontSize="6" fontFamily="monospace" fontWeight="700">
+                    MANUTENÇÃO
+                  </text>
+                  <line x1="20" y1="18" x2="90" y2="18" stroke="#94a3b8" strokeWidth="1.2" strokeLinecap="round" />
+                  <line x1="20" y1="23" x2="75" y2="23" stroke="#cbd5e1" strokeWidth="1.2" strokeLinecap="round" />
+                </g>
+
+                {/* Card 3: Urgência 24h */}
+                <g transform="translate(220, 6)">
+                  <rect x="0" y="0" width="98" height="30" rx="2" fill="#f0fdf4" stroke="#86efac" strokeWidth="1" />
+                  {/* Ícone */}
+                  <rect x="6" y="6" width="10" height="10" rx="1.5" fill="#dcfce7" stroke="#16a34a" strokeWidth="0.8" />
+                  <circle cx="11" cy="11" r="2" fill="#16a34a" />
+                  {/* Textos */}
+                  <text x="20" y="12" fill="#14532d" fontSize="6" fontFamily="monospace" fontWeight="700">
+                    URGÊNCIA 24/7
+                  </text>
+                  <line x1="20" y1="18" x2="88" y2="18" stroke="#86efac" strokeWidth="1.2" strokeLinecap="round" />
+                  <line x1="20" y1="23" x2="70" y2="23" stroke="#bbf7d0" strokeWidth="1.2" strokeLinecap="round" />
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      );
   }
 }
 
@@ -1079,6 +1287,214 @@ function DarkCover({ projectId }: { projectId: string; isCenter: boolean }) {
               <text x="37.5" y="15" textAnchor="middle" fill="#6ee7b7" fontSize="7.5" fontFamily="monospace">
                 DAEMON: OK
               </text>
+            </g>
+          </svg>
+        </div>
+      );
+
+    case '08':
+    case 'capcrj':
+      // CAPCRJ: Miniatura Estilizada da Home do Site Real (Navbar, Hero com Transformador e 3 Cards de Serviços)
+      return (
+        <div className="relative w-full h-full bg-[#050811] flex items-center justify-center overflow-hidden">
+          {/* Grade de fundo técnica sutil */}
+          <svg className="absolute inset-0 w-full h-full opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid-08-dark" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#0284c7" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid-08-dark)" />
+          </svg>
+
+          <svg viewBox="0 0 380 180" className="w-full h-full p-2.5 relative z-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Janela de Site Principal */}
+            <g transform="translate(15, 8)">
+              {/* Moldura da Janela em Azul Marinho Profundo */}
+              <rect x="0" y="0" width="350" height="164" rx="4" fill="#080e1a" stroke="#1e3a5f" strokeWidth="1.4" />
+
+              {/* Barra Superior do Navegador */}
+              <rect x="0" y="0" width="350" height="18" rx="4" fill="#0c1527" stroke="#1e3a5f" strokeWidth="1.4" />
+              <line x1="0" y1="18" x2="350" y2="18" stroke="#1e293b" strokeWidth="1" />
+              {/* Pontos de controle da janela */}
+              <circle cx="12" cy="9" r="2.5" fill="#ef4444" opacity="0.8" />
+              <circle cx="20" cy="9" r="2.5" fill="#f59e0b" opacity="0.8" />
+              <circle cx="28" cy="9" r="2.5" fill="#10b981" opacity="0.8" />
+              {/* Barra de Endereço URL */}
+              <rect x="42" y="3.5" width="135" height="11" rx="2" fill="#050a14" stroke="#1e293b" strokeWidth="0.8" />
+              <text x="50" y="11.5" fill="#64748b" fontSize="6.5" fontFamily="monospace">
+                https://capcrj.pages.dev
+              </text>
+
+              {/* 1. NAVBAR DA CAPCRJ */}
+              <g transform="translate(14, 20)">
+                <rect x="0" y="0" width="322" height="18" fill="#080e1a" />
+                <line x1="0" y1="18" x2="322" y2="18" stroke="#172540" strokeWidth="1" />
+
+                {/* Logo / Identificação CAPCRJ à esquerda */}
+                <path d="M 0 11 L 4 5 L 6 9 L 9 3" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                <text x="13" y="12" fill="#38bdf8" fontSize="9" fontFamily="monospace" fontWeight="800" letterSpacing="0.05em">
+                  CAPCRJ
+                </text>
+                <text x="54" y="12" fill="#64748b" fontSize="6" fontFamily="monospace" fontWeight="500">
+                  | ENGENHARIA
+                </text>
+
+                {/* Traços representando links do menu à direita */}
+                <line x1="195" y1="9" x2="215" y2="9" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="223" y1="9" x2="245" y2="9" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="253" y1="9" x2="275" y2="9" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
+                {/* Botão de contato na navbar */}
+                <rect x="283" y="3.5" width="38" height="11" rx="2" fill="#0284c7" />
+                <text x="302" y="11" textAnchor="middle" fill="#ffffff" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                  CONTATO
+                </text>
+              </g>
+
+              {/* 2. HERO EM DUAS COLUNAS */}
+              <g transform="translate(14, 40)">
+                {/* COLUNA ESQUERDA: TÍTULO, SUBTEXTO E BOTÕES */}
+                <g transform="translate(4, 4)">
+                  {/* Eyebrow badge */}
+                  <rect x="0" y="0" width="94" height="10" rx="2" fill="#0c203c" stroke="#1e40af" strokeWidth="0.8" />
+                  <text x="47" y="7" textAnchor="middle" fill="#60a5fa" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                    MANUTENÇÃO ESPECIALIZADA
+                  </text>
+
+                  {/* Título Principal */}
+                  <text x="0" y="22" fill="#f8fafc" fontSize="10.5" fontFamily="sans-serif" fontWeight="800" letterSpacing="-0.02em">
+                    Alta e Média Tensão
+                  </text>
+                  {/* Linha de acento azul sob o título */}
+                  <rect x="0" y="27" width="112" height="2" rx="1" fill="#38bdf8" />
+
+                  {/* Traços representando textos de apoio */}
+                  <line x1="0" y1="36" x2="135" y2="36" stroke="#94a3b8" strokeWidth="1.6" strokeLinecap="round" />
+                  <line x1="0" y1="42" x2="120" y2="42" stroke="#475569" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="0" y1="48" x2="105" y2="48" stroke="#334155" strokeWidth="1.4" strokeLinecap="round" />
+
+                  {/* Dois Botões de Ação */}
+                  <g transform="translate(0, 56)">
+                    {/* Botão Primário: Solicitar Orçamento */}
+                    <rect x="0" y="0" width="68" height="15" rx="2" fill="#0284c7" />
+                    <text x="34" y="10" textAnchor="middle" fill="#ffffff" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                      ORÇAMENTO ↗
+                    </text>
+
+                    {/* Botão Secundário: Ver Serviços */}
+                    <rect x="74" y="0" width="58" height="15" rx="2" fill="#0c182c" stroke="#38bdf8" strokeWidth="1" />
+                    <text x="103" y="10" textAnchor="middle" fill="#93c5fd" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                      SERVIÇOS
+                    </text>
+                  </g>
+                </g>
+
+                {/* COLUNA DIREITA: TRANSFORMADOR / SUBESTAÇÃO VETORIAL RECONHECÍVEL */}
+                <g transform="translate(170, 0)">
+                  {/* Base / Piso da subestação */}
+                  <rect x="10" y="68" width="134" height="4" rx="1" fill="#0f1d33" stroke="#1e3a5f" strokeWidth="0.8" />
+
+                  {/* Tanque Principal do Transformador */}
+                  <rect x="25" y="22" width="104" height="46" rx="2" fill="#0b172a" stroke="#38bdf8" strokeWidth="1.4" />
+
+                  {/* Aletas de Resfriamento / Radiador frontal */}
+                  <line x1="33" y1="28" x2="33" y2="62" stroke="#1e40af" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="41" y1="28" x2="41" y2="62" stroke="#1e40af" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="49" y1="28" x2="49" y2="62" stroke="#1e40af" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="57" y1="28" x2="57" y2="62" stroke="#1e40af" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="65" y1="28" x2="65" y2="62" stroke="#1e40af" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="73" y1="28" x2="73" y2="62" stroke="#1e40af" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="81" y1="28" x2="81" y2="62" stroke="#1e40af" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="89" y1="28" x2="89" y2="62" stroke="#1e40af" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="97" y1="28" x2="97" y2="62" stroke="#1e40af" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="105" y1="28" x2="105" y2="62" stroke="#1e40af" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="113" y1="28" x2="113" y2="62" stroke="#1e40af" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="121" y1="28" x2="121" y2="62" stroke="#1e40af" strokeWidth="1.4" strokeLinecap="round" />
+
+                  {/* Tanque de Expansão / Conservador de Óleo no topo */}
+                  <rect x="44" y="10" width="66" height="9" rx="4.5" fill="#0f2647" stroke="#38bdf8" strokeWidth="1.2" />
+                  <line x1="77" y1="19" x2="77" y2="22" stroke="#38bdf8" strokeWidth="1.6" />
+
+                  {/* Buchas Isoladoras Cerâmicas de Alta Tensão (Fases A, B, C) */}
+                  {/* Bucha 1 */}
+                  <g transform="translate(38, 2)">
+                    <rect x="0" y="4" width="7" height="4" rx="1" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="0.8" />
+                    <rect x="1" y="1" width="5" height="3" rx="1" fill="#2563eb" stroke="#93c5fd" strokeWidth="0.8" />
+                    <line x1="3.5" y1="1" x2="3.5" y2="-4" stroke="#38bdf8" strokeWidth="1.4" />
+                    <circle cx="3.5" cy="-4" r="1.5" fill="#facc15" />
+                  </g>
+                  {/* Bucha 2 */}
+                  <g transform="translate(74, 2)">
+                    <rect x="0" y="4" width="7" height="4" rx="1" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="0.8" />
+                    <rect x="1" y="1" width="5" height="3" rx="1" fill="#2563eb" stroke="#93c5fd" strokeWidth="0.8" />
+                    <line x1="3.5" y1="1" x2="3.5" y2="-4" stroke="#38bdf8" strokeWidth="1.4" />
+                    <circle cx="3.5" cy="-4" r="1.5" fill="#facc15" />
+                  </g>
+                  {/* Bucha 3 */}
+                  <g transform="translate(110, 2)">
+                    <rect x="0" y="4" width="7" height="4" rx="1" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="0.8" />
+                    <rect x="1" y="1" width="5" height="3" rx="1" fill="#2563eb" stroke="#93c5fd" strokeWidth="0.8" />
+                    <line x1="3.5" y1="1" x2="3.5" y2="-4" stroke="#38bdf8" strokeWidth="1.4" />
+                    <circle cx="3.5" cy="-4" r="1.5" fill="#facc15" />
+                  </g>
+
+                  {/* Barramento / Linha Elétrica Superior */}
+                  <path d="M 41.5 -2 L 77.5 -2 L 113.5 -2 L 138 -2" stroke="#38bdf8" strokeWidth="1" strokeDasharray="3 2" />
+
+                  {/* Plaqueta de Identificação Técnica: 13.8 kV */}
+                  <rect x="63" y="38" width="28" height="12" rx="1.5" fill="#071529" stroke="#0284c7" strokeWidth="1" />
+                  <text x="77" y="46.5" textAnchor="middle" fill="#38bdf8" fontSize="6.5" fontFamily="monospace" fontWeight="800">
+                    13.8 kV
+                  </text>
+                </g>
+              </g>
+
+              {/* 3. TRÊS CARDS DE SERVIÇOS INFERIORES */}
+              <g transform="translate(14, 118)">
+                <line x1="0" y1="0" x2="322" y2="0" stroke="#172540" strokeWidth="1" />
+
+                {/* Card 1: Subestações */}
+                <g transform="translate(4, 6)">
+                  <rect x="0" y="0" width="98" height="30" rx="2" fill="#091426" stroke="#1e3a5f" strokeWidth="1" />
+                  {/* Ícone */}
+                  <rect x="6" y="6" width="10" height="10" rx="1.5" fill="#0c203c" stroke="#38bdf8" strokeWidth="0.8" />
+                  <path d="M 8 13 L 11 9 L 14 13" stroke="#38bdf8" strokeWidth="1" fill="none" />
+                  {/* Textos */}
+                  <text x="20" y="12" fill="#f1f5f9" fontSize="6" fontFamily="monospace" fontWeight="700">
+                    SUBESTAÇÕES
+                  </text>
+                  <line x1="20" y1="18" x2="88" y2="18" stroke="#475569" strokeWidth="1.2" strokeLinecap="round" />
+                  <line x1="20" y1="23" x2="72" y2="23" stroke="#334155" strokeWidth="1.2" strokeLinecap="round" />
+                </g>
+
+                {/* Card 2: Manutenção */}
+                <g transform="translate(112, 6)">
+                  <rect x="0" y="0" width="98" height="30" rx="2" fill="#0a1830" stroke="#0284c7" strokeWidth="1.2" />
+                  {/* Ícone */}
+                  <rect x="6" y="6" width="10" height="10" rx="1.5" fill="#0d2b54" stroke="#60a5fa" strokeWidth="0.8" />
+                  <circle cx="11" cy="11" r="2.5" fill="#60a5fa" />
+                  {/* Textos */}
+                  <text x="20" y="12" fill="#93c5fd" fontSize="6" fontFamily="monospace" fontWeight="700">
+                    MANUTENÇÃO
+                  </text>
+                  <line x1="20" y1="18" x2="90" y2="18" stroke="#475569" strokeWidth="1.2" strokeLinecap="round" />
+                  <line x1="20" y1="23" x2="75" y2="23" stroke="#334155" strokeWidth="1.2" strokeLinecap="round" />
+                </g>
+
+                {/* Card 3: Urgência 24h */}
+                <g transform="translate(220, 6)">
+                  <rect x="0" y="0" width="98" height="30" rx="2" fill="#071b18" stroke="#059669" strokeWidth="1" />
+                  {/* Ícone */}
+                  <rect x="6" y="6" width="10" height="10" rx="1.5" fill="#062e26" stroke="#34d399" strokeWidth="0.8" />
+                  <circle cx="11" cy="11" r="2" fill="#34d399" />
+                  {/* Textos */}
+                  <text x="20" y="12" fill="#6ee7b7" fontSize="6" fontFamily="monospace" fontWeight="700">
+                    URGÊNCIA 24/7
+                  </text>
+                  <line x1="20" y1="18" x2="88" y2="18" stroke="#065f46" strokeWidth="1.2" strokeLinecap="round" />
+                  <line x1="20" y1="23" x2="70" y2="23" stroke="#044332" strokeWidth="1.2" strokeLinecap="round" />
+                </g>
+              </g>
             </g>
           </svg>
         </div>

@@ -316,10 +316,10 @@ function ProjectCardItem({
             {project.title}
           </h3>
           <p className="font-mono text-[10.5px] text-slate-700 dark:text-theme-dim line-clamp-1 font-medium">
-            {highlight}
+            {project.subtitle || highlight}
           </p>
           <p className="text-xs text-slate-600 dark:text-theme-muted line-clamp-2 leading-relaxed pt-0.5 font-normal">
-            {project.tagline}
+            {project.description || project.tagline}
           </p>
         </div>
 
@@ -364,10 +364,10 @@ function ProjectCardItem({
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  aria-label={`${pt ? 'Abrir site' : 'Open live site'}: ${project.title}`}
+                  aria-label={`${pt ? 'Acessar site' : 'Open live site'}: ${project.title}`}
                   className="inline-flex items-center gap-1 px-2 py-0.5 border border-theme-border bg-theme-bg hover:border-theme-muted text-theme-text rounded-[2px] transition-colors font-mono text-[9.5px] uppercase tracking-wider"
                 >
-                  <span>Live</span>
+                  <span>{pt ? 'Acessar site' : 'Live site'}</span>
                   <ExternalLink className="w-2.5 h-2.5 text-theme-muted" />
                 </a>
               )}
