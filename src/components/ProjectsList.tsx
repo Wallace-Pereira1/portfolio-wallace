@@ -114,7 +114,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
           {pt ? 'Estudos de Caso & Portfólio' : 'Case Studies & Portfolio'}
         </span>
         <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]">
-          {pt ? 'Projetos Selecionados' : 'Selected Projects'}
+          {pt ? 'Projetos' : 'Projects'}
         </h2>
       </div>
 
