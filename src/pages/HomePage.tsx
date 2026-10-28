@@ -44,7 +44,7 @@ export default function HomePage() {
         id="projetos"
         className="min-h-[100dvh] flex flex-col justify-center py-16 sm:py-20 md:py-24 bg-transparent px-6 md:px-12 transition-colors relative z-10 snap-start snap-always scroll-mt-6 sm:scroll-mt-10"
       >
-        <div className="max-w-6xl mx-auto w-full relative z-10">
+        <div className="max-w-6xl xl:max-w-7xl mx-auto w-full relative z-10">
           <ProjectsList projects={projects} language={language} />
         </div>
       </section>

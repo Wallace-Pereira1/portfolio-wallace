@@ -578,20 +578,20 @@ function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
                 
                 {/* Logo / Identificação CAPCRJ à esquerda */}
                 <path d="M 0 11 L 4 5 L 6 9 L 9 3" stroke="#0284c7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                <text x="13" y="12" fill="#0369a1" fontSize="9" fontFamily="monospace" fontWeight="800" letterSpacing="0.05em">
+                <text x="13" y="12.5" fill="#0369a1" fontSize="10" fontFamily="monospace" fontWeight="900" letterSpacing="0.05em">
                   CAPCRJ
                 </text>
-                <text x="54" y="12" fill="#94a3b8" fontSize="6" fontFamily="monospace" fontWeight="500">
+                <text x="58" y="12" fill="#64748b" fontSize="6.5" fontFamily="monospace" fontWeight="600">
                   | ENGENHARIA
                 </text>
 
                 {/* Traços representando links do menu à direita */}
-                <line x1="195" y1="9" x2="215" y2="9" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="223" y1="9" x2="245" y2="9" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="253" y1="9" x2="275" y2="9" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="190" y1="9" x2="212" y2="9" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="220" y1="9" x2="242" y2="9" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="250" y1="9" x2="272" y2="9" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" />
                 {/* Botão de contato na navbar */}
-                <rect x="283" y="3.5" width="38" height="11" rx="2" fill="#0284c7" />
-                <text x="302" y="11" textAnchor="middle" fill="#ffffff" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                <rect x="280" y="3" width="41" height="12" rx="2" fill="#0284c7" />
+                <text x="300.5" y="11" textAnchor="middle" fill="#ffffff" fontSize="6" fontFamily="monospace" fontWeight="700">
                   CONTATO
                 </text>
               </g>
@@ -601,34 +601,34 @@ function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
                 {/* COLUNA ESQUERDA: TÍTULO, SUBTEXTO E BOTÕES */}
                 <g transform="translate(4, 4)">
                   {/* Eyebrow badge */}
-                  <rect x="0" y="0" width="94" height="10" rx="2" fill="#e0f2fe" stroke="#7dd3fc" strokeWidth="0.8" />
-                  <text x="47" y="7" textAnchor="middle" fill="#0369a1" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                  <rect x="0" y="0" width="98" height="11" rx="2" fill="#e0f2fe" stroke="#7dd3fc" strokeWidth="0.8" />
+                  <text x="49" y="8" textAnchor="middle" fill="#0369a1" fontSize="6" fontFamily="monospace" fontWeight="700">
                     MANUTENÇÃO ESPECIALIZADA
                   </text>
 
                   {/* Título Principal */}
-                  <text x="0" y="22" fill="#0f172a" fontSize="10.5" fontFamily="sans-serif" fontWeight="800" letterSpacing="-0.02em">
+                  <text x="0" y="24" fill="#0f172a" fontSize="11.5" fontFamily="sans-serif" fontWeight="800" letterSpacing="-0.02em">
                     Alta e Média Tensão
                   </text>
                   {/* Linha de acento azul sob o título */}
-                  <rect x="0" y="27" width="112" height="2" rx="1" fill="#0284c7" />
+                  <rect x="0" y="29" width="118" height="2.5" rx="1" fill="#0284c7" />
 
                   {/* Traços representando textos de apoio */}
-                  <line x1="0" y1="36" x2="135" y2="36" stroke="#64748b" strokeWidth="1.6" strokeLinecap="round" />
-                  <line x1="0" y1="42" x2="120" y2="42" stroke="#94a3b8" strokeWidth="1.4" strokeLinecap="round" />
-                  <line x1="0" y1="48" x2="105" y2="48" stroke="#cbd5e1" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="0" y1="38" x2="135" y2="38" stroke="#64748b" strokeWidth="1.6" strokeLinecap="round" />
+                  <line x1="0" y1="44" x2="120" y2="44" stroke="#94a3b8" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="0" y1="50" x2="105" y2="50" stroke="#cbd5e1" strokeWidth="1.4" strokeLinecap="round" />
 
                   {/* Dois Botões de Ação */}
                   <g transform="translate(0, 56)">
                     {/* Botão Primário: Solicitar Orçamento */}
-                    <rect x="0" y="0" width="68" height="15" rx="2" fill="#0284c7" />
-                    <text x="34" y="10" textAnchor="middle" fill="#ffffff" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                    <rect x="0" y="0" width="70" height="16" rx="2" fill="#0284c7" />
+                    <text x="35" y="10.5" textAnchor="middle" fill="#ffffff" fontSize="6.5" fontFamily="monospace" fontWeight="700">
                       ORÇAMENTO ↗
                     </text>
 
                     {/* Botão Secundário: Ver Serviços */}
-                    <rect x="74" y="0" width="58" height="15" rx="2" fill="#ffffff" stroke="#0284c7" strokeWidth="1" />
-                    <text x="103" y="10" textAnchor="middle" fill="#0369a1" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                    <rect x="76" y="0" width="58" height="16" rx="2" fill="#ffffff" stroke="#0284c7" strokeWidth="1.2" />
+                    <text x="105" y="10.5" textAnchor="middle" fill="#0369a1" fontSize="6.5" fontFamily="monospace" fontWeight="700">
                       SERVIÇOS
                     </text>
                   </g>
@@ -1333,20 +1333,20 @@ function DarkCover({ projectId }: { projectId: string; isCenter: boolean }) {
 
                 {/* Logo / Identificação CAPCRJ à esquerda */}
                 <path d="M 0 11 L 4 5 L 6 9 L 9 3" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                <text x="13" y="12" fill="#38bdf8" fontSize="9" fontFamily="monospace" fontWeight="800" letterSpacing="0.05em">
+                <text x="13" y="12.5" fill="#38bdf8" fontSize="10" fontFamily="monospace" fontWeight="900" letterSpacing="0.05em">
                   CAPCRJ
                 </text>
-                <text x="54" y="12" fill="#64748b" fontSize="6" fontFamily="monospace" fontWeight="500">
+                <text x="58" y="12" fill="#94a3b8" fontSize="6.5" fontFamily="monospace" fontWeight="600">
                   | ENGENHARIA
                 </text>
 
                 {/* Traços representando links do menu à direita */}
-                <line x1="195" y1="9" x2="215" y2="9" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="223" y1="9" x2="245" y2="9" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="253" y1="9" x2="275" y2="9" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="190" y1="9" x2="212" y2="9" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="220" y1="9" x2="242" y2="9" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="250" y1="9" x2="272" y2="9" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
                 {/* Botão de contato na navbar */}
-                <rect x="283" y="3.5" width="38" height="11" rx="2" fill="#0284c7" />
-                <text x="302" y="11" textAnchor="middle" fill="#ffffff" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                <rect x="280" y="3" width="41" height="12" rx="2" fill="#0284c7" />
+                <text x="300.5" y="11" textAnchor="middle" fill="#ffffff" fontSize="6" fontFamily="monospace" fontWeight="700">
                   CONTATO
                 </text>
               </g>
@@ -1356,34 +1356,34 @@ function DarkCover({ projectId }: { projectId: string; isCenter: boolean }) {
                 {/* COLUNA ESQUERDA: TÍTULO, SUBTEXTO E BOTÕES */}
                 <g transform="translate(4, 4)">
                   {/* Eyebrow badge */}
-                  <rect x="0" y="0" width="94" height="10" rx="2" fill="#0c203c" stroke="#1e40af" strokeWidth="0.8" />
-                  <text x="47" y="7" textAnchor="middle" fill="#60a5fa" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                  <rect x="0" y="0" width="98" height="11" rx="2" fill="#0c203c" stroke="#1e40af" strokeWidth="0.8" />
+                  <text x="49" y="8" textAnchor="middle" fill="#60a5fa" fontSize="6" fontFamily="monospace" fontWeight="700">
                     MANUTENÇÃO ESPECIALIZADA
                   </text>
 
                   {/* Título Principal */}
-                  <text x="0" y="22" fill="#f8fafc" fontSize="10.5" fontFamily="sans-serif" fontWeight="800" letterSpacing="-0.02em">
+                  <text x="0" y="24" fill="#f8fafc" fontSize="11.5" fontFamily="sans-serif" fontWeight="800" letterSpacing="-0.02em">
                     Alta e Média Tensão
                   </text>
                   {/* Linha de acento azul sob o título */}
-                  <rect x="0" y="27" width="112" height="2" rx="1" fill="#38bdf8" />
+                  <rect x="0" y="29" width="118" height="2.5" rx="1" fill="#38bdf8" />
 
                   {/* Traços representando textos de apoio */}
-                  <line x1="0" y1="36" x2="135" y2="36" stroke="#94a3b8" strokeWidth="1.6" strokeLinecap="round" />
-                  <line x1="0" y1="42" x2="120" y2="42" stroke="#475569" strokeWidth="1.4" strokeLinecap="round" />
-                  <line x1="0" y1="48" x2="105" y2="48" stroke="#334155" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="0" y1="38" x2="135" y2="38" stroke="#94a3b8" strokeWidth="1.6" strokeLinecap="round" />
+                  <line x1="0" y1="44" x2="120" y2="44" stroke="#475569" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="0" y1="50" x2="105" y2="50" stroke="#334155" strokeWidth="1.4" strokeLinecap="round" />
 
                   {/* Dois Botões de Ação */}
                   <g transform="translate(0, 56)">
                     {/* Botão Primário: Solicitar Orçamento */}
-                    <rect x="0" y="0" width="68" height="15" rx="2" fill="#0284c7" />
-                    <text x="34" y="10" textAnchor="middle" fill="#ffffff" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                    <rect x="0" y="0" width="70" height="16" rx="2" fill="#0284c7" />
+                    <text x="35" y="10.5" textAnchor="middle" fill="#ffffff" fontSize="6.5" fontFamily="monospace" fontWeight="700">
                       ORÇAMENTO ↗
                     </text>
 
                     {/* Botão Secundário: Ver Serviços */}
-                    <rect x="74" y="0" width="58" height="15" rx="2" fill="#0c182c" stroke="#38bdf8" strokeWidth="1" />
-                    <text x="103" y="10" textAnchor="middle" fill="#93c5fd" fontSize="5.5" fontFamily="monospace" fontWeight="700">
+                    <rect x="76" y="0" width="58" height="16" rx="2" fill="#0c182c" stroke="#38bdf8" strokeWidth="1.2" />
+                    <text x="105" y="10.5" textAnchor="middle" fill="#93c5fd" fontSize="6.5" fontFamily="monospace" fontWeight="700">
                       SERVIÇOS
                     </text>
                   </g>

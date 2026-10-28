@@ -120,13 +120,13 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
 
       {/* 2. Palco do Carrossel Pirâmide com Animação Fluida Sem Travamentos */}
       <div
-        className="relative w-full h-[400px] sm:h-[430px] md:h-[450px] overflow-hidden sm:overflow-visible py-2 flex items-center justify-center"
+        className="relative w-full h-[410px] sm:h-[450px] md:h-[520px] lg:h-[550px] overflow-hidden sm:overflow-visible py-2 flex items-center justify-center"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="relative w-full h-full max-w-6xl mx-auto flex items-center justify-center">
+        <div className="relative w-full h-full max-w-6xl xl:max-w-7xl mx-auto flex items-center justify-center">
           {projects.map((project, index) => {
             const diff = getCircularDiff(index, currentIndex, total);
             const isCenter = diff === 0;
@@ -154,25 +154,25 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
               zIndex = 30;
               pointerEvents = 'auto';
             } else if (isLeft) {
-              targetX = 'calc(-50% - 78%)';
+              targetX = 'calc(-50% - 70%)';
               scale = 0.86;
               opacity = 0.45;
               zIndex = 15;
               pointerEvents = 'auto';
             } else if (isRight) {
-              targetX = 'calc(-50% + 78%)';
+              targetX = 'calc(-50% + 70%)';
               scale = 0.86;
               opacity = 0.45;
               zIndex = 15;
               pointerEvents = 'auto';
             } else if (isFarLeft) {
-              targetX = 'calc(-50% - 150%)';
+              targetX = 'calc(-50% - 140%)';
               scale = 0.74;
               opacity = 0;
               zIndex = 0;
               pointerEvents = 'none';
             } else if (isFarRight) {
-              targetX = 'calc(-50% + 150%)';
+              targetX = 'calc(-50% + 140%)';
               scale = 0.74;
               opacity = 0;
               zIndex = 0;
@@ -199,7 +199,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
                   top: 0,
                   pointerEvents,
                 }}
-                className={`w-[80vw] max-w-[335px] sm:w-[350px] md:w-[380px] lg:w-[395px] origin-center ${
+                className={`w-[82vw] max-w-[340px] sm:w-[380px] md:w-[470px] lg:w-[530px] xl:w-[560px] origin-center ${
                   !isCenter ? 'cursor-pointer hover:opacity-80 transition-opacity' : ''
                 }`}
                 onClick={() => {
@@ -290,7 +290,7 @@ function ProjectCardItem({
       }`}
     >
       {/* Capa do Projeto: Capa Vetorial Ultra Minimalista customizada por projeto */}
-      <div className="relative w-full aspect-[16/9] max-h-[140px] sm:max-h-[155px] overflow-hidden bg-slate-50 dark:bg-[#090a0e] shrink-0 border-b border-slate-200 dark:border-theme-border/60">
+      <div className="relative w-full aspect-[16/9] max-h-[155px] sm:max-h-[175px] md:max-h-[225px] lg:max-h-[250px] overflow-hidden bg-slate-50 dark:bg-[#090a0e] shrink-0 border-b border-slate-200 dark:border-theme-border/60">
         <ProjectMinimalCover
           projectId={project.id}
           isCenter={isCenter}
@@ -303,22 +303,22 @@ function ProjectCardItem({
 
         {/* Selo de Categoria (Alto Contraste em Modo Claro e Escuro) */}
         <div className="absolute top-2 left-2 flex items-center gap-1.5 z-10">
-          <span className="font-mono text-[9px] uppercase tracking-wider px-2 py-0.5 bg-white dark:bg-[#12141c] text-slate-950 dark:text-zinc-100 font-bold rounded-[2px] shadow-sm border border-slate-300 dark:border-white/20">
+          <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-wider px-2 py-0.5 bg-white dark:bg-[#12141c] text-slate-950 dark:text-zinc-100 font-bold rounded-[2px] shadow-sm border border-slate-300 dark:border-white/20">
             {project.category.replace('_', ' ')}
           </span>
         </div>
       </div>
 
       {/* Conteúdo do Card */}
-      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2">
+      <div className="p-3.5 sm:p-4 md:p-5 flex-1 flex flex-col justify-between space-y-2">
         <div className="space-y-1">
-          <h3 className="font-serif text-[15px] sm:text-base font-medium text-slate-900 dark:text-theme-text leading-snug line-clamp-1">
+          <h3 className="font-serif text-[15px] sm:text-base md:text-[17px] lg:text-lg font-medium text-slate-900 dark:text-theme-text leading-snug line-clamp-1">
             {project.title}
           </h3>
-          <p className="font-mono text-[10.5px] text-slate-700 dark:text-theme-dim line-clamp-1 font-medium">
+          <p className="font-mono text-[10.5px] md:text-xs text-slate-700 dark:text-theme-dim line-clamp-1 font-medium">
             {project.subtitle || highlight}
           </p>
-          <p className="text-xs text-slate-600 dark:text-theme-muted line-clamp-2 leading-relaxed pt-0.5 font-normal">
+          <p className="text-xs md:text-[13px] text-slate-600 dark:text-theme-muted line-clamp-2 leading-relaxed pt-0.5 font-normal">
             {project.description || project.tagline}
           </p>
         </div>
