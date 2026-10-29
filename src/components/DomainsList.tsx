@@ -1,19 +1,106 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown, ArrowUpRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { ArrowUpRight, Layers, MoveUpRight } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useApp } from '../context/AppContext';
 import DomainDetailModal from './DomainDetailModal';
 
-export interface EditorialDomainItem {
+interface EditorialDomainItem {
   id: string;
+  index: string;
   name: string;
-  technologies: string;
-  description: string;
-  secondaryLine?: string;
+  summary: string;
+  technologies: string[];
   projectTitle: string;
+  projectContext: string;
   projectUrl: string;
 }
+
+const domainsPt: EditorialDomainItem[] = [
+  {
+    id: 'frontend',
+    index: '01',
+    name: 'Front-end',
+    summary: 'Interfaces para produtos digitais e sistemas corporativos, com foco em clareza, acessibilidade e manutenção.',
+    technologies: ['React', 'TypeScript', 'Angular', 'Tailwind CSS'],
+    projectTitle: 'Modernização de Sistema Corporativo Legado',
+    projectContext: 'Migração de ASP para Angular e TypeScript, com redução reportada de 70% no tempo de carregamento.',
+    projectUrl: '/projetos/03',
+  },
+  {
+    id: 'apis-dados',
+    index: '02',
+    name: 'APIs & Dados',
+    summary: 'APIs e modelos relacionais que conectam operações, mantêm dados consistentes e facilitam auditorias.',
+    technologies: ['Node.js', 'PostgreSQL', 'Supabase', 'APIs REST'],
+    projectTitle: 'Fiscal Sentinel: Auditoria e Conformidade Fiscal',
+    projectContext: 'Estudo de caso de auditoria transacional preventiva e detecção de anomalias tributárias.',
+    projectUrl: '/projetos/07',
+  },
+  {
+    id: 'automacoes-ia',
+    index: '03',
+    name: 'Integrações, Automações & IA',
+    summary: 'Fluxos que conectam canais, CRMs e ERPs para qualificar solicitações e reduzir etapas manuais.',
+    technologies: ['n8n', 'Webhooks', 'APIs REST', 'CRM / ERP', 'LLMs & OCR'],
+    projectTitle: 'Agente de IA & Pipeline de Qualificação Imobiliária',
+    projectContext: 'Qualificação de leads integrada ao CRM ARBO, à OLX e à agenda dos corretores.',
+    projectUrl: '/projetos/01',
+  },
+  {
+    id: 'entrega-qualidade',
+    index: '04',
+    name: 'Entrega & Qualidade',
+    summary: 'Da integração e validação ao deploy, com atenção à operação e ao acompanhamento das entregas.',
+    technologies: ['Git', 'CI/CD', 'Vercel', 'Cloudflare'],
+    projectTitle: 'CAPCRJ | Presença Digital & Orçamentos',
+    projectContext: 'Site publicado no Cloudflare Pages, com deploy contínuo integrado ao GitHub.',
+    projectUrl: '/projetos/08',
+  },
+];
+
+const domainsEn: EditorialDomainItem[] = [
+  {
+    id: 'frontend',
+    index: '01',
+    name: 'Front-end',
+    summary: 'Interfaces for digital products and enterprise systems, designed for clarity, accessibility, and maintainability.',
+    technologies: ['React', 'TypeScript', 'Angular', 'Tailwind CSS'],
+    projectTitle: 'Legacy Enterprise System Modernization',
+    projectContext: 'ASP to Angular and TypeScript migration, with a reported 70% reduction in loading time.',
+    projectUrl: '/projetos/03',
+  },
+  {
+    id: 'apis-dados',
+    index: '02',
+    name: 'APIs & Data',
+    summary: 'APIs and relational models that connect operations, keep data consistent, and support auditing.',
+    technologies: ['Node.js', 'PostgreSQL', 'Supabase', 'REST APIs'],
+    projectTitle: 'Fiscal Sentinel: Audit & Compliance',
+    projectContext: 'A case study in preventive transaction auditing and tax anomaly detection.',
+    projectUrl: '/projetos/07',
+  },
+  {
+    id: 'automacoes-ia',
+    index: '03',
+    name: 'Integrations, Automation & AI',
+    summary: 'Workflows connecting channels, CRMs, and ERPs to qualify requests and reduce manual steps.',
+    technologies: ['n8n', 'Webhooks', 'REST APIs', 'CRM / ERP', 'LLMs & OCR'],
+    projectTitle: 'AI Agent & Real Estate Qualification Pipeline',
+    projectContext: 'Lead qualification connected to ARBO CRM, OLX, and brokers’ calendars.',
+    projectUrl: '/projetos/01',
+  },
+  {
+    id: 'entrega-qualidade',
+    index: '04',
+    name: 'Delivery & Quality',
+    summary: 'From integration and validation to deployment, with attention to operations and delivery monitoring.',
+    technologies: ['Git', 'CI/CD', 'Vercel', 'Cloudflare'],
+    projectTitle: 'CAPCRJ | Digital Presence & Quotes',
+    projectContext: 'A site published on Cloudflare Pages with continuous deployment connected to GitHub.',
+    projectUrl: '/projetos/08',
+  },
+];
 
 interface DomainsListProps {
   language?: string;
@@ -23,212 +110,139 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
   const { language: contextLanguage } = useApp();
   const currentLang = propLanguage || contextLanguage;
   const pt = currentLang !== 'en';
-
-  // All accordion items start closed by default
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-
-  // Modal state: domain selected for technical details modal
+  const domains = pt ? domainsPt : domainsEn;
+  const [selectedId, setSelectedId] = useState(domains[0].id);
   const [modalDomainId, setModalDomainId] = useState<string | null>(null);
   const triggerElementsRef = useRef<Map<string, HTMLButtonElement>>(new Map());
-
-  const domainsPt: EditorialDomainItem[] = [
-    {
-      id: 'frontend',
-      name: 'Front-end',
-      technologies: 'React · TypeScript · Angular · Tailwind CSS',
-      description:
-        'Desenvolvimento de interfaces modernas, reativas e com tipagem estrita do início ao fim, pensadas para fluidez de uso e facilidade de manutenção.',
-      projectTitle: 'Plataforma de Investimentos',
-      projectUrl: '/projetos/02',
-    },
-    {
-      id: 'apis-dados',
-      name: 'APIs & Dados',
-      technologies: 'Node.js · PostgreSQL · Supabase · APIs REST',
-      description:
-        'Construção de APIs seguras e idempotentes com persistência relacional, Row Level Security e autenticação robusta.',
-      projectTitle: 'Sentinela Fiscal: Auditoria',
-      projectUrl: '/projetos/06',
-    },
-    {
-      id: 'automacoes-ia',
-      name: 'Integrações, Automações & IA',
-      technologies: 'Crm · n8n · Make · APIs · Webhooks · ERP',
-      description:
-        'Integro CRMs, ERP e plataformas de atendimento para conectar dados, automatizar processos e organizar fluxos comerciais.',
-      secondaryLine: 'Salesforce · RD Station · HubSpot · Olist ERP',
-      projectTitle: 'Agente de Qualificação Imobiliária',
-      projectUrl: '/projetos/01',
-    },
-    {
-      id: 'entrega-qualidade',
-      name: 'Entrega & Qualidade',
-      technologies: 'Git · CI/CD · Vercel · Cloudflare',
-      description:
-        'Versionamento semântico, esteiras de validação automatizada e deploy global na edge com alta disponibilidade e zero downtime.',
-      projectTitle: 'Modernização ASP → Angular',
-      projectUrl: '/projetos/03',
-    },
-  ];
-
-  const domainsEn: EditorialDomainItem[] = [
-    {
-      id: 'frontend',
-      name: 'Front-end',
-      technologies: 'React · TypeScript · Angular · Tailwind CSS',
-      description:
-        'High-performance reactive user interfaces with end-to-end static typing, built for responsive user experience and clean code maintenance.',
-      projectTitle: 'Investment Portfolio Platform',
-      projectUrl: '/projetos/02',
-    },
-    {
-      id: 'apis-dados',
-      name: 'APIs & Data',
-      technologies: 'Node.js · PostgreSQL · Supabase · REST APIs',
-      description:
-        'Resilient and idempotent REST APIs with relational schema modeling, Row Level Security, and secure authentication.',
-      projectTitle: 'Fiscal Sentinel Audit System',
-      projectUrl: '/projetos/06',
-    },
-    {
-      id: 'automacoes-ia',
-      name: 'Integrations, Automations & AI',
-      technologies: 'n8n · Make · APIs · Webhooks',
-      description:
-        'I integrate CRMs, ERP, and customer service platforms to connect data, automate processes, and organize commercial workflows.',
-      secondaryLine: 'Salesforce · RD Station · HubSpot · Olist ERP',
-      projectTitle: 'Real Estate Autonomous Agent',
-      projectUrl: '/projetos/01',
-    },
-    {
-      id: 'entrega-qualidade',
-      name: 'Delivery & Quality',
-      technologies: 'Git · GitHub Actions · CI/CD · Vercel',
-      description:
-        'Semantic versioning, automated quality test gates, and continuous edge deployments with high availability and zero downtime.',
-      projectTitle: 'Legacy ASP → Angular Overhaul',
-      projectUrl: '/projetos/03',
-    },
-  ];
-
-  const domains = pt ? domainsPt : domainsEn;
-
-  const handleToggle = (id: string) => {
-    // Only one item open at a time; clicking an open item closes it.
-    // No automatic scroll upon expanding.
-    setExpandedId((prev) => (prev === id ? null : id));
-  };
+  const selectedDomain = domains.find((domain) => domain.id === selectedId) ?? domains[0];
+  const panelId = 'selected-domain-panel';
 
   return (
-    <div className="w-full max-w-full divide-y divide-theme-border/60 border-y border-theme-border/60">
-      {domains.map((item) => {
-        const isOpen = expandedId === item.id;
-        const headerId = `domain-header-${item.id}`;
-        const contentId = `domain-content-${item.id}`;
-
-        return (
-          <div key={item.id} className="w-full">
-            {/* Real button trigger for accessibility */}
+    <div className="grid w-full max-w-full grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-12 lg:gap-8">
+      <div
+        className="divide-y divide-theme-border/60 border-y border-theme-border/60 lg:col-span-5"
+        aria-label={pt ? 'Selecione um domínio técnico' : 'Select a technical domain'}
+      >
+        {domains.map((domain) => {
+          const isSelected = selectedDomain.id === domain.id;
+          return (
             <button
+              key={domain.id}
               type="button"
-              id={headerId}
-              aria-expanded={isOpen}
-              aria-controls={contentId}
-              onClick={() => handleToggle(item.id)}
-              className="w-full text-left py-4 sm:py-4.5 md:py-5 flex items-start sm:items-center justify-between gap-3 sm:gap-4 transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-text rounded-[2px]"
+              id={`domain-header-${domain.id}`}
+              aria-pressed={isSelected}
+              aria-controls={panelId}
+              onClick={() => setSelectedId(domain.id)}
+              className={`group flex w-full items-center gap-3 py-4 text-left transition-colors sm:py-5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-text rounded-[2px] ${
+                isSelected ? 'text-theme-text' : 'text-theme-dim hover:text-theme-text'
+              }`}
             >
-              <div className="min-w-0 flex-1 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4 sm:pr-4">
-                {/* Domain Name */}
-                <span className="text-base sm:text-lg font-serif font-medium text-theme-text group-hover:text-theme-accent transition-colors leading-snug">
-                  {item.name}
-                </span>
-
-                {/* Short line of primary technologies */}
-                <span className="text-xs sm:text-[13px] font-mono text-theme-muted group-hover:text-theme-dim transition-colors leading-relaxed break-words">
-                  {item.technologies}
-                </span>
-              </div>
-
-              {/* Expand / Collapse Icon */}
-              <span
-                className="p-1 text-theme-muted group-hover:text-theme-text transition-colors shrink-0 mt-0.5 sm:mt-0"
-                aria-hidden="true"
-              >
-                <ChevronDown
-                  className={`w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform duration-200 ease-out ${
-                    isOpen ? 'rotate-180 text-theme-text' : 'rotate-0'
-                  }`}
-                />
+              <span className={`w-8 shrink-0 font-mono text-[10px] tracking-wider ${isSelected ? 'text-theme-text' : 'text-theme-muted'}`}>
+                {domain.index}
               </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-medium leading-snug sm:text-base">{domain.name}</span>
+                <span className="mt-1 block truncate font-mono text-[10px] text-theme-muted sm:text-[11px]">
+                  {domain.technologies.slice(0, 3).join(' · ')}
+                </span>
+              </span>
+              <MoveUpRight
+                aria-hidden="true"
+                className={`h-3.5 w-3.5 shrink-0 transition-transform ${isSelected ? 'translate-x-0.5 -translate-y-0.5 text-theme-text' : 'text-theme-muted group-hover:-translate-y-0.5 group-hover:translate-x-0.5'}`}
+              />
             </button>
+          );
+        })}
+      </div>
 
-            {/* Expanded Content Region */}
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  id={contentId}
-                  role="region"
-                  aria-labelledby={headerId}
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                  className="overflow-hidden"
-                >
-                  <div className="pb-4 sm:pb-5 pt-0.5 space-y-3">
-                    {/* 1 or 2 sentence description */}
-                    <p className="text-xs sm:text-sm text-theme-dim leading-relaxed max-w-3xl font-normal">
-                      {item.description}
-                    </p>
-
-                    {/* Discrete secondary tools / platforms line */}
-                    {item.secondaryLine && (
-                      <p className="text-[11.5px] sm:text-xs font-mono text-theme-muted tracking-wide break-words">
-                        {item.secondaryLine}
-                      </p>
-                    )}
-
-                    {/* Discrete project and technical specs links */}
-                    <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-1 text-xs sm:text-[12.5px] font-mono">
-                      {/* Real related project link */}
-                      <Link
-                        to={item.projectUrl}
-                        className="inline-flex items-center gap-1.5 text-theme-text hover:text-theme-accent transition-colors underline decoration-theme-border hover:decoration-theme-accent underline-offset-4"
-                      >
-                        <span>
-                          {pt ? 'Projeto relacionado:' : 'Related project:'} {item.projectTitle}
-                        </span>
-                        <ArrowUpRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-                      </Link>
-
-                      {/* Technical details button that opens the modal in-place */}
-                      <button
-                        type="button"
-                        ref={(el) => {
-                          if (el) {
-                            triggerElementsRef.current.set(item.id, el);
-                          } else {
-                            triggerElementsRef.current.delete(item.id);
-                          }
-                        }}
-                        onClick={() => setModalDomainId(item.id)}
-                        className="inline-flex items-center gap-1.5 text-theme-muted hover:text-theme-text transition-colors underline decoration-theme-border/60 hover:decoration-theme-text underline-offset-4 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-text rounded-[2px]"
-                        aria-haspopup="dialog"
-                        aria-expanded={modalDomainId === item.id}
-                      >
-                        <span>{pt ? 'Ver detalhes técnicos' : 'View technical specs'}</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.section
+          key={selectedDomain.id}
+          id={panelId}
+          role="region"
+          aria-labelledby={`domain-header-${selectedDomain.id}`}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.18, ease: 'easeOut' }}
+          className="relative flex min-h-[300px] flex-col justify-between overflow-hidden border border-theme-border bg-theme-surface p-5 sm:p-7 md:p-8 lg:col-span-7"
+        >
+          <div aria-hidden="true" className="pointer-events-none absolute right-6 top-6 font-mono text-[10px] tracking-[0.2em] text-theme-muted/60">
+            {selectedDomain.index} / 04
           </div>
-        );
-      })}
 
-      {/* Accessible In-Place Technical Domain Details Modal */}
+          <div className="relative space-y-4 pr-12 sm:space-y-5">
+            <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-theme-muted">
+              <Layers aria-hidden="true" className="h-3.5 w-3.5" />
+              {pt ? 'Domínio em prática' : 'Domain in practice'}
+            </span>
+            <div className="space-y-2">
+              <h3 className="font-serif text-xl font-medium leading-tight tracking-[-0.02em] text-theme-text sm:text-2xl md:text-[28px]">
+                {selectedDomain.name}
+              </h3>
+              <p className="max-w-xl text-sm leading-relaxed text-theme-dim sm:text-[15px]">
+                {selectedDomain.summary}
+              </p>
+            </div>
+
+            <div className="space-y-2 pt-1">
+              <span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-theme-muted">
+                {pt ? 'Stack utilizada' : 'Tools used'}
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {selectedDomain.technologies.map((technology) => (
+                  <span
+                    key={technology}
+                    className="border border-theme-border px-2 py-1 font-mono text-[10px] text-theme-dim sm:text-[11px]"
+                  >
+                    {technology}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="relative mt-6 border-t border-theme-border/70 pt-4 sm:mt-8 sm:pt-5">
+            <span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-theme-muted">
+              {pt ? 'Projeto relacionado' : 'Related project'}
+            </span>
+            <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div className="min-w-0 space-y-1">
+                <h4 className="text-sm font-medium leading-snug text-theme-text sm:text-base">
+                  {selectedDomain.projectTitle}
+                </h4>
+                <p className="max-w-xl text-xs leading-relaxed text-theme-dim sm:text-[13px]">
+                  {selectedDomain.projectContext}
+                </p>
+              </div>
+              <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] sm:text-[11px]">
+                <Link
+                  to={selectedDomain.projectUrl}
+                  className="inline-flex items-center gap-1.5 text-theme-text underline decoration-theme-border underline-offset-4 transition-colors hover:decoration-theme-text"
+                >
+                  {pt ? 'Abrir estudo de caso' : 'Open case study'}
+                  <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
+                </Link>
+                <button
+                  ref={(element) => {
+                    if (element) triggerElementsRef.current.set(selectedDomain.id, element);
+                    else triggerElementsRef.current.delete(selectedDomain.id);
+                  }}
+                  type="button"
+                  onClick={() => setModalDomainId(selectedDomain.id)}
+                  aria-haspopup="dialog"
+                  aria-expanded={modalDomainId === selectedDomain.id}
+                  className="inline-flex items-center gap-1.5 text-theme-muted underline decoration-theme-border/60 underline-offset-4 transition-colors hover:text-theme-text hover:decoration-theme-text focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-text rounded-[2px]"
+                >
+                  {pt ? 'Detalhes técnicos' : 'Technical details'}
+                  <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+      </AnimatePresence>
+
       <DomainDetailModal
         isOpen={Boolean(modalDomainId)}
         onClose={() => setModalDomainId(null)}
