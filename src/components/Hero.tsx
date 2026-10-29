@@ -223,20 +223,6 @@ export default function Hero() {
                     <FileDown className="w-3.5 h-3.5 opacity-80 group-hover/btn:opacity-100 transition-opacity" />
                     <span>{language === 'pt' ? 'Currículo' : 'Resume'}</span>
                   </button>
-
-                  <a
-                    href="#contato"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      trackEvent('contact_click');
-                      scrollToSection('contato');
-                    }}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-theme-dim hover:text-theme-text bg-theme-bg/50 hover:bg-theme-bg border border-theme-border hover:border-theme-muted rounded-[2px] transition-colors cursor-pointer group/contact whitespace-nowrap"
-                    title={language === 'pt' ? 'Ir para a seção de Contato' : 'Go to Contact section'}
-                  >
-                    <Mail className="w-3.5 h-3.5 opacity-80 group-hover/contact:opacity-100 transition-opacity" />
-                    <span>{language === 'pt' ? 'Contato' : 'Contact'}</span>
-                  </a>
                 </div>
               </div>
             </div>
