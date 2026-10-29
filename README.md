@@ -4,10 +4,10 @@ Portfolio profissional desenvolvido com foco em alta performance, design minimal
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **React 18** com Vite para um carregamento ultra rápido
+- **React 19** com Vite para desenvolvimento e compilação rápidos
 - **TypeScript** garantindo segurança e tipagem estática robusta
 - **Tailwind CSS** para estilização utilitária de alta fidelidade e consistência visual
-- **Framer Motion** (Motion) para micro-interações e animações elegantes de transição de estado
+- **Motion for React** para micro-interações e animações de transição
 - **Lucide React** para ícones vetoriais responsivos e modernos
 
 ## 🚀 Como Executar o Projeto Localmente

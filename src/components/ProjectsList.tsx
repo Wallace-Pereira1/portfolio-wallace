@@ -44,8 +44,20 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalProjectId, setModalProjectId] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const touchStartX = useRef<number | null>(null);
+
+  useEffect(() => {
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updateMotionPreference = () => setPrefersReducedMotion(motionPreference.matches);
+    motionPreference.addEventListener('change', updateMotionPreference);
+    return () => motionPreference.removeEventListener('change', updateMotionPreference);
+  }, []);
 
   // Navegação
   const handleNext = useCallback(() => {
@@ -64,19 +76,22 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
 
   // Autoplay de 4 segundos, pausado no hover ou com modal aberto
   useEffect(() => {
-    if (isHovered || modalProjectId || total <= 1) return;
+    if (isHovered || isFocused || prefersReducedMotion || modalProjectId || total <= 1) return;
 
     const timer = setInterval(() => {
       handleNext();
     }, AUTOPLAY_INTERVAL_MS);
 
     return () => clearInterval(timer);
-  }, [isHovered, modalProjectId, total, handleNext]);
+  }, [isHovered, isFocused, prefersReducedMotion, modalProjectId, total, handleNext]);
 
   // Teclado (setas)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (modalProjectId) return;
+      const target = e.target;
+      const isTextEntry = target instanceof HTMLElement &&
+        (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName));
+      if (modalProjectId || isTextEntry || !carouselRef.current?.contains(document.activeElement)) return;
       if (e.key === 'ArrowLeft') {
         handlePrev();
       } else if (e.key === 'ArrowRight') {
@@ -107,7 +122,17 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
   if (total === 0) return null;
 
   return (
-    <div className="space-y-4 sm:space-y-6 select-none">
+    <div
+      ref={carouselRef}
+      role="region"
+      aria-roledescription={pt ? 'carrossel' : 'carousel'}
+      aria-label={pt ? 'Projetos em destaque' : 'Featured projects'}
+      className="space-y-4 sm:space-y-6 select-none"
+      onFocus={() => setIsFocused(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setIsFocused(false);
+      }}
+    >
       {/* 1. Cabeçalho da Seção */}
       <div className="pb-3 border-b border-theme-border/60">
         <span className="text-[11px] font-mono text-theme-muted uppercase tracking-widest block mb-1">

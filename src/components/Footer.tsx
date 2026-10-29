@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Linkedin, Github, Send, Check, ArrowUp, ArrowUpRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { submitContactMessage } from '../utils/submitContactMessage';
 
 export default function Footer() {
   const { t, language } = useApp();
@@ -26,24 +27,10 @@ export default function Footer() {
     setLoading(true);
     setErrorMsg(null);
 
-    const submissionData = new FormData();
-    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "9c805b8d-089c-4a66-abb7-9d7cb76df899";
-    submissionData.append("access_key", accessKey);
-    submissionData.append("name", formData.nome);
-    submissionData.append("email", formData.email);
-    submissionData.append("subject", `[Portfólio Wallace] Contato de ${formData.nome} - ${formData.recompensa}`);
-    submissionData.append("message", formData.mensagem);
-    submissionData.append("recompensa", formData.recompensa);
-
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: submissionData
-      });
+      const data = await submitContactMessage(formData);
 
-      const data = await response.json();
-
-      if (response.ok && data.success) {
+      if (data.success) {
         setSuccess(true);
         setFormData({ nome: '', email: '', recompensa: 'Recrutamento / Oportunidade', mensagem: '' });
         setTimeout(() => setSuccess(false), 6000);

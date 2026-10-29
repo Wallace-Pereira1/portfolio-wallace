@@ -5,6 +5,7 @@ import EditorialColophon from '../components/EditorialColophon';
 import { useApp } from '../context/AppContext';
 import { usePageSeo } from '../utils/usePageSeo';
 import { trackEvent } from '../utils/analytics';
+import { submitContactMessage } from '../utils/submitContactMessage';
 
 export default function ContatoPage() {
   const { language, t } = useApp();
@@ -45,24 +46,10 @@ export default function ContatoPage() {
     setLoading(true);
     setErrorMsg(null);
 
-    const submissionData = new FormData();
-    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '9c805b8d-089c-4a66-abb7-9d7cb76df899';
-    submissionData.append('access_key', accessKey);
-    submissionData.append('name', formData.nome);
-    submissionData.append('email', formData.email);
-    submissionData.append('subject', `[Portfólio Wallace] Contato de ${formData.nome} - ${formData.recompensa}`);
-    submissionData.append('message', formData.mensagem);
-    submissionData.append('recompensa', formData.recompensa);
-
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: submissionData,
-      });
+      const data = await submitContactMessage(formData);
 
-      const data = await response.json();
-
-      if (response.ok && data.success) {
+      if (data.success) {
         setSuccess(true);
         trackEvent('form_submit_success', { subject: formData.recompensa });
         setFormData({ nome: '', email: '', recompensa: 'Recrutamento / Oportunidade', mensagem: '' });
@@ -203,7 +190,7 @@ export default function ContatoPage() {
                 <p className="text-xs text-theme-dim">
                   {language === 'pt'
                     ? 'Preencha o formulário abaixo para envio direto à minha caixa de entrada profissional.'
-                    : 'Fill in the form below to send an encrypted message directly to my inbox.'}
+                    : 'Fill in the form below to send a message directly to my professional inbox.'}
                 </p>
               </div>
 

@@ -1,6 +1,12 @@
-import jsPDF from 'jspdf';
+export async function downloadResumePdf(language: 'pt' | 'en' = 'pt') {
+  let jsPDF: typeof import('jspdf').default;
+  try {
+    ({ default: jsPDF } = await import('jspdf'));
+  } catch (error) {
+    console.error('Could not load the PDF generator.', error);
+    return;
+  }
 
-export function downloadResumePdf(language: 'pt' | 'en' = 'pt') {
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',

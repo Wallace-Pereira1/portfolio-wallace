@@ -7,9 +7,12 @@ import { getTechIcon } from './TechIcon';
 import TechBadge from './TechBadge';
 import ServiceAreaModal from './ServiceAreaModal';
 import { trackEvent } from '../utils/analytics';
+import { projectsEn, projectsPt } from '../data/projects';
 
 export default function Hero() {
   const { t, language } = useApp();
+  const portfolioProjectCount = (language === 'pt' ? projectsPt : projectsEn)
+    .filter((project) => !project.disabled).length;
   const heroRef = useRef<HTMLElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const rafId = useRef<number | null>(null);
@@ -402,7 +405,11 @@ export default function Hero() {
                   tabIndex={0}
                   onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') scrollToSection('projetos'); }}
                 >
-                  <span className="text-[11px] group-hover/item:text-theme-text transition-colors">{language === 'pt' ? '6 projetos em destaque' : '6 featured projects'}</span>
+                  <span className="text-[11px] group-hover/item:text-theme-text transition-colors">
+                    {language === 'pt'
+                      ? `${portfolioProjectCount} ${portfolioProjectCount === 1 ? 'projeto no portfólio' : 'projetos no portfólio'}`
+                      : `${portfolioProjectCount} ${portfolioProjectCount === 1 ? 'project in portfolio' : 'projects in portfolio'}`}
+                  </span>
                   <span className="text-theme-muted group-hover/item:translate-x-0.5 transition-transform">→</span>
                 </div>
                 <div

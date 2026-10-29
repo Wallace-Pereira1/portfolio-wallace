@@ -10,6 +10,7 @@ export interface PageSeoOptions {
 }
 
 const SITE_URL = 'https://wallacepereiradev.vercel.app';
+const OG_IMAGE_URL = `${SITE_URL}/og-image.png`;
 
 export function usePageSeo({ title, description, path, jsonLd, noIndex }: PageSeoOptions) {
   const { language } = useApp();
@@ -53,8 +54,11 @@ export function usePageSeo({ title, description, path, jsonLd, noIndex }: PageSe
     setMeta('property', 'og:title', title);
     setMeta('property', 'og:description', description);
     setMeta('property', 'og:url', absoluteCanonical);
+    setMeta('property', 'og:image', OG_IMAGE_URL);
+    setMeta('name', 'twitter:card', 'summary_large_image');
     setMeta('name', 'twitter:title', title);
     setMeta('name', 'twitter:description', description);
+    setMeta('name', 'twitter:image', OG_IMAGE_URL);
 
     // 7. Inject or Update Page-Specific JSON-LD Script
     const jsonLdId = 'page-json-ld';
