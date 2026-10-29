@@ -1,10 +1,4 @@
 import { Project } from '../types';
-// import realEstateAiImg from '../assets/images/real_estate_agent_1790275435285.jpg';
-// import financehubImg from '../assets/images/financehub.jpg';
-// import aspToAngularImg from '../assets/images/asptoangular.png';
-// import bistroMockupImg from '../assets/images/bistro_tablet_mockup_1790556479120.jpg';
-// import documentOcrImg from '../assets/images/document_ocr_pipeline_1790557791118.jpg';
-// import fiscalSentinelImg from '../assets/images/fiscal_sentinel_audit_1790558022531.jpg';
 
 export const projectsPt: Project[] = [
   {

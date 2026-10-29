@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Award, ExternalLink, Search, X, Check, Brain, Database, Code, Play } from 'lucide-react';
+import { Award, ExternalLink, Search, X, Brain, Database, Code } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export interface Certificate {

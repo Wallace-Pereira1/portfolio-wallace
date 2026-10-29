@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, ChevronDown, ChevronUp, ExternalLink, Code2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronDown, ChevronUp, ExternalLink, Code2, ChevronLeft, ChevronRight } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import EditorialColophon from '../components/EditorialColophon';
 import { useApp } from '../context/AppContext';
@@ -310,7 +310,7 @@ export default function EstudosPage() {
       {/* Case Studies Detailed Document Flow */}
       <main className="py-10 md:py-14 px-6 md:px-12 bg-transparent transition-colors">
         <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
-          {filteredProjects.map((project, index) => {
+          {filteredProjects.map((project) => {
             const isExpanded = expandedId === project.id;
 
             return (

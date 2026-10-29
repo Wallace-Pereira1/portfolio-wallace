@@ -53,7 +53,6 @@ import {
   TbChecklist,
   TbBrowserCheck,
   TbServer2,
-  TbBuildingSkyscraper,
   TbEye,
   TbFileText,
   TbDeviceFloppy,

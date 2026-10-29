@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, useLocation, useRoutes, Navigate } from 'react-router-dom';
+import { BrowserRouter, useLocation, useRoutes } from 'react-router-dom';
 import { AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
 import Backdrop from './components/Backdrop';

@@ -1,16 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
-import TypewriterTitle from './TypewriterTitle';
 import { FileDown, Mail, MessageCircle, ArrowRight, MapPin, Activity, Layers, Cpu, Compass } from 'lucide-react';
 import { downloadResumePdf } from '../utils/generateResumePdf';
-import { getTechIcon } from './TechIcon';
 import TechBadge from './TechBadge';
 import ServiceAreaModal from './ServiceAreaModal';
 import { trackEvent } from '../utils/analytics';
 import { projectsEn, projectsPt } from '../data/projects';
 
 export default function Hero() {
-  const { t, language } = useApp();
+  const { language } = useApp();
   const portfolioProjectCount = (language === 'pt' ? projectsPt : projectsEn)
     .filter((project) => !project.disabled).length;
   const heroRef = useRef<HTMLElement>(null);

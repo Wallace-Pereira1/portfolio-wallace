@@ -2,8 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Layers, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
-import { DomainItem } from './TiltDomainCard';
 import TechBadge from './TechBadge';
+
+interface DomainItem {
+  index: string;
+  title: string;
+  description: string;
+  primarySkills: string[];
+  secondarySkills: string[];
+}
 
 interface DomainStudyModalProps {
   isOpen: boolean;

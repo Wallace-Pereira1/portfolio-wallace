@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Send, Check, Mail, Linkedin, Github, Loader2, MessageCircle } from 'lucide-react';
+import { ArrowUpRight, Send, Check, Loader2, MessageCircle } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import EditorialColophon from '../components/EditorialColophon';
 import { useApp } from '../context/AppContext';

@@ -234,7 +234,6 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
               >
                 <ProjectCardItem
                   project={project}
-                  index={index}
                   isCenter={isCenter}
                   position={isLeft ? 'left' : isRight ? 'right' : 'center'}
                   language={language}
@@ -280,7 +279,6 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
 
 interface ProjectCardItemProps {
   project: Project;
-  index: number;
   isCenter: boolean;
   position: 'left' | 'center' | 'right';
   language: string;
@@ -295,7 +293,6 @@ interface ProjectCardItemProps {
  */
 function ProjectCardItem({
   project,
-  index,
   isCenter,
   position,
   language,
@@ -319,7 +316,6 @@ function ProjectCardItem({
         <ProjectMinimalCover
           projectId={project.id}
           isCenter={isCenter}
-          category={project.category}
           isLight={isLight}
         />
 

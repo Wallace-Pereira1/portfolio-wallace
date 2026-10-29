@@ -4,7 +4,6 @@ import { useApp } from '../context/AppContext';
 interface ProjectMinimalCoverProps {
   projectId: string;
   isCenter: boolean;
-  category?: string;
   isLight?: boolean;
 }
 
@@ -17,7 +16,6 @@ interface ProjectMinimalCoverProps {
 export default function ProjectMinimalCover({
   projectId,
   isCenter,
-  category,
   isLight,
 }: ProjectMinimalCoverProps) {
   const { theme } = useApp();

@@ -6,13 +6,11 @@ import {
   Code2,
   Sparkles,
   Layers,
-  ArrowRight,
   Maximize2,
   CheckCircle2,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { projectsPt, projectsEn } from '../data/projects';
-import { Project } from '../types';
 import TechBadge from './TechBadge';
 
 interface ProjectStudyModalProps {
@@ -26,7 +24,7 @@ export default function ProjectStudyModal({
   onClose,
   initialProjectId,
 }: ProjectStudyModalProps) {
-  const { language, t } = useApp();
+  const { language } = useApp();
   const projects = language === 'pt' ? projectsPt : projectsEn;
 
   const [currentId, setCurrentId] = useState<string>('01'); // Default to first project (Real Estate)
