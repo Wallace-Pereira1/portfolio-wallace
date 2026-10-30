@@ -374,7 +374,7 @@ function ProjectCardItem({
               }}
               className="inline-flex items-center gap-1.5 px-3 py-1 bg-theme-text text-theme-bg hover:opacity-90 rounded-[2px] transition-opacity font-semibold uppercase tracking-wider text-[10px] font-mono cursor-pointer shadow-sm group/btn"
             >
-              <span>{pt ? 'Estudo completo' : 'Full case study'}</span>
+              <span>{pt ? 'Ver mais' : 'See more'}</span>
               <ArrowUpRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
             </button>
 

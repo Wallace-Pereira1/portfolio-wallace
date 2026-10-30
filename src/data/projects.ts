@@ -3,7 +3,7 @@ import { Project } from '../types';
 export const projectsPt: Project[] = [
   {
     id: '01',
-    title: 'Agente de IA & Pipeline de Qualificação Imobiliária',
+    title: 'Agente de IA Imobiliária',
     tagline: 'Qualificação autônoma de leads imobiliários com CRM, agenda, APIs, OCR e atendimento 24/7.',
     category: 'integration_api',
     role: 'Engenheiro de IA & Automação de Sistemas',
@@ -49,7 +49,7 @@ export const projectsPt: Project[] = [
   },
   {
     id: '02',
-    title: 'Plataforma de Consolidação de Investimentos',
+    title: 'Plataforma Investimentos',
     tagline: '(Estudo de Caso) Consolidação de investimentos em tempo real com arquitetura offline-first e persistência dual-engine.',
     category: 'web_product',
     role: 'Desenvolvedor Full Stack & Arquiteto UI',
@@ -81,7 +81,7 @@ export const projectsPt: Project[] = [
   },
   {
     id: '03',
-    title: 'Modernização de Sistema Corporativo Legado',
+    title: 'Modernização de Sistema',
     tagline: 'Modernização de ASP para Angular e TypeScript com redução de 70% no tempo de carregamento.',
     category: 'web_product',
     role: 'Engenheiro Front-end (Mestra Informática)',
@@ -132,7 +132,7 @@ export const projectsPt: Project[] = [
   },
   {
     id: '05',
-    title: 'Sistema de Gestão e Comandas para Bistrô',
+    title: 'Sistema de Gestão e Comandas',
     tagline: 'Aplicação web mobile-first para controle ágil de pedidos, mesas e integração com staff de cozinha.',
     category: 'web_product',
     role: 'Front-end Engineer & UX Designer',
@@ -146,7 +146,7 @@ export const projectsPt: Project[] = [
   },
   {
     id: '06',
-    title: 'Pipeline de Extração Estruturada de Documentos (OCR)',
+    title: 'Extrator de Documentos (OCR)',
     tagline: 'Extração automatizada e validação de esquemas tipados para documentos fiscais e cadastrais complexos.',
     category: 'data_backend',
     role: 'Engenheiro de Dados & Backend',
@@ -159,7 +159,7 @@ export const projectsPt: Project[] = [
   },
   {
     id: '07',
-    title: 'Fiscal Sentinel: Auditoria e Conformidade Fiscal',
+    title: 'Auditoria Fiscal',
     tagline: 'Automação para auditoria transacional preventiva e detecção de anomalias tributárias.',
     category: 'data_backend',
     role: 'Full Stack / Security & Compliance',
@@ -172,7 +172,7 @@ export const projectsPt: Project[] = [
   },
   {
     id: '08',
-    title: 'CAPCRJ | Presença Digital & Orçamentos',
+    title: 'CAPCRJ Orçamentos Digital',
     subtitle: 'Engenharia elétrica traduzida em uma experiência digital.',
     tagline: 'Site institucional com páginas de serviços, galeria técnica e formulários integrados ao e-mail para contato, orçamento e interesse em fidelização.',
     description: 'Site institucional com páginas de serviços, galeria técnica e formulários integrados ao e-mail para contato, orçamento e interesse em fidelização.',
