@@ -118,9 +118,9 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
   const panelId = 'selected-domain-panel';
 
   return (
-    <div className="grid w-full max-w-full grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-12 lg:gap-8">
+    <div className="grid w-full max-w-full grid-cols-1 gap-3 sm:gap-6 lg:grid-cols-12 lg:gap-8">
       <div
-        className="divide-y divide-theme-border/60 border-y border-theme-border/60 lg:col-span-5"
+        className="grid grid-cols-2 gap-2 sm:block sm:divide-y sm:divide-theme-border/60 sm:border-y sm:border-theme-border/60 lg:col-span-5"
         aria-label={pt ? 'Selecione um domínio técnico' : 'Select a technical domain'}
       >
         {domains.map((domain) => {
@@ -133,22 +133,22 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
               aria-pressed={isSelected}
               aria-controls={panelId}
               onClick={() => setSelectedId(domain.id)}
-              className={`group flex w-full items-center gap-3 py-4 text-left transition-colors sm:py-5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-text rounded-[2px] ${
-                isSelected ? 'text-theme-text' : 'text-theme-dim hover:text-theme-text'
+              className={`group flex min-h-[64px] w-full items-center gap-2 border px-2.5 py-2.5 text-left transition-colors sm:min-h-0 sm:gap-3 sm:border-0 sm:px-0 sm:py-5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-text rounded-[2px] ${
+                isSelected ? 'border-theme-text/50 text-theme-text sm:border-theme-border/60' : 'border-theme-border/60 text-theme-dim hover:text-theme-text'
               }`}
             >
-              <span className={`w-8 shrink-0 font-mono text-[10px] tracking-wider ${isSelected ? 'text-theme-text' : 'text-theme-muted'}`}>
+              <span className={`hidden w-8 shrink-0 font-mono text-[10px] tracking-wider sm:block ${isSelected ? 'text-theme-text' : 'text-theme-muted'}`}>
                 {domain.index}
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block text-sm font-medium leading-snug sm:text-base">{domain.name}</span>
-                <span className="mt-1 block truncate font-mono text-[10px] text-theme-muted sm:text-[11px]">
+                <span className="block text-xs font-medium leading-snug sm:text-base">{domain.name}</span>
+                <span className="mt-0.5 block truncate font-mono text-[9px] text-theme-muted sm:mt-1 sm:text-[11px]">
                   {domain.technologies.slice(0, 3).join(' · ')}
                 </span>
               </span>
               <MoveUpRight
                 aria-hidden="true"
-                className={`h-3.5 w-3.5 shrink-0 transition-transform ${isSelected ? 'translate-x-0.5 -translate-y-0.5 text-theme-text' : 'text-theme-muted group-hover:-translate-y-0.5 group-hover:translate-x-0.5'}`}
+                className={`hidden h-3.5 w-3.5 shrink-0 transition-transform sm:block ${isSelected ? 'translate-x-0.5 -translate-y-0.5 text-theme-text' : 'text-theme-muted group-hover:-translate-y-0.5 group-hover:translate-x-0.5'}`}
               />
             </button>
           );
@@ -165,35 +165,35 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
           transition={{ duration: 0.18, ease: 'easeOut' }}
-          className="relative flex min-h-[300px] flex-col justify-between overflow-hidden border border-theme-border bg-theme-surface p-5 sm:p-7 md:p-8 lg:col-span-7"
+          className="relative flex min-h-0 flex-col justify-between overflow-hidden border border-theme-border bg-theme-surface p-4 sm:min-h-[300px] sm:p-7 md:p-8 lg:col-span-7"
         >
-          <div aria-hidden="true" className="pointer-events-none absolute right-6 top-6 font-mono text-[10px] tracking-[0.2em] text-theme-muted/60">
+          <div aria-hidden="true" className="pointer-events-none absolute right-4 top-4 font-mono text-[9px] tracking-[0.2em] text-theme-muted/60 sm:right-6 sm:top-6 sm:text-[10px]">
             {selectedDomain.index} / 04
           </div>
 
-          <div className="relative space-y-4 pr-12 sm:space-y-5">
-            <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-theme-muted">
-              <Layers aria-hidden="true" className="h-3.5 w-3.5" />
+          <div className="relative space-y-3 pr-9 sm:space-y-5 sm:pr-12">
+            <span className="inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-theme-muted sm:text-[10px]">
+              <Layers aria-hidden="true" className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
               {pt ? 'Domínio em prática' : 'Domain in practice'}
             </span>
-            <div className="space-y-2">
-              <h3 className="font-serif text-xl font-medium leading-tight tracking-[-0.02em] text-theme-text sm:text-2xl md:text-[28px]">
+            <div className="space-y-1.5 sm:space-y-2">
+              <h3 className="font-serif text-lg font-medium leading-tight tracking-[-0.02em] text-theme-text sm:text-2xl md:text-[28px]">
                 {selectedDomain.name}
               </h3>
-              <p className="max-w-xl text-sm leading-relaxed text-theme-dim sm:text-[15px]">
+              <p className="max-w-xl text-xs leading-relaxed text-theme-dim sm:text-[15px]">
                 {selectedDomain.summary}
               </p>
             </div>
 
-            <div className="space-y-2 pt-1">
-              <span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-theme-muted">
+            <div className="space-y-1.5 pt-0.5 sm:space-y-2 sm:pt-1">
+              <span className="block font-mono text-[9px] uppercase tracking-[0.16em] text-theme-muted sm:text-[10px]">
                 {pt ? 'Stack utilizada' : 'Tools used'}
               </span>
-              <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1 sm:gap-1.5">
                 {selectedDomain.technologies.map((technology) => (
                   <span
                     key={technology}
-                    className="border border-theme-border px-2 py-1 font-mono text-[10px] text-theme-dim sm:text-[11px]"
+                    className="border border-theme-border px-1.5 py-0.5 font-mono text-[9px] text-theme-dim sm:px-2 sm:py-1 sm:text-[11px]"
                   >
                     {technology}
                   </span>
@@ -202,20 +202,20 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
             </div>
           </div>
 
-          <div className="relative mt-6 border-t border-theme-border/70 pt-4 sm:mt-8 sm:pt-5">
-            <span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-theme-muted">
+          <div className="relative mt-4 border-t border-theme-border/70 pt-3 sm:mt-8 sm:pt-5">
+            <span className="block font-mono text-[9px] uppercase tracking-[0.16em] text-theme-muted sm:text-[10px]">
               {pt ? 'Projeto relacionado' : 'Related project'}
             </span>
-            <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div className="mt-1.5 flex flex-col gap-2 sm:mt-2 sm:flex-row sm:items-end sm:justify-between sm:gap-3">
               <div className="min-w-0 space-y-1">
-                <h4 className="text-sm font-medium leading-snug text-theme-text sm:text-base">
+                <h4 className="text-xs font-medium leading-snug text-theme-text sm:text-base">
                   {selectedDomain.projectTitle}
                 </h4>
-                <p className="max-w-xl text-xs leading-relaxed text-theme-dim sm:text-[13px]">
+                <p className="hidden max-w-xl text-xs leading-relaxed text-theme-dim sm:block sm:text-[13px]">
                   {selectedDomain.projectContext}
                 </p>
               </div>
-              <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] sm:text-[11px]">
+              <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[9px] sm:text-[11px]">
                 <Link
                   to={selectedDomain.projectUrl}
                   className="inline-flex items-center gap-1.5 text-theme-text underline decoration-theme-border underline-offset-4 transition-colors hover:decoration-theme-text"

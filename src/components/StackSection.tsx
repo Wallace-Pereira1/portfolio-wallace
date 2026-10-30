@@ -12,7 +12,7 @@ export default function StackSection({ showHeader = true }: StackSectionProps) {
   return (
     <section
       id="tecnologias"
-      className={`min-h-[100dvh] flex flex-col justify-center ${showHeader ? 'py-8 sm:py-12 md:py-16' : 'py-6 md:py-10'} bg-transparent px-4 sm:px-6 md:px-12 transition-colors relative snap-start snap-always scroll-mt-6 sm:scroll-mt-10`}
+      className={`flex min-h-0 flex-col justify-start sm:min-h-[100dvh] sm:justify-center ${showHeader ? 'py-8 sm:py-12 md:py-16' : 'py-6 md:py-10'} bg-transparent px-4 sm:px-6 md:px-12 transition-colors relative snap-start snap-always scroll-mt-6 sm:scroll-mt-10`}
     >
       <div id="competencias" className="absolute -top-20 opacity-0 pointer-events-none" />
       <div className="max-w-6xl mx-auto w-full space-y-5 sm:space-y-7">
