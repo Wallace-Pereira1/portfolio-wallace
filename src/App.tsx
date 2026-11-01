@@ -78,7 +78,7 @@ export default function App() {
       <div className="bg-theme-bg text-theme-text min-h-screen selection:bg-brand-blue/20 selection:text-theme-text transition-colors duration-200 flex flex-col justify-between overflow-x-hidden relative">
         {/* Fundo global: grade, brilho de acento, retângulos sobrepostos e grão */}
         <Backdrop />
-        {/* Dither em escala de cinza: fino, lento e mascarado (só no topo) */}
+        {/* Dither em escala de cinza: fino, lento e mascarado (só no topo) 
         <DitherWaveBackground
           isFixed={true}
           className="dither-mask"
@@ -90,7 +90,7 @@ export default function App() {
           waveFrequency={1.6}
           waveAmplitude={0.18}
           opacity={0.26}
-        />
+        />*/}
         <Navbar />
         <main className="flex-1 w-full flex flex-col overflow-x-hidden relative z-10">
           <AnimatedRoutes />
