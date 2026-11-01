@@ -258,13 +258,13 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                 </div>
 
                 {errorMsg && (
-                  <div className="p-3 bg-red-950/20 border border-red-500/40 text-red-400 text-xs font-mono rounded-[2px]">
+                  <div role="alert" aria-live="assertive" aria-atomic="true" className="p-3 bg-red-950/20 border border-red-500/40 text-red-400 text-xs font-mono rounded-[2px]">
                     {errorMsg}
                   </div>
                 )}
 
                 {success && (
-                  <div className="p-3 bg-emerald-950/20 border border-emerald-500/40 text-emerald-400 text-xs font-mono rounded-[2px] flex items-center gap-2">
+                  <div role="status" aria-live="polite" aria-atomic="true" className="p-3 bg-emerald-950/20 border border-emerald-500/40 text-emerald-400 text-xs font-mono rounded-[2px] flex items-center gap-2">
                     <Check className="w-4 h-4 shrink-0" />
                     <span>{t('foot.form.success')}</span>
                   </div>

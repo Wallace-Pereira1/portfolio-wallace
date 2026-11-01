@@ -12,17 +12,20 @@ import {
 import { useApp } from '../context/AppContext';
 import { projectsPt, projectsEn } from '../data/projects';
 import TechBadge from './TechBadge';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 interface ProjectStudyModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialProjectId?: string | null;
+  triggerElement?: HTMLElement | null;
 }
 
 export default function ProjectStudyModal({
   isOpen,
   onClose,
   initialProjectId,
+  triggerElement,
 }: ProjectStudyModalProps) {
   const { language } = useApp();
   const projects = language === 'pt' ? projectsPt : projectsEn;
@@ -30,6 +33,10 @@ export default function ProjectStudyModal({
   const [currentId, setCurrentId] = useState<string>('01'); // Default to first project (Real Estate)
   const [isImageZoomed, setIsImageZoomed] = useState(false);
   const modalScrollRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useModalAccessibility(isOpen, onClose, dialogRef, closeButtonRef, triggerElement);
 
   // Sync initial project when modal opens
   useEffect(() => {
@@ -44,28 +51,17 @@ export default function ProjectStudyModal({
     }
   }, [isOpen, initialProjectId]);
 
-  // Lock body scroll when modal is open
   useEffect(() => {
-    if (!isOpen) return;
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        if (isImageZoomed) {
-          setIsImageZoomed(false);
-        } else {
-          onClose();
-        }
+    if (!isOpen || !isImageZoomed) return;
+    const handleZoomEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.stopImmediatePropagation();
+        setIsImageZoomed(false);
       }
     };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, isImageZoomed, onClose]);
+    window.addEventListener('keydown', handleZoomEscape, true);
+    return () => window.removeEventListener('keydown', handleZoomEscape, true);
+  }, [isOpen, isImageZoomed]);
 
   const currentIndex = projects.findIndex((p) => p.id === currentId);
   const currentProject = projects[currentIndex] || projects[0];
@@ -74,8 +70,11 @@ export default function ProjectStudyModal({
     <AnimatePresence>
       {isOpen && currentProject && (
         <div
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
+          aria-labelledby="project-study-modal-title"
+          tabIndex={-1}
           className="fixed inset-0 z-50 overflow-y-auto p-2 sm:p-4 md:p-6 flex items-center justify-center"
         >
           {/* Backdrop Overlay */}
@@ -102,13 +101,14 @@ export default function ProjectStudyModal({
                 <span className="text-[10px] font-mono uppercase tracking-widest text-theme-muted block truncate">
                   {language === 'pt' ? 'Estudo Detalhado de Sistema' : 'Detailed System Study'}
                 </span>
-                <span className="text-xs sm:text-sm font-semibold text-theme-text truncate block">
+                <span id="project-study-modal-title" className="text-xs sm:text-sm font-semibold text-theme-text truncate block">
                   {currentProject.modalTitle || currentProject.title}
                 </span>
               </div>
 
               {/* Close Button */}
               <button
+                ref={closeButtonRef}
                 type="button"
                 onClick={onClose}
                 aria-label={language === 'pt' ? 'Fechar modal' : 'Close modal'}

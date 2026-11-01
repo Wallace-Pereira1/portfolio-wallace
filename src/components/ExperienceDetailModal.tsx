@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Building2, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
 import TechBadge from './TechBadge';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export interface WorkExperienceItem {
   company: string;
@@ -30,24 +31,9 @@ export default function ExperienceDetailModal({
   experience,
   language,
 }: ExperienceDetailModalProps) {
-  // Lock body scroll when modal is active
-  useEffect(() => {
-    if (!isOpen) return;
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  useModalAccessibility(isOpen && !!experience, onClose, dialogRef, closeButtonRef);
 
   if (!experience) return null;
 
@@ -67,6 +53,7 @@ export default function ExperienceDetailModal({
 
           {/* Modal Container */}
           <motion.div
+            ref={dialogRef}
             initial={{ opacity: 0, scale: 0.96, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
@@ -110,6 +97,7 @@ export default function ExperienceDetailModal({
 
               {/* Close Button */}
               <button
+                ref={closeButtonRef}
                 type="button"
                 onClick={onClose}
                 aria-label={language === 'pt' ? 'Fechar modal' : 'Close modal'}

@@ -43,6 +43,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalProjectId, setModalProjectId] = useState<string | null>(null);
+  const projectModalTriggerRef = useRef<HTMLElement | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
@@ -239,7 +240,10 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
                   language={language}
                   pt={pt}
                   isLight={isLight}
-                  onOpenModal={() => setModalProjectId(project.id)}
+                  onOpenModal={(triggerElement) => {
+                    projectModalTriggerRef.current = triggerElement;
+                    setModalProjectId(project.id);
+                  }}
                 />
               </motion.div>
             );
@@ -272,6 +276,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
         isOpen={Boolean(modalProjectId)}
         onClose={() => setModalProjectId(null)}
         initialProjectId={modalProjectId}
+        triggerElement={projectModalTriggerRef.current}
       />
     </div>
   );
@@ -284,7 +289,7 @@ interface ProjectCardItemProps {
   language: string;
   pt: boolean;
   isLight: boolean;
-  onOpenModal?: () => void;
+  onOpenModal?: (triggerElement: HTMLElement) => void;
 }
 
 /**
@@ -305,14 +310,14 @@ function ProjectCardItem({
   return (
     <article
       data-project-card
-      className={`relative w-full rounded-[2px] border bg-white dark:bg-theme-surface flex flex-col justify-between overflow-hidden transition-all duration-300 ${
+      className={`relative w-full rounded-[2px] border flex flex-col justify-between overflow-hidden transition-all duration-300 ${isLight ? 'bg-white' : 'bg-theme-surface'} ${
         isCenter
-          ? 'border-slate-400 dark:border-theme-muted/80 shadow-xl shadow-slate-900/10 dark:shadow-2xl dark:shadow-black/70 ring-1 ring-slate-900/10 dark:ring-white/10'
-          : 'border-slate-200 dark:border-theme-border/70 hover:border-slate-300 dark:hover:border-theme-muted/60 shadow-sm'
+          ? (isLight ? 'border-slate-400 shadow-xl shadow-slate-900/10 ring-1 ring-slate-900/10' : 'border-theme-muted/80 shadow-2xl shadow-black/70 ring-1 ring-white/10')
+          : (isLight ? 'border-slate-200 hover:border-slate-300 shadow-sm' : 'border-theme-border/70 hover:border-theme-muted/60 shadow-sm')
       }`}
     >
       {/* Capa do Projeto: Capa Vetorial Ultra Minimalista customizada por projeto */}
-      <div className="relative w-full aspect-[16/9] max-h-[155px] sm:max-h-[175px] md:max-h-[225px] lg:max-h-[250px] overflow-hidden bg-slate-50 dark:bg-[#090a0e] shrink-0 border-b border-slate-200 dark:border-theme-border/60">
+      <div className={`relative w-full aspect-[16/9] max-h-[155px] sm:max-h-[175px] md:max-h-[225px] lg:max-h-[250px] overflow-hidden shrink-0 border-b ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090a0e] border-theme-border/60'}`}>
         <ProjectMinimalCover
           projectId={project.id}
           isCenter={isCenter}
@@ -320,11 +325,11 @@ function ProjectCardItem({
         />
 
         {/* Gradiente sutil para fusão limpa com o corpo */}
-        <div className="absolute inset-0 bg-gradient-to-t from-white/90 dark:from-theme-surface/85 via-transparent to-transparent pointer-events-none" />
+        <div className={`absolute inset-0 bg-gradient-to-t ${isLight ? 'from-white/90' : 'from-theme-surface/85'} via-transparent to-transparent pointer-events-none`} />
 
         {/* Selo de Categoria (Alto Contraste em Modo Claro e Escuro) */}
         <div className="absolute top-2 left-2 flex items-center gap-1.5 z-10">
-          <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-wider px-2 py-0.5 bg-white dark:bg-[#12141c] text-slate-950 dark:text-zinc-100 font-bold rounded-[2px] shadow-sm border border-slate-300 dark:border-white/20">
+          <span className={`font-mono text-[9px] md:text-[10px] uppercase tracking-wider px-2 py-0.5 font-bold rounded-[2px] shadow-sm border ${isLight ? 'bg-white text-slate-950 border-slate-300' : 'bg-[#12141c] text-zinc-100 border-white/20'}`}>
             {project.category.replace('_', ' ')}
           </span>
         </div>
@@ -333,13 +338,13 @@ function ProjectCardItem({
       {/* Conteúdo do Card */}
       <div className="p-3.5 sm:p-4 md:p-5 flex-1 flex flex-col justify-between space-y-2">
         <div className="space-y-1">
-          <h3 className="font-serif text-[15px] sm:text-base md:text-[17px] lg:text-lg font-medium text-slate-900 dark:text-theme-text leading-snug line-clamp-1">
+          <h3 className={`font-serif text-[15px] sm:text-base md:text-[17px] lg:text-lg font-medium leading-snug line-clamp-1 ${isLight ? 'text-slate-900' : 'text-theme-text'}`}>
             {project.title}
           </h3>
-          <p className="font-mono text-[10.5px] md:text-xs text-slate-700 dark:text-theme-dim line-clamp-1 font-medium">
+          <p className={`font-mono text-[10.5px] md:text-xs line-clamp-1 font-medium ${isLight ? 'text-slate-700' : 'text-theme-dim'}`}>
             {project.subtitle || highlight}
           </p>
-          <p className="text-xs md:text-[13px] text-slate-600 dark:text-theme-muted line-clamp-2 leading-relaxed pt-0.5 font-normal">
+          <p className={`text-xs md:text-[13px] line-clamp-2 leading-relaxed pt-0.5 font-normal ${isLight ? 'text-slate-600' : 'text-theme-muted'}`}>
             {project.description || project.tagline}
           </p>
         </div>
@@ -357,7 +362,7 @@ function ProjectCardItem({
             />
           ))}
           {!isCenter && project.technologies.length > 3 && (
-            <span className="text-[9.5px] font-mono text-slate-700 dark:text-theme-muted font-semibold select-none">
+            <span className={`text-[9.5px] font-mono font-semibold select-none ${isLight ? 'text-slate-700' : 'text-theme-muted'}`}>
               +{project.technologies.length - 3}
             </span>
           )}
@@ -370,7 +375,7 @@ function ProjectCardItem({
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                onOpenModal?.();
+                onOpenModal?.(e.currentTarget);
               }}
               className="inline-flex items-center gap-1.5 px-3 py-1 bg-theme-text text-theme-bg hover:opacity-90 rounded-[2px] transition-opacity font-semibold uppercase tracking-wider text-[10px] font-mono cursor-pointer shadow-sm group/btn"
             >

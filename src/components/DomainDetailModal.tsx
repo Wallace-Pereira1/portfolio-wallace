@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { projectsEn, projectsPt } from '../data/projects';
 
 export interface DomainDetailData {
   id: string;
@@ -62,9 +63,9 @@ export const domainDetailsPt: Record<string, DomainDetailData> = {
     ],
     relatedProjects: [
       {
-        id: '06',
-        title: 'Sentinela Fiscal: Auditoria',
-        url: '/projetos/06',
+        id: '07',
+        title: 'Auditoria Fiscal',
+        url: '/projetos/07',
         highlight: 'PostgreSQL e trilha de auditoria relacional',
       },
       {
@@ -178,9 +179,9 @@ export const domainDetailsEn: Record<string, DomainDetailData> = {
     ],
     relatedProjects: [
       {
-        id: '06',
+        id: '07',
         title: 'Fiscal Sentinel Audit System',
-        url: '/projetos/06',
+        url: '/projetos/07',
         highlight: 'PostgreSQL and relational audit trail architecture',
       },
       {
@@ -274,6 +275,7 @@ export default function DomainDetailModal({
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const dataset = isPt ? domainDetailsPt : domainDetailsEn;
+  const projects = isPt ? projectsPt : projectsEn;
   const detail = domainId ? dataset[domainId] : null;
 
   // Check prefers-reduced-motion
@@ -485,11 +487,11 @@ export default function DomainDetailModal({
                     >
                       <div className="min-w-0">
                         <Link
-                          to={proj.url}
+                          to={`/projetos/${proj.id}`}
                           onClick={onClose}
                           className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-medium text-theme-text hover:text-theme-accent transition-colors underline decoration-theme-border hover:decoration-theme-accent underline-offset-4"
                         >
-                          <span>{proj.title}</span>
+                          <span>{projects.find((project) => project.id === proj.id)?.title ?? proj.title}</span>
                           <ArrowUpRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                         </Link>
                       </div>

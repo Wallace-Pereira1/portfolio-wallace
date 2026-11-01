@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, useLocation, useRoutes } from 'react-router-dom';
+import { BrowserRouter, useLocation, useRoutes, useParams } from 'react-router-dom';
 import { AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
 import Backdrop from './components/Backdrop';
@@ -11,6 +11,7 @@ import TrajetoriaPage from './pages/TrajetoriaPage';
 import CompetenciasPage from './pages/CompetenciasPage';
 import ContatoPage from './pages/ContatoPage';
 import NotFoundPage from './pages/NotFoundPage';
+import { projectsEn, projectsPt } from './data/projects';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -45,7 +46,7 @@ function AnimatedRoutes() {
     [
       { path: '/', element: <HomePage /> },
       { path: '/estudos', element: <EstudosPage /> },
-      { path: '/projetos/:id', element: <EstudosPage /> },
+      { path: '/projetos/:id', element: <ProjectRoute /> },
       { path: '/trajetoria', element: <TrajetoriaPage /> },
       { path: '/competencias', element: <CompetenciasPage /> },
       { path: '/contato', element: <ContatoPage /> },
@@ -63,6 +64,12 @@ function AnimatedRoutes() {
       )}
     </AnimatePresence>
   );
+}
+
+function ProjectRoute() {
+  const { id } = useParams<{ id: string }>();
+  const isValid = [...projectsPt, ...projectsEn].some((project) => project.id === id && !project.disabled);
+  return isValid ? <EstudosPage /> : <NotFoundPage />;
 }
 
 export default function App() {
