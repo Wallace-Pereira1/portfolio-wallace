@@ -26,40 +26,30 @@ export default function HomePage() {
     path: '/',
   });
 
-  // Ativa o scroll snap exclusivo na HomePage
-  React.useEffect(() => {
-    document.documentElement.classList.add('snap-active');
-    return () => {
-      document.documentElement.classList.remove('snap-active');
-    };
-  }, []);
-
   return (
     <div className="w-full">
-      {/* 1. Hero as Editorial Cover (Tela 1) */}
+      {/* 1. Hero and home introduction */}
       <Hero />
 
-      {/* 2. Selected Works: índice editorial (Tela 2) */}
+      {/* 2. Selected work */}
       <section
         id="projetos"
-        className="min-h-[100dvh] flex flex-col justify-center py-16 sm:py-20 md:py-24 bg-transparent px-6 md:px-12 transition-colors relative z-10 snap-start snap-always scroll-mt-6 sm:scroll-mt-10"
+        className="portfolio-section bg-transparent transition-colors relative z-10"
       >
-        <div className="max-w-6xl xl:max-w-7xl mx-auto w-full relative z-10">
+        <div className="portfolio-container relative z-10">
           <ProjectsList projects={projects} language={language} />
         </div>
       </section>
 
-      {/* 3. Professional Trajectory & Experience (Tela 3) */}
+      {/* 3. Professional trajectory */}
       <ExperienceSection showHeader={true} />
 
-      {/* 4. Technical Domains & Capabilities (Tela 4) */}
+      {/* 4. Technical capabilities */}
       <StackSection showHeader={true} />
 
-      {/* 5. Direct Contact & Collaboration + Colophon (Tela 5) */}
-      <div className="min-h-[100dvh] flex flex-col justify-between snap-start snap-always scroll-mt-6 sm:scroll-mt-10 pt-16 sm:pt-20">
-        <div className="flex-1 flex flex-col justify-center">
-          <ContactSection showHeader={true} />
-        </div>
+      {/* 5. Contact and footer */}
+      <div>
+        <ContactSection showHeader={true} />
         <EditorialColophon />
       </div>
     </div>

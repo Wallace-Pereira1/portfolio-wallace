@@ -2,6 +2,9 @@
 @import "tailwindcss";
 
 :root {
+  --navbar-height: 65px;
+  --section-scroll-offset: calc(var(--navbar-height) + 16px);
+  --content-width: 780px;
   --bg-color: #08090a;
   --text-color: #f2f3f5;
   --surface-color: #0d0e10;
@@ -12,6 +15,12 @@
   --text-muted: #8d93a1;
   --accent-color: #f2f3f5;
   --accent-muted: #272a30;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --navbar-height: 73px;
+  }
 }
 
 :root.light {
@@ -53,11 +62,6 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-html.snap-active {
-  scroll-snap-type: y proximity;
-  scroll-padding-top: 4.75rem;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html,
   html:focus-within {
@@ -71,12 +75,6 @@ html.snap-active {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
-  }
-}
-
-@media (min-width: 768px) {
-  html.snap-active {
-    scroll-snap-type: y mandatory;
   }
 }
 
@@ -241,10 +239,21 @@ img, svg, video {
   overflow: visible;
 }
 
-/* Strict Mobile Scroll Snap for Project Cards */
-[data-project-card] {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+
+/* Shared content rhythm for the portfolio home sections. */
+.portfolio-section {
+  padding-block: clamp(56px, 8vh, 96px);
+  padding-inline: clamp(24px, 6vw, 48px);
+  scroll-margin-top: var(--section-scroll-offset);
+}
+
+.portfolio-hero {
+  padding-top: calc(var(--navbar-height) + clamp(56px, 8vh, 96px));
+}
+
+.portfolio-container {
+  width: min(100%, var(--content-width));
+  margin-inline: auto;
 }
 
 /* Hide scrollbar utility for clean sliding tabs */

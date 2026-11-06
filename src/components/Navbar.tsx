@@ -9,8 +9,6 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
-  const isClickScrollingRef = useRef(false);
-  const clickTimeoutRef = useRef<number | null>(null);
   const scrollRafRef = useRef<number | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -35,13 +33,9 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      // If user clicked a nav tab, do not let scroll events jitter the active tab
-      if (isClickScrollingRef.current) return;
-
       if (scrollRafRef.current) return;
       scrollRafRef.current = requestAnimationFrame(() => {
         scrollRafRef.current = null;
-        if (isClickScrollingRef.current) return;
 
         // Top of page -> inicio has absolute priority on page load and top position
         if (window.scrollY < 120) {
@@ -49,19 +43,18 @@ export default function Navbar() {
           return;
         }
 
-        // Bottom of page -> contact only if scrolled significantly and truly at footer
+        // At the document end, keep Contact active even when sections are compact.
         const scrollHeight = document.documentElement.scrollHeight;
         const clientHeight = window.innerHeight;
         if (
-          scrollHeight > clientHeight + 300 &&
-          window.scrollY > 400 &&
-          clientHeight + window.scrollY >= scrollHeight - 70
+          window.scrollY > 0 &&
+          clientHeight + window.scrollY >= scrollHeight - 64
         ) {
           setActiveSection('contato');
           return;
         }
 
-        const triggerPoint = window.innerHeight * 0.4;
+        const triggerPoint = Math.min(window.innerHeight * 0.35, 260);
         let current = 'inicio';
 
         for (const id of sectionIds) {
@@ -81,8 +74,10 @@ export default function Navbar() {
     handleScroll();
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      if (scrollRafRef.current) cancelAnimationFrame(scrollRafRef.current);
-      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+      if (scrollRafRef.current !== null) {
+        cancelAnimationFrame(scrollRafRef.current);
+        scrollRafRef.current = null;
+      }
     };
   }, [location.pathname]);
 
@@ -107,7 +102,7 @@ export default function Navbar() {
 
       const element = document.getElementById(targetId);
       if (element) {
-        const navOffset = 76;
+        const navOffset = (document.getElementById('main-navbar')?.offsetHeight ?? 65) + 16;
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - navOffset;
         window.scrollTo({
@@ -158,13 +153,7 @@ export default function Navbar() {
       return;
     }
 
-    // Lock scroll listener immediately so intermediate sections don't cause the indicator to shake/jump
-    isClickScrollingRef.current = true;
     setActiveSection(targetId);
-    if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
-    clickTimeoutRef.current = window.setTimeout(() => {
-      isClickScrollingRef.current = false;
-    }, 850);
 
     if (targetId === 'inicio') {
       window.scrollTo({
@@ -177,7 +166,7 @@ export default function Navbar() {
 
     const element = document.getElementById(targetId);
     if (element) {
-      const navOffset = 76;
+      const navOffset = (document.getElementById('main-navbar')?.offsetHeight ?? 65) + 16;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - navOffset;
 

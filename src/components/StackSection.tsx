@@ -12,13 +12,13 @@ export default function StackSection({ showHeader = true }: StackSectionProps) {
   return (
     <section
       id="tecnologias"
-      className={`flex min-h-0 flex-col justify-start sm:min-h-[100dvh] sm:justify-center ${showHeader ? 'py-8 sm:py-12 md:py-16' : 'py-6 md:py-10'} bg-transparent px-6 md:px-12 transition-colors relative snap-start snap-always scroll-mt-6 sm:scroll-mt-10`}
+      className="portfolio-section bg-transparent transition-colors relative"
     >
       <div id="competencias" className="absolute -top-20 opacity-0 pointer-events-none" />
-      <div className="max-w-6xl mx-auto w-full space-y-5 sm:space-y-7">
+      <div className="portfolio-container space-y-6 md:space-y-8">
         {/* Section Header */}
         {showHeader && (
-          <div className="space-y-1.5 pb-1">
+          <div className="space-y-3">
             <h2 className="font-serif text-2xl sm:text-[26px] leading-[1.15] font-medium text-theme-text tracking-[-0.015em]">
               {language === 'pt' ? 'Competências' : 'Skills'}
             </h2>

@@ -218,13 +218,13 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
   return (
     <section
       id="experiencia"
-      className={`min-h-[100dvh] flex flex-col justify-center ${showHeader ? 'py-16 sm:py-20 md:py-24' : 'py-8 md:py-12'} bg-transparent px-6 md:px-12 transition-colors snap-start snap-always scroll-mt-6 sm:scroll-mt-10`}
+      className="portfolio-section bg-transparent transition-colors"
     >
-      <div className="max-w-6xl mx-auto w-full space-y-6 md:space-y-8">
+      <div className="portfolio-container space-y-6 md:space-y-8">
         {/* Section Header or Tabs Bar */}
         {showHeader ? (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pb-5">
-            <div className="md:col-span-8 space-y-2">
+            <div className="md:col-span-8 space-y-3">
               <span className="text-xs font-mono text-theme-muted uppercase tracking-widest block">
                 {language === 'pt' ? 'Trajetória Profissional' : 'Professional Trajectory'}
               </span>

@@ -59,19 +59,19 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
   return (
     <section
       id="contato"
-      className={`${
-        showHeader ? 'py-6 sm:py-8 md:py-10' : 'py-6 md:py-8'
-      } px-6 md:px-12 bg-transparent transition-colors`}
+      className="portfolio-section bg-transparent transition-colors"
     >
-      <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
+      <div className="portfolio-container space-y-8 md:space-y-10">
         {showHeader && (
-          <div className="space-y-2 pb-5">
-            <span className="text-xs font-mono text-theme-muted uppercase tracking-widest block">
-              {language === 'pt' ? 'Contato & Disponibilidade' : 'Contact & Availability'}
-            </span>
-            <h2 className="font-serif text-2xl sm:text-[26px] leading-[1.15] font-medium text-theme-text tracking-[-0.015em]">
-              {language === 'pt' ? 'Contato' : 'Contact'}
-            </h2>
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <span className="text-xs font-mono text-theme-muted uppercase tracking-widest block">
+                {language === 'pt' ? 'Contato & Disponibilidade' : 'Contact & Availability'}
+              </span>
+              <h2 className="font-serif text-2xl sm:text-[26px] leading-[1.15] font-medium text-theme-text tracking-[-0.015em]">
+                {language === 'pt' ? 'Contato' : 'Contact'}
+              </h2>
+            </div>
             <p className="text-[15px] sm:text-base text-theme-dim max-w-2xl leading-relaxed">
               {language === 'pt'
                 ? 'Pronto para colaborar em novos desafios de engenharia full-time (remoto/híbrido no RJ) ou estruturação de produtos web e integrações complexas.'

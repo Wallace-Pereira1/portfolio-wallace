@@ -27,7 +27,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
       className="w-full space-y-5 sm:space-y-7"
     >
       <header className="pb-4 border-b border-theme-border/60">
-        <span className="text-xs font-mono text-theme-muted uppercase tracking-widest block mb-1">
+        <span className="text-xs font-mono text-theme-muted uppercase tracking-widest block mb-3">
           {isEnglish ? 'Selected work' : 'Trabalhos selecionados'}
         </span>
         <h2

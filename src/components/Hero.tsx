@@ -84,7 +84,7 @@ export default function Hero() {
     <section
       id="inicio"
       ref={heroRef}
-      className="relative min-h-[100dvh] flex flex-col justify-center pt-20 sm:pt-24 pb-8 sm:pb-12 bg-transparent px-6 md:px-12 transition-colors overflow-hidden snap-start snap-always scroll-mt-0"
+      className="portfolio-section portfolio-hero relative flex flex-col justify-start bg-transparent transition-colors overflow-hidden"
     >
       {/* Camada Decorativa de Parallax Sutil de Fundo */}
       <div
@@ -117,7 +117,7 @@ export default function Hero() {
         <div className="absolute bottom-8 right-12 text-theme-text opacity-[0.06] font-mono text-[9px]">+</div>
       </div>
 
-      <div className="max-w-6xl mx-auto w-full relative z-10">
+      <div className="portfolio-container relative z-10">
         <div className="relative border border-theme-border bg-theme-surface/90 p-6 sm:p-8 md:p-10 offset-card">
           <div className="max-w-3xl space-y-6 sm:space-y-7">
             <h1 className="font-serif text-[clamp(2rem,4vw,2.75rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text">

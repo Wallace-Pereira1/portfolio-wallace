@@ -16,8 +16,8 @@ export default function EditorialColophon({ nextRoute: _nextRoute }: EditorialCo
   };
 
   return (
-    <footer className="border-t border-theme-border bg-transparent py-6 md:py-8 px-6 md:px-12 transition-colors">
-      <div className="max-w-6xl mx-auto">
+    <footer className="border-t border-theme-border bg-transparent py-6 md:py-8 px-[clamp(24px,6vw,48px)] transition-colors">
+      <div className="portfolio-container">
         {/* Colophon & Channels */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center text-xs font-mono">
           <div className="space-y-1">
