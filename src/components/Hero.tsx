@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { FileDown, Mail, MessageCircle, ArrowRight, MapPin, Activity, Layers, Cpu, Compass } from 'lucide-react';
+import { FileDown, Mail, MessageCircle, ArrowRight, MapPin, Activity, Layers, Compass } from 'lucide-react';
 import { downloadResumePdf } from '../utils/generateResumePdf';
-import TechBadge from './TechBadge';
 import ServiceAreaModal from './ServiceAreaModal';
 import { trackEvent } from '../utils/analytics';
 import { projectsEn, projectsPt } from '../data/projects';
+import { currentStack } from '../data/stack';
 
 export default function Hero() {
   const { language } = useApp();
@@ -101,17 +101,6 @@ export default function Hero() {
     setSelectedServiceArea(id);
     setIsServiceModalOpen(true);
   };
-
-  const coreStack = [
-    'TypeScript',
-    'React',
-    'Angular',
-    'Node.js',
-    'PostgreSQL',
-    'n8n',
-    'APIs REST',
-    'LLMs',
-  ];
 
   const engineeringDomains = language === 'pt'
     ? [
@@ -348,28 +337,13 @@ export default function Hero() {
 
           {/* 4. BLOCO DE STACK PRINCIPAL (Lado a lado com Bloco 5 no landscape) */}
           <div className="order-4 sm:col-span-1 landscape:col-span-1 md:col-span-1 lg:col-span-5 bg-theme-surface border border-theme-border hover:border-theme-muted/80 rounded-[2px] p-4 sm:p-5 flex flex-col justify-between transition-all duration-200 offset-card">
-            <div className="space-y-2.5">
-              <div className="flex items-center justify-end">
-                <Cpu className="w-3.5 h-3.5 text-theme-muted" />
-              </div>
-
-              {/* Grid de Ícones das Tecnologias Suportadas com Legendinha / Tooltip */}
-              <div className="grid grid-cols-2 gap-1.5 pt-0.5">
-                {coreStack.map((tech) => (
-                  <TechBadge
-                    key={tech}
-                    tech={tech}
-                    language={language}
-                    size="sm"
-                    fullWidth={true}
-                    className="[&>button]:py-1.5 [&>button]:px-2.5 [&>button]:gap-2"
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-2.5 pt-2 text-[9.5px] font-mono text-theme-muted flex items-center border-t border-theme-border/40">
-              <span>{language === 'pt' ? 'Tecnologias em ambiente produtivo' : 'Technologies in production envs'}</span>
+            <div className="space-y-3">
+              <span className="block text-xs font-mono uppercase tracking-widest text-theme-muted">
+                {language === 'pt' ? 'Stack atual' : 'Current stack'}
+              </span>
+              <p className="text-sm sm:text-[15px] leading-relaxed text-theme-text">
+                {currentStack.join(' · ')}
+              </p>
             </div>
           </div>
 

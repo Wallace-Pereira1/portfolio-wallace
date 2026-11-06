@@ -4,7 +4,6 @@ import { ArrowUpRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Certifications from './Certifications';
 import ExperienceDetailModal, { WorkExperienceItem } from './ExperienceDetailModal';
-import TechBadge from './TechBadge';
 
 const timelineContainerVariants = {
   hidden: { opacity: 0 },
@@ -401,16 +400,9 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
                         <span className="text-[11px] font-mono uppercase tracking-widest text-theme-muted block">
                           {language === 'pt' ? 'Tecnologias' : 'Technologies'}
                         </span>
-                        <div className="flex flex-wrap gap-2 items-center">
-                          {exp.technologies.slice(0, 6).map((tech) => (
-                            <TechBadge
-                              key={tech}
-                              tech={tech}
-                              language={language}
-                              size="md"
-                            />
-                          ))}
-                        </div>
+                        <p className="text-xs sm:text-[13px] leading-relaxed text-theme-dim">
+                          {exp.technologies.slice(0, 5).join(' · ')}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -471,16 +463,9 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
                         <span className="text-[11px] font-mono uppercase tracking-widest text-theme-muted block">
                           {language === 'pt' ? 'Tecnologias' : 'Technologies'}
                         </span>
-                        <div className="flex flex-wrap gap-1.5 items-center">
-                          {exp.technologies.slice(0, 6).map((tech) => (
-                            <TechBadge
-                              key={tech}
-                              tech={tech}
-                              language={language}
-                              size="sm"
-                            />
-                          ))}
-                        </div>
+                        <p className="text-xs leading-relaxed text-theme-dim">
+                          {exp.technologies.slice(0, 5).join(' · ')}
+                        </p>
                       </div>
                     </div>
                   </div>

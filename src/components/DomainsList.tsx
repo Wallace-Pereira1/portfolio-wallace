@@ -2,6 +2,7 @@ import React from 'react';
 import { BrainCircuit, Boxes, Terminal, Waypoints, Workflow, Webhook } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { currentStack } from '../data/stack';
 import TechIcon from './TechIcon';
 
 interface SkillGroup {
@@ -13,8 +14,6 @@ interface SkillGroup {
   projectEn: string;
   projectUrl: string;
 }
-
-const currentStack = ['TypeScript', 'React', 'Node.js', 'PostgreSQL'];
 
 const skillGroups: SkillGroup[] = [
   {
@@ -77,7 +76,7 @@ function getNeutralIcon(technology: string) {
   return null;
 }
 
-function SkillItem({ technology }: { technology: string }) {
+const SkillItem: React.FC<{ technology: string }> = ({ technology }) => {
   const NeutralIcon = getNeutralIcon(technology);
 
   return (
@@ -92,7 +91,7 @@ function SkillItem({ technology }: { technology: string }) {
       <span>{technology}</span>
     </li>
   );
-}
+};
 
 interface DomainsListProps {
   language?: string;
