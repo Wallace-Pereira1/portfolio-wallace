@@ -176,7 +176,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
 
           {/* Contact Message Form */}
           <div className="md:col-span-7">
-            <div className="p-6 sm:p-8 bg-theme-surface border border-theme-border rounded-[2px] space-y-6 offset-static">
+            <div className="p-6 sm:p-8 bg-theme-surface border border-theme-border rounded-[2px] space-y-6">
               <div className="space-y-1">
                 <span className="text-xs font-mono text-theme-muted uppercase tracking-wider block">
                   {t('foot.form.title')}

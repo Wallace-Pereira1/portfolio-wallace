@@ -40,7 +40,7 @@ export default function NotFoundPage() {
         />
 
         <div className="max-w-6xl mx-auto px-6 md:px-12 py-12">
-          <div className="p-8 bg-theme-surface border border-theme-border rounded-[2px] max-w-xl offset-card space-y-5">
+          <div className="p-8 bg-theme-surface border border-theme-border rounded-[2px] max-w-xl space-y-5">
             <div className="flex items-center gap-3 text-theme-muted">
               <Compass className="w-5 h-5" />
               <span className="font-mono text-xs uppercase tracking-wider">

@@ -326,7 +326,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
                 </div>
 
                 {/* Experience Content Card */}
-                <div className="flex-1 min-w-0 rounded-[2px] p-5 sm:p-7 md:p-8 bg-theme-surface border border-theme-border hover:border-theme-muted transition-colors duration-150 relative group/card offset-card">
+                <div className="flex-1 min-w-0 rounded-[2px] p-5 sm:p-7 md:p-8 bg-theme-surface border border-theme-border hover:border-theme-muted transition-colors duration-150 relative group/card">
 
                   {/* Desktop Layout (Two Areas: Metadados e Ação à esquerda, Conteúdo e Tecnologias à direita) */}
                   <div className="hidden md:grid md:grid-cols-12 md:gap-8 lg:gap-10 items-stretch relative z-10">
