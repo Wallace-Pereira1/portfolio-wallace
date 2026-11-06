@@ -1,106 +1,98 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
+import { BrainCircuit, Boxes, Terminal, Waypoints, Workflow, Webhook } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Layers, MoveUpRight } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
 import { useApp } from '../context/AppContext';
-import DomainDetailModal from './DomainDetailModal';
+import TechIcon from './TechIcon';
 
-interface EditorialDomainItem {
+interface SkillGroup {
   id: string;
-  index: string;
-  name: string;
-  summary: string;
+  namePt: string;
+  nameEn: string;
   technologies: string[];
-  projectTitle: string;
-  projectContext: string;
+  projectPt: string;
+  projectEn: string;
   projectUrl: string;
 }
 
-const domainsPt: EditorialDomainItem[] = [
+const currentStack = ['TypeScript', 'React', 'Node.js', 'PostgreSQL'];
+
+const skillGroups: SkillGroup[] = [
   {
     id: 'frontend',
-    index: '01',
-    name: 'Front-end',
-    summary: 'Interfaces para produtos digitais e sistemas corporativos, com foco em clareza, acessibilidade e manutenção.',
+    namePt: 'Front-end',
+    nameEn: 'Front-end',
     technologies: ['React', 'TypeScript', 'Angular', 'Tailwind CSS'],
-    projectTitle: 'Modernização de Sistema Corporativo Legado',
-    projectContext: 'Migração de ASP para Angular e TypeScript, com redução reportada de 70% no tempo de carregamento.',
+    projectPt: 'Modernização de Sistema Corporativo Legado',
+    projectEn: 'Legacy Enterprise System Modernization',
     projectUrl: '/projetos/03',
   },
   {
     id: 'apis-dados',
-    index: '02',
-    name: 'APIs & Dados',
-    summary: 'APIs e modelos relacionais que conectam operações, mantêm dados consistentes e facilitam auditorias.',
+    namePt: 'APIs & Dados',
+    nameEn: 'APIs & Data',
     technologies: ['Node.js', 'PostgreSQL', 'Supabase', 'APIs REST'],
-    projectTitle: 'Fiscal Sentinel: Auditoria e Conformidade Fiscal',
-    projectContext: 'Estudo de caso de auditoria transacional preventiva e detecção de anomalias tributárias.',
+    projectPt: 'Fiscal Sentinel: Auditoria e Conformidade Fiscal',
+    projectEn: 'Fiscal Sentinel: Audit & Compliance',
     projectUrl: '/projetos/07',
   },
   {
     id: 'automacoes-ia',
-    index: '03',
-    name: 'Integrações, Automações & IA',
-    summary: 'Fluxos que conectam canais, CRMs e ERPs para qualificar solicitações e reduzir etapas manuais.',
-    technologies: ['n8n', 'Webhooks', 'APIs REST', 'CRM / ERP', 'LLMs & OCR'],
-    projectTitle: 'Agente de IA & Pipeline de Qualificação Imobiliária',
-    projectContext: 'Qualificação de leads integrada ao CRM ARBO, à OLX e à agenda dos corretores.',
+    namePt: 'Integrações, Automações & IA',
+    nameEn: 'Integrations, Automation & AI',
+    technologies: ['n8n', 'Webhooks', 'CRM / ERP', 'LLMs & OCR'],
+    projectPt: 'Agente de IA & Pipeline de Qualificação Imobiliária',
+    projectEn: 'AI Agent & Real Estate Qualification Pipeline',
     projectUrl: '/projetos/01',
   },
   {
     id: 'entrega-qualidade',
-    index: '04',
-    name: 'Entrega & Qualidade',
-    summary: 'Da integração e validação ao deploy, com atenção à operação e ao acompanhamento das entregas.',
+    namePt: 'Entrega & Qualidade',
+    nameEn: 'Delivery & Quality',
     technologies: ['Git', 'CI/CD', 'Vercel', 'Cloudflare'],
-    projectTitle: 'CAPCRJ | Presença Digital & Orçamentos',
-    projectContext: 'Site publicado no Cloudflare Pages, com deploy contínuo integrado ao GitHub.',
+    projectPt: 'CAPCRJ | Presença Digital & Orçamentos',
+    projectEn: 'CAPCRJ | Digital Presence & Quotes',
     projectUrl: '/projetos/08',
   },
 ];
 
-const domainsEn: EditorialDomainItem[] = [
-  {
-    id: 'frontend',
-    index: '01',
-    name: 'Front-end',
-    summary: 'Interfaces for digital products and enterprise systems, designed for clarity, accessibility, and maintainability.',
-    technologies: ['React', 'TypeScript', 'Angular', 'Tailwind CSS'],
-    projectTitle: 'Legacy Enterprise System Modernization',
-    projectContext: 'ASP to Angular and TypeScript migration, with a reported 70% reduction in loading time.',
-    projectUrl: '/projetos/03',
-  },
-  {
-    id: 'apis-dados',
-    index: '02',
-    name: 'APIs & Data',
-    summary: 'APIs and relational models that connect operations, keep data consistent, and support auditing.',
-    technologies: ['Node.js', 'PostgreSQL', 'Supabase', 'REST APIs'],
-    projectTitle: 'Fiscal Sentinel: Audit & Compliance',
-    projectContext: 'A case study in preventive transaction auditing and tax anomaly detection.',
-    projectUrl: '/projetos/07',
-  },
-  {
-    id: 'automacoes-ia',
-    index: '03',
-    name: 'Integrations, Automation & AI',
-    summary: 'Workflows connecting channels, CRMs, and ERPs to qualify requests and reduce manual steps.',
-    technologies: ['n8n', 'Webhooks', 'REST APIs', 'CRM / ERP', 'LLMs & OCR'],
-    projectTitle: 'AI Agent & Real Estate Qualification Pipeline',
-    projectContext: 'Lead qualification connected to ARBO CRM, OLX, and brokers’ calendars.',
-    projectUrl: '/projetos/01',
-  },
-  {
-    id: 'entrega-qualidade',
-    index: '04',
-    name: 'Delivery & Quality',
-    summary: 'From integration and validation to deployment, with attention to operations and delivery monitoring.',
-    technologies: ['Git', 'CI/CD', 'Vercel', 'Cloudflare'],
-    projectTitle: 'CAPCRJ | Digital Presence & Quotes',
-    projectContext: 'A site published on Cloudflare Pages with continuous deployment connected to GitHub.',
-    projectUrl: '/projetos/08',
-  },
-];
+const neutralIcons = {
+  n8n: Workflow,
+  webhook: Webhook,
+  api: Waypoints,
+  crm: Boxes,
+  llm: BrainCircuit,
+  cloudflare: Terminal,
+  cicd: Waypoints,
+} as const;
+
+function getNeutralIcon(technology: string) {
+  const normalized = technology.toLowerCase();
+  if (normalized.includes('n8n')) return neutralIcons.n8n;
+  if (normalized.includes('webhook')) return neutralIcons.webhook;
+  if (normalized.includes('api')) return neutralIcons.api;
+  if (normalized.includes('crm')) return neutralIcons.crm;
+  if (normalized.includes('llm') || normalized.includes('ocr')) return neutralIcons.llm;
+  if (normalized.includes('cloudflare')) return neutralIcons.cloudflare;
+  if (normalized.includes('ci/cd')) return neutralIcons.cicd;
+  return null;
+}
+
+function SkillItem({ technology }: { technology: string }) {
+  const NeutralIcon = getNeutralIcon(technology);
+
+  return (
+    <li className="flex min-h-8 items-center gap-2 text-[13px] leading-5 text-theme-dim">
+      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] border border-theme-border/80 bg-theme-surface">
+        {NeutralIcon ? (
+          <NeutralIcon aria-hidden="true" className="h-4 w-4 text-theme-muted" strokeWidth={1.7} />
+        ) : (
+          <TechIcon name={technology} className="h-4 w-4" />
+        )}
+      </span>
+      <span>{technology}</span>
+    </li>
+  );
+}
 
 interface DomainsListProps {
   language?: string;
@@ -108,148 +100,51 @@ interface DomainsListProps {
 
 export default function DomainsList({ language: propLanguage }: DomainsListProps) {
   const { language: contextLanguage } = useApp();
-  const currentLang = propLanguage || contextLanguage;
-  const pt = currentLang !== 'en';
-  const domains = pt ? domainsPt : domainsEn;
-  const [selectedId, setSelectedId] = useState(domains[0].id);
-  const [modalDomainId, setModalDomainId] = useState<string | null>(null);
-  const triggerElementsRef = useRef<Map<string, HTMLButtonElement>>(new Map());
-  const selectedDomain = domains.find((domain) => domain.id === selectedId) ?? domains[0];
-  const panelId = 'selected-domain-panel';
+  const isEnglish = (propLanguage || contextLanguage) === 'en';
 
   return (
-    <div className="grid w-full max-w-full grid-cols-1 gap-3 sm:gap-6 lg:grid-cols-12 lg:gap-8">
-      <div
-        className="grid grid-cols-2 gap-2 sm:block sm:divide-y sm:divide-theme-border/60 sm:border-y sm:border-theme-border/60 lg:col-span-5"
-        aria-label={pt ? 'Selecione um domínio técnico' : 'Select a technical domain'}
-      >
-        {domains.map((domain) => {
-          const isSelected = selectedDomain.id === domain.id;
-          return (
-            <button
-              key={domain.id}
-              type="button"
-              id={`domain-header-${domain.id}`}
-              aria-pressed={isSelected}
-              aria-controls={panelId}
-              onClick={() => setSelectedId(domain.id)}
-              className={`group flex min-h-[64px] w-full items-center gap-2 border px-2.5 py-2.5 text-left transition-colors sm:min-h-0 sm:gap-3 sm:border-0 sm:px-0 sm:py-5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-text rounded-[2px] ${
-                isSelected ? 'border-theme-text/50 text-theme-text sm:border-theme-border/60' : 'border-theme-border/60 text-theme-dim hover:text-theme-text'
-              }`}
-            >
-              <span className={`hidden w-8 shrink-0 font-mono text-[10px] tracking-wider sm:block ${isSelected ? 'text-theme-text' : 'text-theme-muted'}`}>
-                {domain.index}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block text-xs font-medium leading-snug sm:text-base">{domain.name}</span>
-                <span className="mt-0.5 block truncate font-mono text-[9px] text-theme-muted sm:mt-1 sm:text-[11px]">
-                  {domain.technologies.slice(0, 3).join(' · ')}
-                </span>
-              </span>
-              <MoveUpRight
-                aria-hidden="true"
-                className={`hidden h-3.5 w-3.5 shrink-0 transition-transform sm:block ${isSelected ? 'translate-x-0.5 -translate-y-0.5 text-theme-text' : 'text-theme-muted group-hover:-translate-y-0.5 group-hover:translate-x-0.5'}`}
-              />
-            </button>
-          );
-        })}
+    <div className="w-full space-y-7 sm:space-y-9">
+      <div className="space-y-3 border-b border-theme-border/70 pb-5 sm:flex sm:items-center sm:gap-8 sm:space-y-0 sm:pb-6">
+        <span className="shrink-0 font-mono text-[11px] uppercase tracking-[0.16em] text-theme-muted">
+          {isEnglish ? 'Current stack' : 'Stack atual'}
+        </span>
+        <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 sm:gap-x-7">
+          {currentStack.map((technology) => (
+            <li key={technology} className="flex items-center gap-2 text-sm text-theme-text">
+              <TechIcon name={technology} className="h-4 w-4" />
+              <span>{technology}</span>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.section
-          key={selectedDomain.id}
-          id={panelId}
-          role="region"
-          aria-labelledby={`domain-header-${selectedDomain.id}`}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.18, ease: 'easeOut' }}
-          className="relative flex min-h-0 flex-col justify-between overflow-hidden border border-theme-border bg-theme-surface p-4 sm:min-h-[300px] sm:p-7 md:p-8 lg:col-span-7"
-        >
-          <div aria-hidden="true" className="pointer-events-none absolute right-4 top-4 font-mono text-[9px] tracking-[0.2em] text-theme-muted/60 sm:right-6 sm:top-6 sm:text-[10px]">
-            {selectedDomain.index} / 04
-          </div>
-
-          <div className="relative space-y-3 pr-9 sm:space-y-5 sm:pr-12">
-            <span className="inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-theme-muted sm:text-[10px]">
-              <Layers aria-hidden="true" className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-              {pt ? 'Domínio em prática' : 'Domain in practice'}
-            </span>
-            <div className="space-y-1.5 sm:space-y-2">
-              <h3 className="font-serif text-lg font-medium leading-tight tracking-[-0.02em] text-theme-text sm:text-2xl md:text-[28px]">
-                {selectedDomain.name}
-              </h3>
-              <p className="max-w-xl text-xs leading-relaxed text-theme-dim sm:text-[15px]">
-                {selectedDomain.summary}
-              </p>
-            </div>
-
-            <div className="space-y-1.5 pt-0.5 sm:space-y-2 sm:pt-1">
-              <span className="block font-mono text-[9px] uppercase tracking-[0.16em] text-theme-muted sm:text-[10px]">
-                {pt ? 'Stack utilizada' : 'Tools used'}
-              </span>
-                <div className="flex flex-wrap gap-1 sm:gap-1.5">
-                {selectedDomain.technologies.map((technology) => (
-                  <span
-                    key={technology}
-                    className="border border-theme-border px-1.5 py-0.5 font-mono text-[9px] text-theme-dim sm:px-2 sm:py-1 sm:text-[11px]"
-                  >
-                    {technology}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="relative mt-4 border-t border-theme-border/70 pt-3 sm:mt-8 sm:pt-5">
-            <span className="block font-mono text-[9px] uppercase tracking-[0.16em] text-theme-muted sm:text-[10px]">
-              {pt ? 'Projeto relacionado' : 'Related project'}
-            </span>
-            <div className="mt-1.5 flex flex-col gap-2 sm:mt-2 sm:flex-row sm:items-end sm:justify-between sm:gap-3">
-              <div className="min-w-0 space-y-1">
-                <h4 className="text-xs font-medium leading-snug text-theme-text sm:text-base">
-                  {selectedDomain.projectTitle}
-                </h4>
-                <p className="hidden max-w-xl text-xs leading-relaxed text-theme-dim sm:block sm:text-[13px]">
-                  {selectedDomain.projectContext}
-                </p>
-              </div>
-              <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[9px] sm:text-[11px]">
-                <Link
-                  to={selectedDomain.projectUrl}
-                  className="inline-flex items-center gap-1.5 text-theme-text underline decoration-theme-border underline-offset-4 transition-colors hover:decoration-theme-text"
-                >
-                  {pt ? 'Abrir estudo de caso' : 'Open case study'}
-                  <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
-                </Link>
-                <button
-                  ref={(element) => {
-                    if (element) triggerElementsRef.current.set(selectedDomain.id, element);
-                    else triggerElementsRef.current.delete(selectedDomain.id);
-                  }}
-                  type="button"
-                  onClick={() => setModalDomainId(selectedDomain.id)}
-                  aria-haspopup="dialog"
-                  aria-expanded={modalDomainId === selectedDomain.id}
-                  className="inline-flex items-center gap-1.5 text-theme-muted underline decoration-theme-border/60 underline-offset-4 transition-colors hover:text-theme-text hover:decoration-theme-text focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-text rounded-[2px]"
-                >
-                  {pt ? 'Detalhes técnicos' : 'Technical details'}
-                  <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </motion.section>
-      </AnimatePresence>
-
-      <DomainDetailModal
-        isOpen={Boolean(modalDomainId)}
-        onClose={() => setModalDomainId(null)}
-        domainId={modalDomainId}
-        language={currentLang}
-        triggerElement={modalDomainId ? triggerElementsRef.current.get(modalDomainId) : null}
-      />
+      <div className="grid grid-cols-1 gap-x-7 gap-y-7 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-6">
+        {skillGroups.map((group) => (
+          <section key={group.id} aria-labelledby={`skill-group-${group.id}`} className="min-w-0">
+            <h3
+              id={`skill-group-${group.id}`}
+              className="mb-3 font-mono text-[10px] uppercase tracking-[0.14em] text-theme-muted"
+            >
+              {isEnglish ? group.nameEn : group.namePt}
+            </h3>
+            <ul className="space-y-0.5">
+              {group.technologies.map((technology) => (
+                <SkillItem key={technology} technology={technology} />
+              ))}
+            </ul>
+            <p className="mt-3 border-t border-theme-border/60 pt-2.5 text-xs leading-relaxed text-theme-muted">
+              <span>{isEnglish ? 'Used in: ' : 'Usado em: '}</span>
+              <Link
+                to={group.projectUrl}
+                className="text-theme-dim underline decoration-theme-border underline-offset-4 hover:text-theme-text hover:decoration-theme-text transition-colors"
+              >
+                {isEnglish ? group.projectEn : group.projectPt}
+                <span aria-hidden="true"> ↗</span>
+              </Link>
+            </p>
+          </section>
+        ))}
+      </div>
     </div>
   );
 }

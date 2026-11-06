@@ -7,7 +7,7 @@ interface StackSectionProps {
 }
 
 export default function StackSection({ showHeader = true }: StackSectionProps) {
-  const { language, t } = useApp();
+  const { language } = useApp();
 
   return (
     <section
@@ -19,15 +19,9 @@ export default function StackSection({ showHeader = true }: StackSectionProps) {
         {/* Section Header */}
         {showHeader && (
           <div className="space-y-1.5 pb-1">
-            <span className="text-[10.5px] font-mono text-theme-muted uppercase tracking-widest block font-medium">
-              {language === 'pt' ? 'Competências & Tecnologias' : 'Skills & Technologies'}
-            </span>
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl leading-[1.15] font-medium text-theme-text tracking-[-0.015em]">
-              {t('tech.title')}
+            <h2 className="font-serif text-2xl sm:text-[26px] leading-[1.15] font-medium text-theme-text tracking-[-0.015em]">
+              {language === 'pt' ? 'Competências' : 'Skills'}
             </h2>
-            <p className="text-xs sm:text-sm text-theme-dim max-w-2xl leading-relaxed">
-              {t('tech.desc')}
-            </p>
           </div>
         )}
 
