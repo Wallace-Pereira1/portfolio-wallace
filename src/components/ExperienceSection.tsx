@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowUpRight } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Certifications from './Certifications';
 import ExperienceDetailModal, { WorkExperienceItem } from './ExperienceDetailModal';
@@ -48,7 +48,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       period: 'Junho de 2026 — Presente',
       location: 'Rio de Janeiro, RJ · Remoto',
       summary: 'Responsável técnico pelo e-commerce e pelas integrações que conectam ERP, CRM, WhatsApp e as 10 lojas da marca, mantendo pedidos, estoque e cadastros de clientes sincronizados.',
-      impact: 'Pedidos, estoque e clientes de 10 lojas e do e-commerce conectados por APIs e webhooks, com tratamento de erros e monitoramento das sincronizações.',
+      impact: 'Conectei pedidos, estoque e cadastros de clientes de 10 lojas e do e-commerce por APIs e webhooks, com tratamento de falhas e monitoramento.',
       technologies: ['Olist', 'APIs REST', 'Webhooks', 'WhatsApp API', 'GA4 & GTM', 'Cloudflare'],
       buttonText: 'VER EXPERIÊNCIA ↗',
       isCurrent: true,
@@ -67,7 +67,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       period: 'Junho de 2024 — Presente',
       location: 'Rio de Janeiro, RJ · Remoto',
       summary: 'Desenvolvi agentes de IA conversacionais e automações em n8n para atender e qualificar leads, integrando vendas, e-commerce e CRM, do mapeamento do escopo até a produção.',
-      impact: 'Agentes e fluxos automatizados que tiram trabalho manual do atendimento e da qualificação de leads, com integrações em produção com Olist, Salesforce e RD Station.',
+      impact: 'Automatizei etapas manuais do atendimento e da qualificação de leads, com integrações em produção com Olist, Salesforce e RD Station.',
       technologies: ['n8n', 'Node.js', 'APIs REST', 'MySQL', 'Salesforce', 'RD Station', 'LLMs'],
       buttonText: 'VER EXPERIÊNCIA ↗',
       isCurrent: false,
@@ -87,7 +87,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       period: 'Março de 2022 — Março de 2023',
       location: 'Rio de Janeiro, RJ',
       summary: 'Desenvolvimento e sustentação de interfaces empresariais com Angular e TypeScript, integradas a APIs REST e orientadas à evolução gradual de sistemas corporativos.',
-      impact: 'Participação na modernização de sistema legado ASP para uma arquitetura modular, com redução de mais de 70% no tempo de carregamento.',
+      impact: 'Contribuí para modernizar o sistema legado ASP em uma arquitetura modular, com redução reportada de mais de 70% no tempo de carregamento.',
       technologies: ['Angular', 'TypeScript', 'JavaScript', 'APIs REST', 'Design Systems'],
       buttonText: 'VER PROJETO RELACIONADO ↗',
       projectUrl: '#projetos',
@@ -107,7 +107,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       period: 'Abril de 2021 — Dezembro de 2021',
       location: 'Rio de Janeiro, Brasil',
       summary: 'Formação prática em fundamentos de computação, algoritmos, estruturas de dados e desenvolvimento com Java e JavaScript.',
-      impact: 'Base técnica construída por meio de exercícios práticos, lógica de programação e desenvolvimento orientado a objetos.',
+      impact: 'Construí uma base técnica com exercícios práticos, lógica de programação e desenvolvimento orientado a objetos.',
       technologies: ['Java', 'JavaScript', 'Git', 'Algoritmos', 'Estruturas de Dados'],
       buttonText: 'VER EXPERIÊNCIA ↗',
       isCurrent: false,
@@ -124,7 +124,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       period: 'June 2026 — Present',
       location: 'Rio de Janeiro, RJ · Remote',
       summary: 'Technical owner of the e-commerce platform and of the integrations connecting ERP, CRM, WhatsApp and the brand’s 10 stores, keeping orders, inventory and customer records in sync.',
-      impact: 'Orders, inventory and customers from 10 stores and the online shop connected through APIs and webhooks, with error handling and sync monitoring.',
+      impact: 'Connected orders, inventory and customer records across 10 stores and the online shop through APIs and webhooks, with failure handling and monitoring.',
       technologies: ['Olist', 'REST APIs', 'Webhooks', 'WhatsApp API', 'GA4 & GTM', 'Cloudflare'],
       buttonText: 'VIEW EXPERIENCE ↗',
       isCurrent: true,
@@ -143,7 +143,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       period: 'June 2024 — Present',
       location: 'Rio de Janeiro, RJ · Remote',
       summary: 'Built conversational AI agents and n8n automations to handle and qualify leads, integrating sales, e-commerce and CRM, from scoping to production.',
-      impact: 'Automated agents and workflows that take manual work out of customer service and lead qualification, with live integrations with Olist, Salesforce and RD Station.',
+      impact: 'Automated manual steps in customer service and lead qualification, with live integrations with Olist, Salesforce and RD Station.',
       technologies: ['n8n', 'Node.js', 'REST APIs', 'MySQL', 'Salesforce', 'RD Station', 'LLMs'],
       buttonText: 'VIEW EXPERIENCE ↗',
       isCurrent: false,
@@ -163,7 +163,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       period: 'March 2022 — March 2023',
       location: 'Rio de Janeiro, RJ',
       summary: 'Development and maintenance of enterprise interfaces with Angular and TypeScript, integrated with REST APIs and focused on the gradual evolution of corporate systems.',
-      impact: 'Contributed to modernizing a legacy ASP system to a modular architecture, achieving a 70%+ reduction in loading times.',
+      impact: 'Contributed to modernizing a legacy ASP system into a modular architecture, with a reported 70%+ reduction in loading time.',
       technologies: ['Angular', 'TypeScript', 'JavaScript', 'REST APIs', 'Design Systems'],
       buttonText: 'VIEW RELATED PROJECT ↗',
       projectUrl: '#projetos',
@@ -183,7 +183,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       period: 'April 2021 — December 2021',
       location: 'Rio de Janeiro, Brazil',
       summary: 'Hands-on training in computer science fundamentals, algorithms, data structures, and development with Java and JavaScript.',
-      impact: 'Technical foundation built through practical coding, computational logic, and object-oriented development.',
+      impact: 'Built a technical foundation through practical coding, computational logic, and object-oriented development.',
       technologies: ['Java', 'JavaScript', 'Git', 'Algorithms', 'Data Structures'],
       buttonText: 'VIEW EXPERIENCE ↗',
       isCurrent: false,
@@ -300,175 +300,54 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
-            className="space-y-6 sm:space-y-8 md:space-y-10"
+            className="divide-y divide-theme-border/70 border-b border-theme-border/70"
           >
-            {workExperiences.map((exp, idx) => (
+            {workExperiences.map((exp) => (
               <motion.article
                 key={exp.company}
                 variants={timelineItemVariants}
-                className="flex gap-0 md:gap-6 items-start md:-ml-10 group/exp"
+                className="py-5 sm:py-6"
               >
-                {/* Timeline Spine Column (Fine vertical line + Marker node) */}
-                <div className="relative hidden md:flex flex-col items-center self-stretch shrink-0 w-4">
-                  {/* Timeline Marker Node */}
-                  <div className="pt-6 sm:pt-7">
-                    <div className="w-2.5 h-2.5 rounded-full bg-theme-surface border border-theme-border group-hover/exp:border-theme-text/80 group-hover/exp:bg-theme-muted/40 transition-colors" />
-                  </div>
-
-                  {/* Connecting Vertical Line down to next experience */}
-                  {idx < workExperiences.length - 1 && (
-                    <div
-                      aria-hidden="true"
-                      className="w-[1px] bg-theme-border/60 flex-1 my-2"
-                    />
-                  )}
-                </div>
-
-                {/* Experience Content Card */}
-                <div className="flex-1 min-w-0 rounded-[2px] p-5 sm:p-7 md:p-8 bg-theme-surface border border-theme-border hover:border-theme-muted transition-colors duration-150 relative group/card">
-
-                  {/* Desktop Layout (Two Areas: Metadados e Ação à esquerda, Conteúdo e Tecnologias à direita) */}
-                  <div className="hidden md:grid md:grid-cols-12 md:gap-8 lg:gap-10 items-stretch relative z-10">
-                    {/* Area 1: Metadados & Botão de Ação no Lado Esquerdo */}
-                    <div className="md:col-span-4 lg:col-span-4 flex flex-col justify-between pt-0.5 space-y-4">
-                      <div className="space-y-3.5">
-                        {/* Period */}
-                        <div className="space-y-1">
-                          <span className="text-[11px] font-mono uppercase tracking-wider text-theme-muted block">
-                            {language === 'pt' ? 'Período' : 'Timeline'}
-                          </span>
-                          <p className="text-xs sm:text-[13px] font-mono font-medium text-theme-text/90">
-                            {exp.period}
-                          </p>
-                        </div>
-
-                        {/* Location */}
-                        <div className="space-y-1">
-                          <span className="text-[11px] font-mono uppercase tracking-wider text-theme-muted block">
-                            {language === 'pt' ? 'Localização' : 'Location'}
-                          </span>
-                          <p className="text-xs font-mono text-theme-muted">
-                            {exp.location}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Botão de Detalhes no Lado Esquerdo, nivelado com as tecnologias */}
-                      <div className="pt-2">
-                        <button
-                          type="button"
-                          onClick={() => handleActionClick(exp)}
-                          className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider rounded-[2px] transition-all cursor-pointer group/btn focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-text px-3.5 sm:px-4 py-2 border border-theme-border bg-theme-surface hover:border-theme-text hover:text-theme-text text-theme-dim font-medium whitespace-nowrap"
-                        >
-                          <span>{exp.buttonText || (language === 'pt' ? 'VER EXPERIÊNCIA ↗' : 'VIEW EXPERIENCE ↗')}</span>
-                          <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 text-theme-muted group-hover/btn:text-theme-text" />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Area 2: Conteúdo */}
-                    <div className="md:col-span-8 lg:col-span-8 flex flex-col justify-between space-y-5">
-                      <div className="space-y-5">
-                        {/* 1. Empresa & 2. Cargo */}
-                        <div className="space-y-1.5 border-b border-theme-border/40 pb-3">
-                          <h3 className="font-serif text-2xl sm:text-[28px] font-medium text-theme-text tracking-[-0.01em] leading-tight">
-                            {exp.company}
-                          </h3>
-                          <h4 className="text-base sm:text-lg font-semibold text-theme-text/90 tracking-tight leading-snug">
-                            {exp.role}
-                          </h4>
-                        </div>
-
-                        {/* 3. Descrição */}
-                        <p className="text-sm sm:text-[15px] text-theme-dim leading-relaxed font-normal">
-                          {exp.summary}
-                        </p>
-
-                        {/* 4. Bloco de Impacto */}
-                        <div className="rounded-[2px] space-y-1.5 p-3.5 sm:p-4 bg-theme-surface/60 border-l-2 border-theme-border border-r border-t border-b border-theme-border/40 transition-colors">
-                          <span className="text-[11px] font-mono uppercase tracking-wider block font-semibold text-theme-muted">
-                            {language === 'pt' ? 'IMPACTO' : 'IMPACT'}
-                          </span>
-                          <p className="text-xs sm:text-sm text-theme-text/90 leading-relaxed font-medium">
-                            {exp.impact}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* 5. Tecnologias Principais em Badges Compactas */}
-                      <div className="space-y-2 pt-2">
-                        <span className="text-[11px] font-mono uppercase tracking-widest text-theme-muted block">
-                          {language === 'pt' ? 'Tecnologias' : 'Technologies'}
-                        </span>
-                        <p className="text-xs sm:text-[13px] leading-relaxed text-theme-dim">
-                          {exp.technologies.slice(0, 5).join(' · ')}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Mobile Layout (Coluna vertical única na ordem estrita solicitada: 1. Marcador, 2. Período, 3. Empresa, 4. Local, 5. Cargo, 6. Descrição, 7. Impacto, 8. Tecnologias, 9. Botão) */}
-                  <div className="md:hidden space-y-3.5 relative z-10">
-                    {/* 2. Período */}
-                    <div>
-                      <span className="text-xs font-mono text-theme-text/90 font-medium">
-                        {exp.period}
-                      </span>
-                    </div>
-
-                    {/* 3. Empresa */}
-                    <h3 className="font-serif text-xl sm:text-2xl font-medium text-theme-text tracking-[-0.01em] leading-tight">
-                      {exp.company}
-                    </h3>
-
-                    {/* 4. Local */}
-                    <p className="text-xs font-mono text-theme-muted">
-                      {exp.location}
+                <div className="space-y-2.5">
+                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                    <h3 className="text-base sm:text-lg font-medium text-theme-text">{exp.company}</h3>
+                    <span aria-hidden="true" className="text-theme-muted">—</span>
+                    <p className="text-sm sm:text-[15px] text-theme-dim">{exp.role}</p>
+                    <p className="ml-auto text-xs font-mono text-theme-muted">
+                      {exp.period} · {exp.location}
                     </p>
+                  </div>
+                  <p className="max-w-4xl text-sm sm:text-[15px] leading-relaxed text-theme-dim">
+                    {exp.summary}
+                  </p>
 
-                    {/* 5. Cargo */}
-                    <h4 className="text-base font-semibold text-theme-text/90 tracking-tight leading-snug">
-                      {exp.role}
-                    </h4>
-
-                    {/* 6. Descrição */}
-                    <p className="text-xs sm:text-sm text-theme-dim leading-relaxed font-normal">
-                      {exp.summary}
-                    </p>
-
-                    {/* 7. Bloco de Impacto */}
-                    <div className="rounded-[2px] space-y-1 p-3 bg-theme-surface/60 border-l-2 border-theme-border border-r border-t border-b border-theme-border/40 transition-colors">
-                      <span className="text-[11px] font-mono uppercase tracking-wider block font-semibold text-theme-muted">
-                        {language === 'pt' ? 'IMPACTO' : 'IMPACT'}
-                      </span>
-                      <p className="text-xs text-theme-text/90 leading-relaxed font-medium">
-                        {exp.impact}
+                  <details className="group pt-1">
+                    <summary className="inline-flex cursor-pointer list-none items-center gap-1.5 text-sm text-theme-text underline decoration-theme-border underline-offset-4 hover:decoration-theme-text focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text [&::-webkit-details-marker]:hidden">
+                      {language === 'pt' ? 'Ver mais' : 'Read more'}
+                      <ChevronDown aria-hidden="true" className="h-3.5 w-3.5 transition-transform group-open:rotate-180" />
+                    </summary>
+                    <div className="mt-3 space-y-3 pl-3 border-l border-theme-border/70">
+                      {exp.impact && (
+                        <ul className="list-disc pl-5 text-sm leading-relaxed text-theme-dim">
+                          <li>
+                            <strong className="font-semibold text-theme-text">{exp.impact.split(' ')[0]}</strong>{' '}
+                            {exp.impact.slice(exp.impact.indexOf(' ') + 1)}
+                          </li>
+                        </ul>
+                      )}
+                      <p className="text-xs sm:text-[13px] leading-relaxed text-theme-muted">
+                        <span className="text-theme-dim">{language === 'pt' ? 'Tecnologias: ' : 'Technologies: '}</span>
+                        {exp.technologies.slice(0, 5).join(' · ')}
                       </p>
+                      <button
+                        type="button"
+                        onClick={() => handleActionClick(exp)}
+                        className="inline-flex items-center gap-1.5 text-sm text-theme-text underline decoration-theme-border underline-offset-4 hover:decoration-theme-text focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+                      >
+                        {exp.buttonText || (language === 'pt' ? 'Ver experiência completa' : 'View full experience')}
+                      </button>
                     </div>
-
-                    {/* 8. Botão de Detalhes no Lado Esquerdo & Tecnologias na Mesma Altura */}
-                    <div className="pt-1 flex flex-col-reverse sm:flex-row sm:items-end justify-between gap-3">
-                      <div className="shrink-0 self-start sm:self-end pt-1 sm:pt-0">
-                        <button
-                          type="button"
-                          onClick={() => handleActionClick(exp)}
-                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-mono text-xs uppercase tracking-wider rounded-[2px] transition-all cursor-pointer group/btn focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-text px-3.5 py-2 border border-theme-border bg-theme-surface hover:border-theme-text hover:text-theme-text text-theme-dim font-medium whitespace-nowrap"
-                        >
-                          <span>{exp.buttonText || (language === 'pt' ? 'VER EXPERIÊNCIA ↗' : 'VIEW EXPERIENCE ↗')}</span>
-                          <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 text-theme-muted group-hover/btn:text-theme-text" />
-                        </button>
-                      </div>
-
-                      <div className="space-y-1.5 flex-1 min-w-0">
-                        <span className="text-[11px] font-mono uppercase tracking-widest text-theme-muted block">
-                          {language === 'pt' ? 'Tecnologias' : 'Technologies'}
-                        </span>
-                        <p className="text-xs leading-relaxed text-theme-dim">
-                          {exp.technologies.slice(0, 5).join(' · ')}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  </details>
                 </div>
               </motion.article>
             ))}
