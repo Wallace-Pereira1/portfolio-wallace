@@ -29,7 +29,7 @@ export default function HomePage() {
   return (
     <div className="w-full">
       {/* 1. Hero and home introduction */}
-      <Hero />
+      <Hero projects={projects} />
 
       {/* 2. Selected work */}
       <section

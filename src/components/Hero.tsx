@@ -1,12 +1,18 @@
 import React, { useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { FileDown, MessageCircle } from 'lucide-react';
+import { ArrowUpRight, FileDown, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { downloadResumePdf } from '../utils/generateResumePdf';
 import { trackEvent } from '../utils/analytics';
 import { currentStack } from '../data/stack';
+import type { Project } from '../types';
 
-export default function Hero() {
-  const { language } = useApp();
+interface HeroProps {
+  projects: Project[];
+}
+
+export default function Hero({ projects }: HeroProps) {
+  const { language, t } = useApp();
   const heroRef = useRef<HTMLElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const rafId = useRef<number | null>(null);
@@ -163,18 +169,76 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-4 border-y border-theme-border/70 py-4 sm:mt-10 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
-          <p className="text-sm sm:text-[15px] text-theme-dim leading-relaxed">
-            {language === 'pt'
-              ? 'Aberto a vagas full stack · Rio de Janeiro · remoto/híbrido'
-              : 'Open to full stack roles · Rio de Janeiro · remote/hybrid'}
-          </p>
-          <p className="shrink-0 text-sm sm:text-[15px] text-theme-text leading-relaxed">
-            <span className="mr-3 font-mono text-[11px] uppercase tracking-widest text-theme-muted">
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Link
+            to="/#contato"
+            aria-label={language === 'pt' ? 'Disponibilidade e contato' : 'Availability and contact'}
+            className="group relative flex min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+          >
+            <span className="font-mono text-[13px] uppercase tracking-wide text-theme-muted">
+              {language === 'pt' ? 'Disponibilidade' : 'Availability'}
+            </span>
+            <span className="pr-8 text-[15px] leading-relaxed text-theme-dim">
+              <span className="block text-theme-text">
+                {language === 'pt' ? 'Aberto a vagas full stack' : 'Open to full stack roles'}
+              </span>
+              <span className="block">{language === 'pt' ? 'Rio de Janeiro · remoto/híbrido' : 'Rio de Janeiro · remote/hybrid'}</span>
+              <span className="block text-theme-muted">{t('hero.stat1.val')} {language === 'pt' ? 'de experiência' : 'of experience'}</span>
+            </span>
+            <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Link>
+
+          <Link
+            to="/#tecnologias"
+            aria-label={language === 'pt' ? 'Stack atual e competências' : 'Current stack and skills'}
+            className="group relative flex min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+          >
+            <span className="font-mono text-[13px] uppercase tracking-wide text-theme-muted">
               {language === 'pt' ? 'Stack atual' : 'Current stack'}
             </span>
-            {currentStack.join(' · ')}
-          </p>
+            <span className="pr-8 font-mono text-xs leading-relaxed text-theme-dim">
+              {currentStack.join(' · ')}
+            </span>
+            <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Link>
+
+          <Link
+            to="/#projetos"
+            aria-label={language === 'pt' ? 'Projetos selecionados' : 'Selected projects'}
+            className="group relative flex min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+          >
+            <span className="font-mono text-[13px] uppercase tracking-wide text-theme-muted">
+              {language === 'pt' ? 'Projetos' : 'Projects'}
+            </span>
+            <span className="pr-8 text-[15px] leading-relaxed text-theme-dim">
+              <span className="mb-1 block text-theme-text">
+                {projects.length} {language === 'pt' ? 'projetos' : 'projects'}
+              </span>
+              {projects.slice(0, 2).map((project) => (
+                <span key={project.id} className="block text-sm text-theme-muted">{project.title}</span>
+              ))}
+            </span>
+            <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Link>
+
+          <Link
+            to="/#experiencia"
+            aria-label={language === 'pt' ? 'Trajetória profissional atual' : 'Current professional experience'}
+            className="group relative flex min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+          >
+            <span className="font-mono text-[13px] uppercase tracking-wide text-theme-muted">
+              {language === 'pt' ? 'Trajetória' : 'Experience'}
+            </span>
+            <span className="pr-8 text-[15px] leading-relaxed text-theme-dim">
+              <span className="block text-theme-text">Prata e Prata</span>
+              <span className="block text-sm text-theme-muted">
+                {language === 'pt'
+                  ? 'Analista de Automação, Integrações e Operações Financeiras'
+                  : 'Automation, Integrations & Financial Operations Analyst'}
+              </span>
+            </span>
+            <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Link>
         </div>
       </div>
     </section>
