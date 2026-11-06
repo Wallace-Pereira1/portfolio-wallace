@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, ArrowUpRight, Sun, Moon, FileDown } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { downloadResumePdf } from '../utils/generateResumePdf';
 
 export default function Navbar() {
   const { language, setLanguage, theme, setTheme, t } = useApp();
@@ -281,28 +280,6 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Direct Resume Download */}
-          <button
-            type="button"
-            onClick={() => downloadResumePdf(language)}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono uppercase tracking-wider text-theme-text hover:text-theme-dim border border-theme-border hover:border-theme-text bg-theme-surface rounded-[2px] transition-colors cursor-pointer"
-            title={language === 'pt' ? 'Baixar Currículo em PDF' : 'Download Resume in PDF'}
-            aria-label="Download CV"
-          >
-            <FileDown className="w-3.5 h-3.5 text-theme-muted" />
-            <span>{language === 'pt' ? 'Currículo' : 'Resume'}</span>
-          </button>
-
-          <a
-            href="/#contato"
-            onClick={(e) => scrollToSection('contato', e)}
-            className="group inline-flex items-center gap-1.5 text-[12px] font-mono uppercase tracking-wider text-theme-text hover:text-theme-dim transition-colors cursor-pointer bg-transparent border-none"
-          >
-            <span className="border-b border-theme-text/50 group-hover:border-theme-text pb-0.5 transition-colors">
-              {t('nav.cta')}
-            </span>
-            <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </a>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -370,7 +347,7 @@ export default function Navbar() {
                             {link.name}
                           </span>
                           {isActive && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-theme-text" />
+                            <span aria-hidden="true" className="h-px w-6 bg-theme-text" />
                           )}
                         </a>
                       </li>
@@ -398,26 +375,6 @@ export default function Navbar() {
                     </button>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsOpen(false);
-                    downloadResumePdf(language);
-                  }}
-                  className="flex items-center justify-center gap-2 w-full py-2.5 border border-theme-border bg-theme-surface hover:border-theme-text text-theme-text text-xs font-mono uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer"
-                >
-                  <FileDown className="w-4 h-4 text-theme-muted" />
-                  <span>{language === 'pt' ? 'Baixar Currículo (PDF)' : 'Download Resume (PDF)'}</span>
-                </button>
-
-                <a
-                  href="/#contato"
-                  onClick={(e) => scrollToSection('contato', e)}
-                  className="flex items-center justify-center gap-1.5 w-full py-2.5 bg-theme-text text-theme-bg text-xs font-mono uppercase tracking-wider rounded-[2px] transition-opacity hover:opacity-90 cursor-pointer font-medium border-none"
-                >
-                  {t('nav.cta')}
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </a>
               </div>
             </motion.div>
           </div>
