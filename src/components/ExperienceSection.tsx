@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Certifications from './Certifications';
@@ -38,6 +38,10 @@ interface ExperienceSectionProps {
 
 export default function ExperienceSection({ showHeader = true }: ExperienceSectionProps) {
   const { t, language } = useApp();
+  const prefersReducedMotion = useReducedMotion();
+  const experienceVariants = prefersReducedMotion
+    ? { hidden: { opacity: 1, y: 0 }, visible: { opacity: 1, y: 0 } }
+    : timelineItemVariants;
   const [activeTab, setActiveTab] = useState<'trabalho' | 'educacao_certificados'>('trabalho');
   const [selectedExperience, setSelectedExperience] = useState<WorkExperienceItem | null>(null);
 
@@ -221,11 +225,11 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
         {showHeader ? (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pb-5">
             <div className="md:col-span-8 space-y-2">
-              <span className="text-[11px] font-mono text-theme-muted uppercase tracking-widest block">
+              <span className="text-xs font-mono text-theme-muted uppercase tracking-widest block">
                 {language === 'pt' ? 'Trajetória Profissional' : 'Professional Trajectory'}
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]">
-                {t('exp.title')}
+              <h2 className="font-serif text-2xl sm:text-[26px] leading-[1.15] font-medium text-theme-text tracking-[-0.015em]">
+                {language === 'pt' ? 'Trajetória' : 'Experience'}
               </h2>
             </div>
 
@@ -260,7 +264,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
           </div>
         ) : (
           <div className="flex items-center justify-between pb-6">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-theme-muted">
+            <span className="text-xs font-mono uppercase tracking-wider text-theme-muted">
               {activeTab === 'trabalho'
                 ? (language === 'pt' ? 'Atuação Profissional' : 'Work History')
                 : (language === 'pt' ? 'Formação & Certificados' : 'Education & Credentials')}
@@ -305,7 +309,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
             {workExperiences.map((exp) => (
               <motion.article
                 key={exp.company}
-                variants={timelineItemVariants}
+                variants={experienceVariants}
                 className="py-5 sm:py-6"
               >
                 <div className="space-y-2.5">
@@ -358,7 +362,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-8">
               {/* Higher Education */}
               <div className="md:col-span-6 space-y-4">
-                <span className="text-[11px] font-mono uppercase tracking-widest text-theme-muted block">
+                <span className="text-xs font-mono uppercase tracking-widest text-theme-muted block">
                   {t('exp.edu.title')}
                 </span>
                 <div className="space-y-2">
@@ -368,7 +372,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
                   <p className="text-sm font-medium text-theme-dim">
                     {t('exp.edu.inst')}
                   </p>
-                  <p className="text-xs font-mono text-theme-muted">
+                  <p className="text-sm font-mono text-theme-muted">
                     {t('exp.edu.period')} · {t('exp.edu.status')}
                   </p>
                 </div>
@@ -376,7 +380,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
 
               {/* Languages */}
               <div className="md:col-span-6 space-y-4">
-                <span className="text-[11px] font-mono uppercase tracking-widest text-theme-muted block">
+                <span className="text-xs font-mono uppercase tracking-widest text-theme-muted block">
                   {t('exp.lang.title')}
                 </span>
                 <div className="space-y-4">
@@ -385,7 +389,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
                       <span className="text-base font-semibold text-theme-text block">
                         {lang.name}
                       </span>
-                      <span className="text-xs font-mono text-theme-dim block">
+                      <span className="text-sm font-mono text-theme-dim block">
                         {lang.level}
                       </span>
                     </div>

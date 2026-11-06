@@ -85,7 +85,7 @@ const SkillItem: React.FC<{ technology: string }> = ({ technology }) => {
         {NeutralIcon ? (
           <NeutralIcon aria-hidden="true" className="h-4 w-4 text-theme-muted" strokeWidth={1.7} />
         ) : (
-          <TechIcon name={technology} className="h-4 w-4" />
+          <TechIcon name={technology} className="h-4 w-4" colorMode="brand" />
         )}
       </span>
       <span>{technology}</span>
@@ -104,13 +104,13 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
   return (
     <div className="w-full space-y-7 sm:space-y-9">
       <div className="space-y-3 border-b border-theme-border/70 pb-5 sm:flex sm:items-center sm:gap-8 sm:space-y-0 sm:pb-6">
-        <span className="shrink-0 font-mono text-[11px] uppercase tracking-[0.16em] text-theme-muted">
+        <span className="shrink-0 font-mono text-xs uppercase tracking-[0.16em] text-theme-muted">
           {isEnglish ? 'Current stack' : 'Stack atual'}
         </span>
         <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 sm:gap-x-7">
           {currentStack.map((technology) => (
             <li key={technology} className="flex items-center gap-2 text-sm text-theme-text">
-              <TechIcon name={technology} className="h-4 w-4" />
+              <TechIcon name={technology} className="h-4 w-4" colorMode="brand" />
               <span>{technology}</span>
             </li>
           ))}
@@ -122,7 +122,7 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
           <section key={group.id} aria-labelledby={`skill-group-${group.id}`} className="min-w-0">
             <h3
               id={`skill-group-${group.id}`}
-              className="mb-3 font-mono text-[10px] uppercase tracking-[0.14em] text-theme-muted"
+              className="mb-3 font-mono text-xs uppercase tracking-[0.14em] text-theme-muted"
             >
               {isEnglish ? group.nameEn : group.namePt}
             </h3>

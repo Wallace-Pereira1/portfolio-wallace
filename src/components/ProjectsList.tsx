@@ -27,12 +27,12 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
       className="w-full space-y-5 sm:space-y-7"
     >
       <header className="pb-4 border-b border-theme-border/60">
-        <span className="text-[11px] font-mono text-theme-muted uppercase tracking-widest block mb-1">
+        <span className="text-xs font-mono text-theme-muted uppercase tracking-widest block mb-1">
           {isEnglish ? 'Selected work' : 'Trabalhos selecionados'}
         </span>
         <h2
           id="projects-heading"
-          className="font-serif text-3xl sm:text-4xl lg:text-[40px] leading-[1.1] font-medium text-theme-text tracking-[-0.015em]"
+          className="font-serif text-2xl sm:text-[26px] leading-[1.15] font-medium text-theme-text tracking-[-0.015em]"
         >
           {isEnglish ? 'Projects' : 'Projetos'}
         </h2>

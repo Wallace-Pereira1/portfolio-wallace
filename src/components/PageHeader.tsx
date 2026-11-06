@@ -21,15 +21,15 @@ export default function PageHeader({ number, eyebrow, title, description, meta =
         {/* Editorial Heading: Eyebrow Context -> Short Strong H1 -> Specific Description */}
         <div className="space-y-3 sm:space-y-4 max-w-4xl">
           {(eyebrow || number) && (
-            <div className="text-[11px] font-mono uppercase tracking-widest text-theme-muted font-medium">
+            <div className="text-xs font-mono uppercase tracking-widest text-theme-muted font-medium">
               {eyebrow || number}
             </div>
           )}
           <TypewriterTitle
             text={title}
-            className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-[-0.02em] text-theme-text leading-[1.06]"
+            className="font-serif text-2xl sm:text-[28px] font-medium tracking-[-0.02em] text-theme-text leading-[1.15]"
           />
-          <p className="text-base sm:text-lg text-theme-dim max-w-3xl font-normal leading-relaxed">
+          <p className="text-[15px] sm:text-base text-theme-dim max-w-3xl font-normal leading-relaxed">
             {description}
           </p>
         </div>
@@ -39,11 +39,11 @@ export default function PageHeader({ number, eyebrow, title, description, meta =
           <div
             className={`grid grid-cols-2 ${
               meta.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-4'
-            } gap-4 pt-4 border-t border-theme-border/60 text-xs font-mono`}
+            } gap-4 pt-4 border-t border-theme-border/60 text-sm font-mono`}
           >
             {meta.map((item, idx) => (
               <div key={idx} className="space-y-0.5">
-                <span className="text-[11px] text-theme-muted uppercase tracking-wider block">
+                <span className="text-xs text-theme-muted uppercase tracking-wider block">
                   {item.label}
                 </span>
                 <span className="text-theme-text font-medium block truncate">

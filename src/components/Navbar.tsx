@@ -241,7 +241,7 @@ export default function Navbar() {
           {/* Controls: Language and Theme */}
           <div className="flex items-center gap-3">
             {/* Lang switcher */}
-            <div className="flex items-center text-[11px] font-mono text-theme-dim">
+            <div className="flex items-center text-xs font-mono text-theme-dim">
               <button
                 onClick={() => setLanguage('pt')}
                 className={`px-1 py-0.5 transition-colors cursor-pointer ${
@@ -325,7 +325,7 @@ export default function Navbar() {
               className="w-full bg-theme-bg border-b border-theme-border shadow-2xl p-6 flex flex-col justify-between max-h-[calc(100vh-65px)] overflow-y-auto"
             >
               <div className="space-y-4">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-theme-muted block mb-2">
+                <span className="text-xs font-mono uppercase tracking-widest text-theme-muted block mb-2">
                   {language === 'pt' ? 'Navegação' : 'Navigation'}
                 </span>
                 <ul className="flex flex-col divide-y divide-theme-border-subtle">

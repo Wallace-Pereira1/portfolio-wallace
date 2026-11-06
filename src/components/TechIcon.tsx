@@ -61,6 +61,7 @@ import {
 interface TechIconProps {
   name: string;
   className?: string;
+  colorMode?: 'brand' | 'grayscale';
 }
 
 const renderIcon = (IconComponent: React.ComponentType<any>, colorClass: string, className: string) => {
@@ -270,6 +271,11 @@ export const getTechIcon = (name: string, className = 'w-3.5 h-3.5'): React.Reac
   return renderIcon(TbCode, 'text-theme-muted', className);
 };
 
-export default function TechIcon({ name, className = 'w-3.5 h-3.5' }: TechIconProps) {
-  return <>{getTechIcon(name, className)}</>;
+export default function TechIcon({
+  name,
+  className = 'w-3.5 h-3.5',
+  colorMode = 'grayscale',
+}: TechIconProps) {
+  const iconClassName = colorMode === 'grayscale' ? `${className} grayscale` : className;
+  return <>{getTechIcon(name, iconClassName)}</>;
 }
