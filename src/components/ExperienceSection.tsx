@@ -313,11 +313,13 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
                 className="py-5 sm:py-6"
               >
                 <div className="space-y-2.5">
-                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                    <h3 className="text-base sm:text-lg font-medium text-theme-text">{exp.company}</h3>
-                    <span aria-hidden="true" className="text-theme-muted">—</span>
-                    <p className="text-sm sm:text-[15px] text-theme-dim">{exp.role}</p>
-                    <p className="ml-auto text-xs font-mono text-theme-muted">
+                  <div className="space-y-1">
+                    <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                      <h3 className="text-base sm:text-lg font-medium text-theme-text">{exp.company}</h3>
+                      <span aria-hidden="true" className="text-theme-muted">—</span>
+                      <p className="text-sm sm:text-[15px] text-theme-dim">{exp.role}</p>
+                    </div>
+                    <p className="text-[12px] font-mono text-theme-muted">
                       {exp.period} · {exp.location}
                     </p>
                   </div>
