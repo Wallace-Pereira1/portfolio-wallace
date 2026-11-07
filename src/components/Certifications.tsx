@@ -402,10 +402,10 @@ export default function Certifications() {
                   {getCategoryIcon(cert.category)}
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-[10px] text-theme-muted border border-theme-border bg-theme-bg px-1.5 py-0.5 rounded-[2px] font-normal uppercase">
+                  <span className="font-mono text-xs text-theme-muted border border-theme-border bg-theme-bg px-1.5 py-0.5 rounded-[2px] font-normal uppercase">
                     {labels.featuredBadge}
                   </span>
-                  <span className="font-mono text-[10px] text-theme-muted">{cert.year}</span>
+                  <span className="font-mono text-xs text-theme-muted">{cert.year}</span>
                 </div>
               </div>
               <h4 className="font-medium text-sm leading-snug text-theme-text group-hover:underline line-clamp-2">
@@ -422,7 +422,7 @@ export default function Certifications() {
                 target="_blank"
                 referrerPolicy="no-referrer"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 font-mono text-[11px] text-theme-text hover:underline uppercase"
+                className="inline-flex items-center gap-1 font-mono text-xs text-theme-text hover:underline uppercase"
               >
                 {labels.credentialBtn} <ExternalLink className="w-3 h-3" />
               </a>
@@ -439,7 +439,7 @@ export default function Certifications() {
         >
           <Award className="w-3.5 h-3.5 shrink-0 text-theme-muted" />
           <span>{labels.viewMore}</span>
-          <span className="font-mono text-[10px] ml-1 bg-theme-bg text-theme-muted border border-theme-border px-1.5 py-0.5 rounded-[2px]">
+          <span className="font-mono text-xs ml-1 bg-theme-bg text-theme-muted border border-theme-border px-1.5 py-0.5 rounded-[2px]">
             {certificatesData.length}
           </span>
         </button>
@@ -546,7 +546,7 @@ export default function Certifications() {
                             <span className="text-xs font-semibold text-theme-dim">
                               {cert.issuer}
                             </span>
-                            <span className="font-mono text-[10px] bg-theme-bg px-1.5 py-0.5 rounded-[2px] border border-theme-border text-theme-dim flex items-center gap-1.5 shrink-0">
+                            <span className="font-mono text-xs bg-theme-bg px-1.5 py-0.5 rounded-[2px] border border-theme-border text-theme-dim flex items-center gap-1.5 shrink-0">
                               {getCategoryIcon(cert.category)}
                               {cert.year}
                             </span>
@@ -558,7 +558,7 @@ export default function Certifications() {
                         </div>
 
                         <div className="mt-4 pt-3 border-t border-theme-border-subtle flex justify-between items-center">
-                          <span className="font-mono text-[9px] text-theme-muted tracking-wider uppercase">
+                          <span className="font-mono text-xs text-theme-muted tracking-wider uppercase">
                             {categories[cert.category]}
                           </span>
                           
@@ -567,7 +567,7 @@ export default function Certifications() {
                             target="_blank"
                             referrerPolicy="no-referrer"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 font-mono text-[11px] text-theme-text hover:underline transition-colors uppercase"
+                            className="inline-flex items-center gap-1 font-mono text-xs text-theme-text hover:underline transition-colors uppercase"
                           >
                             {labels.credentialBtn} <ExternalLink className="w-2.5 h-2.5" />
                           </a>

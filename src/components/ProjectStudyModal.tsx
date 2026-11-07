@@ -98,7 +98,7 @@ export default function ProjectStudyModal({
             {/* Modal Header */}
             <div className="shrink-0 flex items-center justify-between px-4 sm:px-7 py-3 sm:py-3.5 border-b border-theme-border bg-theme-surface">
               <div className="min-w-0">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-theme-muted block truncate">
+                <span className="text-xs font-mono uppercase tracking-widest text-theme-muted block truncate">
                   {language === 'pt' ? 'Estudo Detalhado de Sistema' : 'Detailed System Study'}
                 </span>
                 <span id="project-study-modal-title" className="text-xs sm:text-sm font-semibold text-theme-text truncate block">
@@ -131,7 +131,7 @@ export default function ProjectStudyModal({
                       {currentProject.role}
                     </span>
                     <span className="text-theme-border">/</span>
-                    <span className="text-[11px] text-theme-muted uppercase tracking-wider">
+                    <span className="text-xs text-theme-muted uppercase tracking-wider">
                       {currentProject.customCategory || (
                         <>
                           {currentProject.category === 'web_product' && (language === 'pt' ? 'Produto Web & SaaS' : 'Web & SaaS Product')}
@@ -143,13 +143,13 @@ export default function ProjectStudyModal({
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <span className="text-[11px] text-theme-muted">{currentProject.period}</span>
+                    <span className="text-xs text-theme-muted">{currentProject.period}</span>
                     {currentProject.status ? (
-                      <span className="text-[10px] uppercase tracking-widest text-emerald-400 border border-emerald-400/30 px-1.5 py-0.5 rounded-[2px]">
+                      <span className="text-xs uppercase tracking-widest text-emerald-400 border border-emerald-400/30 px-1.5 py-0.5 rounded-[2px]">
                         {currentProject.status}
                       </span>
                     ) : currentProject.featured && (
-                      <span className="text-[10px] uppercase tracking-widest text-brand-blue border border-brand-blue/30 px-1.5 py-0.5 rounded-[2px]">
+                      <span className="text-xs uppercase tracking-widest text-brand-blue border border-brand-blue/30 px-1.5 py-0.5 rounded-[2px]">
                         {language === 'pt' ? 'Em Produção' : 'In Production'}
                       </span>
                     )}
@@ -161,7 +161,7 @@ export default function ProjectStudyModal({
                   <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs font-mono pt-1">
                     {currentProject.client && (
                       <div className="flex items-center gap-1.5">
-                        <span className="text-theme-muted uppercase tracking-wider text-[10.5px]">
+                        <span className="text-theme-muted uppercase tracking-wider text-xs">
                           {language === 'pt' ? 'Cliente:' : 'Client:'}
                         </span>
                         <span className="text-theme-text font-medium">{currentProject.client}</span>
@@ -169,7 +169,7 @@ export default function ProjectStudyModal({
                     )}
                     {currentProject.year && (
                       <div className="flex items-center gap-1.5">
-                        <span className="text-theme-muted uppercase tracking-wider text-[10.5px]">
+                        <span className="text-theme-muted uppercase tracking-wider text-xs">
                           {language === 'pt' ? 'Ano:' : 'Year:'}
                         </span>
                         <span className="text-theme-text font-medium">{currentProject.year}</span>
@@ -195,7 +195,7 @@ export default function ProjectStudyModal({
                         href={currentProject.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-theme-text text-theme-bg hover:opacity-90 rounded-[2px] transition-opacity font-semibold uppercase tracking-wider text-[11px]"
+                        className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-theme-text text-theme-bg hover:opacity-90 rounded-[2px] transition-opacity font-semibold uppercase tracking-wider text-xs"
                       >
                         <span>{language === 'pt' ? 'Abrir Aplicação em Produção' : 'Open Live Application'}</span>
                         <ExternalLink className="w-3.5 h-3.5" />
@@ -206,7 +206,7 @@ export default function ProjectStudyModal({
                         href={currentProject.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-3.5 py-1.5 border border-theme-border text-theme-text hover:bg-theme-surface rounded-[2px] transition-colors uppercase tracking-wider text-[11px]"
+                        className="inline-flex items-center gap-2 px-3.5 py-1.5 border border-theme-border text-theme-text hover:bg-theme-surface rounded-[2px] transition-colors uppercase tracking-wider text-xs"
                       >
                         <Code2 className="w-3.5 h-3.5" />
                         <span>{language === 'pt' ? 'Código no GitHub' : 'View on GitHub'}</span>
@@ -229,7 +229,7 @@ export default function ProjectStudyModal({
 
                     {/* Banner Badges */}
                     <div className="absolute top-3 left-3 sm:top-4 sm:left-4 flex flex-wrap items-center gap-2">
-                      <span className="px-2 py-0.5 bg-black/75 backdrop-blur-sm text-white text-[10px] font-mono uppercase tracking-widest rounded-[2px] border border-white/10 flex items-center gap-1.5">
+                      <span className="px-2 py-0.5 bg-black/75 backdrop-blur-sm text-white text-xs font-mono uppercase tracking-widest rounded-[2px] border border-white/10 flex items-center gap-1.5">
                         <Sparkles className="w-3 h-3 text-brand-blue" />
                         {language === 'pt' ? 'Visualização da Arquitetura do Sistema' : 'System Architecture Visual'}
                       </span>
@@ -238,7 +238,7 @@ export default function ProjectStudyModal({
                     <button
                       type="button"
                       onClick={() => setIsImageZoomed(true)}
-                      className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 px-2.5 py-1 bg-black/75 hover:bg-black text-white text-[11px] font-mono rounded-[2px] border border-white/15 flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm"
+                      className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 px-2.5 py-1 bg-black/75 hover:bg-black text-white text-xs font-mono rounded-[2px] border border-white/15 flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm"
                     >
                       <Maximize2 className="w-3 h-3" />
                       <span>{language === 'pt' ? 'Expandir Imagem' : 'Zoom Image'}</span>
@@ -286,7 +286,7 @@ export default function ProjectStudyModal({
                         {currentProject.blocksTitle || (language === 'pt' ? 'Pipeline Operacional & Fluxo Arquitetural' : 'Operational Pipeline & Architecture Flow')}
                       </h2>
                     </div>
-                    <span className="text-[10px] font-mono text-theme-muted">
+                    <span className="text-xs font-mono text-theme-muted">
                       {currentProject.workflow.length} {language === 'pt' ? 'etapas orquestradas' : 'orchestrated steps'}
                     </span>
                   </div>
@@ -298,7 +298,7 @@ export default function ProjectStudyModal({
                         className="p-3.5 bg-theme-bg border border-theme-border/70 rounded-[2px] space-y-1.5 hover:border-theme-text/40 transition-colors"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-mono text-brand-blue font-bold px-1.5 py-0.5 bg-theme-surface border border-brand-blue/30 rounded-[2px]">
+                          <span className="text-xs font-mono text-brand-blue font-bold px-1.5 py-0.5 bg-theme-surface border border-brand-blue/30 rounded-[2px]">
                             {item.step}
                           </span>
                           <CheckCircle2 className="w-3.5 h-3.5 text-theme-muted" />
@@ -306,7 +306,7 @@ export default function ProjectStudyModal({
                         <h3 className="text-xs sm:text-[13px] font-semibold text-theme-text tracking-tight">
                           {item.title}
                         </h3>
-                        <p className="text-[11px] sm:text-xs text-theme-dim leading-relaxed">
+                        <p className="text-xs text-theme-dim leading-relaxed">
                           {item.description}
                         </p>
                       </div>
@@ -321,7 +321,7 @@ export default function ProjectStudyModal({
                   <h2 className="text-xs font-mono uppercase tracking-widest text-theme-text font-semibold">
                     {language === 'pt' ? 'Stack Tecnológica Completa' : 'Full Technology Ecosystem'}
                   </h2>
-                  <span className="text-[11px] font-mono text-theme-muted">
+                  <span className="text-xs font-mono text-theme-muted">
                     {currentProject.technologies.length} {language === 'pt' ? 'tecnologias mapeadas' : 'technologies'}
                   </span>
                 </div>
@@ -353,7 +353,7 @@ export default function ProjectStudyModal({
 
             {/* Modal Footer Controls */}
             <div className="shrink-0 px-4 sm:px-7 py-2.5 sm:py-3 border-t border-theme-border bg-theme-surface flex items-center justify-between text-xs font-mono text-theme-dim">
-              <span className="text-[11px] text-theme-muted">
+              <span className="text-xs text-theme-muted">
                 {language === 'pt' ? 'Pressione ESC para fechar' : 'Press ESC to close'}
               </span>
               <button

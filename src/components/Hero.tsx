@@ -118,10 +118,10 @@ export default function Hero({ projects }: HeroProps) {
         </svg>
 
         {/* Marcadores geométricos discretos */}
-        <div className="absolute top-20 sm:top-24 left-10 text-theme-text opacity-[0.06] font-mono text-[9px]">+</div>
-        <div className="absolute top-20 sm:top-24 right-10 text-theme-text opacity-[0.06] font-mono text-[9px]">+</div>
-        <div className="absolute bottom-8 left-12 text-theme-text opacity-[0.06] font-mono text-[9px]">+</div>
-        <div className="absolute bottom-8 right-12 text-theme-text opacity-[0.06] font-mono text-[9px]">+</div>
+        <div className="absolute top-20 sm:top-24 left-10 text-theme-text opacity-[0.06] font-mono text-xs">+</div>
+        <div className="absolute top-20 sm:top-24 right-10 text-theme-text opacity-[0.06] font-mono text-xs">+</div>
+        <div className="absolute bottom-8 left-12 text-theme-text opacity-[0.06] font-mono text-xs">+</div>
+        <div className="absolute bottom-8 right-12 text-theme-text opacity-[0.06] font-mono text-xs">+</div>
       </div>
 
       <div className="portfolio-container relative z-10">

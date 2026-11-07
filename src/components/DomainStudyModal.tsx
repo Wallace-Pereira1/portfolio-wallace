@@ -111,11 +111,11 @@ export default function DomainStudyModal({
             {/* Top Bar with Domain Identifier & Close Button */}
             <div className="shrink-0 flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 border-b border-theme-border/70 bg-theme-bg/60">
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[2px] bg-theme-text text-theme-bg font-mono text-[10px] uppercase tracking-wider font-semibold">
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[2px] bg-theme-text text-theme-bg font-mono text-xs uppercase tracking-wider font-semibold">
                   <Layers className="w-3 h-3" />
                   <span>{language === 'pt' ? 'ESPECIFICAÇÃO' : 'SPECIFICATION'}</span>
                 </span>
-                <span className="text-[10.5px] font-mono text-theme-muted uppercase tracking-wider">
+                <span className="text-xs font-mono text-theme-muted uppercase tracking-wider">
                   {language === 'pt' ? 'DOMÍNIO TÉCNICO' : 'TECHNICAL DOMAIN'}
                 </span>
               </div>
@@ -189,7 +189,7 @@ export default function DomainStudyModal({
 
               {/* Engineering Standards & Real-World Application */}
               <div className="p-4 rounded-[2px] bg-theme-bg/60 border border-theme-border/60 space-y-2">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-theme-muted block font-semibold">
+                <span className="text-xs font-mono uppercase tracking-wider text-theme-muted block font-semibold">
                   {language === 'pt' ? 'MÉTODO & PRODUÇÃO' : 'METHOD & PRODUCTION'}
                 </span>
                 <p className="text-xs sm:text-[12.5px] text-theme-dim leading-relaxed font-mono">
@@ -202,7 +202,7 @@ export default function DomainStudyModal({
 
             {/* Modal Footer */}
             <div className="shrink-0 flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 border-t border-theme-border/70 bg-theme-bg/60 text-xs font-mono">
-              <span className="text-theme-muted text-[10.5px]">
+              <span className="text-theme-muted text-xs">
                 {language === 'pt' ? 'Visão de Arquitetura' : 'Architecture Specifications'}
               </span>
 
@@ -235,7 +235,7 @@ export default function DomainStudyModal({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px] border border-theme-border bg-theme-surface hover:bg-theme-border/40 text-theme-text transition-colors cursor-pointer text-[11px] sm:text-xs"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px] border border-theme-border bg-theme-surface hover:bg-theme-border/40 text-theme-text transition-colors cursor-pointer text-xs"
                 >
                   <span>{language === 'pt' ? 'Fechar' : 'Close'}</span>
                 </button>

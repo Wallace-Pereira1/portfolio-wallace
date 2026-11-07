@@ -777,8 +777,8 @@ export default function TechBadge({
   }, [isOpen]);
 
   const sizeClasses = {
-    xs: 'px-1.5 py-0.5 text-[10px] gap-1',
-    sm: 'px-2 py-0.5 text-[11px] gap-1.5',
+    xs: 'px-1.5 py-0.5 text-xs gap-1',
+    sm: 'px-2 py-0.5 text-xs gap-1.5',
     md: 'px-2.5 py-1 text-xs gap-2',
   }[size];
 
@@ -814,7 +814,7 @@ export default function TechBadge({
         <TechIcon name={tech} className={`${iconSize} shrink-0`} />
         {expandOnHover ? (
           <span
-            className={`font-mono text-[11px] whitespace-nowrap overflow-hidden transition-all duration-300 ease-out select-none ${
+            className={`font-mono text-xs whitespace-nowrap overflow-hidden transition-all duration-300 ease-out select-none ${
               isOpen
                 ? 'max-w-[220px] opacity-100 ml-1.5'
                 : 'max-w-0 opacity-0 ml-0 group-hover/badge:max-w-[220px] group-hover/badge:opacity-100 group-hover/badge:ml-1.5'
@@ -824,7 +824,7 @@ export default function TechBadge({
           </span>
         ) : (
           !iconOnly && (
-            <span className="text-[10.5px] font-mono text-left whitespace-nowrap transition-all duration-300 ease-out overflow-visible">
+            <span className="text-xs font-mono text-left whitespace-nowrap transition-all duration-300 ease-out overflow-visible">
               {tech}
             </span>
           )
@@ -873,17 +873,17 @@ export default function TechBadge({
             <div className="flex items-center justify-between gap-3 border-b border-theme-border/60 pb-1.5 whitespace-nowrap">
               <div className="flex items-center gap-1.5 shrink-0">
                 <TechIcon name={tech} className="w-3.5 h-3.5 shrink-0" />
-                <span className="text-[11.5px] font-mono font-semibold text-theme-text whitespace-nowrap">
+                <span className="text-xs font-mono font-semibold text-theme-text whitespace-nowrap">
                   {info.fullName}
                 </span>
               </div>
               {info.category && (
-                <span className="text-[9px] font-mono uppercase tracking-widest text-theme-muted shrink-0 px-1.5 py-0.5 bg-theme-bg border border-theme-border/50 rounded-[2px]">
+                <span className="text-xs font-mono uppercase tracking-widest text-theme-muted shrink-0 px-1.5 py-0.5 bg-theme-bg border border-theme-border/50 rounded-[2px]">
                   {info.category}
                 </span>
               )}
             </div>
-            <p className="text-[11px] text-theme-dim leading-snug font-sans font-normal pt-0.5 break-words">
+            <p className="text-xs text-theme-dim leading-snug font-sans font-normal pt-0.5 break-words">
               {info.context}
             </p>
           </div>

@@ -344,7 +344,7 @@ export default function ServiceAreaModal({
                       }
                       onSelectArea(area.id);
                     }}
-                    className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px] text-[11px] sm:text-xs font-mono whitespace-nowrap transition-all cursor-pointer ${
+                    className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px] text-xs font-mono whitespace-nowrap transition-all cursor-pointer ${
                       active
                         ? 'bg-theme-text text-theme-bg font-semibold shadow-xs'
                         : 'text-theme-muted hover:text-theme-text hover:bg-theme-border/40'
@@ -365,7 +365,7 @@ export default function ServiceAreaModal({
             {/* Header: Area Title, Badge & Main Statement */}
             <div className="space-y-2.5 border-b border-theme-border/50 pb-4">
               <div className="flex items-center gap-2">
-                <span className="text-[9.5px] sm:text-[10px] font-mono uppercase tracking-widest text-theme-muted px-2 py-0.5 border border-theme-border/60 rounded-[2px]">
+                <span className="text-xs font-mono uppercase tracking-widest text-theme-muted px-2 py-0.5 border border-theme-border/60 rounded-[2px]">
                   {isPt ? currentArea.badge : currentArea.enBadge}
                 </span>
               </div>
@@ -384,7 +384,7 @@ export default function ServiceAreaModal({
                 </p>
               </div>
 
-              <p className="text-[11px] sm:text-xs text-theme-muted font-mono">
+              <p className="text-xs text-theme-muted font-mono">
                 {isPt ? currentArea.tagline : currentArea.enTagline}
               </p>
             </div>
@@ -393,7 +393,7 @@ export default function ServiceAreaModal({
             <div className="space-y-2.5">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-theme-text" />
-                <h3 className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-theme-muted font-semibold">
+                <h3 className="text-xs font-mono uppercase tracking-widest text-theme-muted font-semibold">
                   {isPt ? 'Entregas Práticas & Soluções' : 'Practical Deliverables & Solutions'}
                 </h3>
               </div>
@@ -405,7 +405,7 @@ export default function ServiceAreaModal({
                       key={idx}
                       className="flex items-start gap-2.5 text-xs sm:text-[12.5px] md:text-[13px] text-theme-dim leading-relaxed"
                     >
-                      <span className="text-theme-text font-mono text-[11px] mt-0.5 select-none font-bold">
+                      <span className="text-theme-text font-mono text-xs mt-0.5 select-none font-bold">
                         →
                       </span>
                       <span>{item}</span>
@@ -419,7 +419,7 @@ export default function ServiceAreaModal({
             <div className="space-y-2.5 pt-1">
               <div className="flex items-center gap-2">
                 <Layers className="w-3.5 h-3.5 text-theme-muted" />
-                <h3 className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-theme-muted font-semibold">
+                <h3 className="text-xs font-mono uppercase tracking-widest text-theme-muted font-semibold">
                   {isPt ? 'Tecnologias & Ferramentas Usadas' : 'Technologies & Stack'}
                 </h3>
               </div>
@@ -434,10 +434,10 @@ export default function ServiceAreaModal({
             {/* Direct Collaboration CTA */}
             <div className="p-3.5 sm:p-4 rounded-[2px] bg-theme-bg/60 border border-theme-border/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="space-y-0.5">
-                <span className="text-[9.5px] sm:text-[10px] font-mono uppercase tracking-wider text-theme-muted block font-semibold">
+                <span className="text-xs font-mono uppercase tracking-wider text-theme-muted block font-semibold">
                   {isPt ? 'PROJETOS OU DEMANDAS NESSA ÁREA?' : 'PROJECTS IN THIS AREA?'}
                 </span>
-                <p className="text-[11.5px] sm:text-xs text-theme-dim">
+                <p className="text-xs text-theme-dim">
                   {isPt
                     ? 'Disponível para construir do zero ou evoluir sua operação existente.'
                     : 'Available to build from scratch or scale existing business workflows.'}
@@ -447,7 +447,7 @@ export default function ServiceAreaModal({
               <button
                 type="button"
                 onClick={handleContactClick}
-                className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-[2px] bg-theme-text text-theme-bg text-[11px] sm:text-xs font-mono font-medium hover:opacity-90 transition-opacity cursor-pointer whitespace-nowrap self-start sm:self-auto"
+                className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-[2px] bg-theme-text text-theme-bg text-xs font-mono font-medium hover:opacity-90 transition-opacity cursor-pointer whitespace-nowrap self-start sm:self-auto"
               >
                 <MessageSquare className="w-3.5 h-3.5" />
                 <span>{isPt ? 'Iniciar conversa' : 'Start conversation'}</span>
@@ -457,7 +457,7 @@ export default function ServiceAreaModal({
 
           {/* Modal Footer */}
           <div className="shrink-0 flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 border-t border-theme-border/70 bg-theme-bg/60 text-xs font-mono">
-            <span className="text-theme-muted text-[10.5px] sm:text-[11px]">
+            <span className="text-theme-muted text-xs">
               0{currentIndex + 1} / 0{SERVICE_AREAS.length}
             </span>
 
@@ -489,7 +489,7 @@ export default function ServiceAreaModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px] border border-theme-border bg-theme-surface hover:bg-theme-border/40 text-theme-text transition-colors cursor-pointer text-[11px] sm:text-xs"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px] border border-theme-border bg-theme-surface hover:bg-theme-border/40 text-theme-text transition-colors cursor-pointer text-xs"
               >
                 <span>{isPt ? 'Fechar' : 'Close'}</span>
               </button>

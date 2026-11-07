@@ -301,7 +301,7 @@ export default function EstudosPage() {
             </div>
           )}
 
-          <span className="hidden md:inline-block text-[11px] font-mono text-theme-muted shrink-0 pl-2 border-l border-theme-border/40">
+          <span className="hidden md:inline-block text-xs font-mono text-theme-muted shrink-0 pl-2 border-l border-theme-border/40">
             {filteredProjects.length} {language === 'pt' ? 'registros exibidos' : 'records shown'}
           </span>
         </div>
@@ -328,7 +328,7 @@ export default function EstudosPage() {
                     <div className="flex items-center gap-4">
                       <span>{project.period}</span>
                       {project.featured && (
-                        <span className="text-[10px] uppercase tracking-widest text-brand-blue border border-brand-blue/30 px-1.5 py-0.5 rounded-[2px]">
+                        <span className="text-xs uppercase tracking-widest text-brand-blue border border-brand-blue/30 px-1.5 py-0.5 rounded-[2px]">
                           Destaque
                         </span>
                       )}
@@ -351,7 +351,7 @@ export default function EstudosPage() {
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-theme-text text-theme-bg hover:opacity-90 rounded-[2px] transition-opacity uppercase tracking-wider text-[11px]"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-theme-text text-theme-bg hover:opacity-90 rounded-[2px] transition-opacity uppercase tracking-wider text-xs"
                       >
                         <span>{t('proj.action.live')}</span>
                         <ExternalLink className="w-3 h-3" />
@@ -362,7 +362,7 @@ export default function EstudosPage() {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-theme-border text-theme-dim hover:text-theme-text rounded-[2px] transition-colors uppercase tracking-wider text-[11px]"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-theme-border text-theme-dim hover:text-theme-text rounded-[2px] transition-colors uppercase tracking-wider text-xs"
                       >
                         <Code2 className="w-3 h-3" />
                         <span>{t('proj.action.github')}</span>
@@ -400,7 +400,7 @@ export default function EstudosPage() {
                               loading="lazy"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-theme-bg via-transparent to-transparent opacity-60" />
-                            <span className="absolute bottom-3 left-3 text-[10px] font-mono px-2 py-0.5 bg-black/75 backdrop-blur-sm text-white rounded-[2px] border border-white/10 uppercase tracking-widest">
+                            <span className="absolute bottom-3 left-3 text-xs font-mono px-2 py-0.5 bg-black/75 backdrop-blur-sm text-white rounded-[2px] border border-white/10 uppercase tracking-widest">
                               {language === 'pt' ? 'Visualização da Arquitetura do Sistema' : 'Architectural System Visual'}
                             </span>
                           </div>
@@ -409,17 +409,17 @@ export default function EstudosPage() {
                         {/* Step-by-Step Architectural Pipeline if available */}
                         {project.workflow && project.workflow.length > 0 && (
                           <div className="space-y-3 p-4 sm:p-5 bg-theme-surface border border-theme-border rounded-[2px]">
-                            <span className="text-[10px] font-mono uppercase tracking-widest text-theme-muted block font-semibold">
+                            <span className="text-xs font-mono uppercase tracking-widest text-theme-muted block font-semibold">
                               {language === 'pt' ? 'Pipeline Operacional Passo a Passo' : 'Step-by-Step Operational Pipeline'}
                             </span>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                               {project.workflow.map((item) => (
                                 <div key={item.step} className="p-3 bg-theme-bg border border-theme-border/60 rounded-[2px] space-y-1">
-                                  <span className="text-[10px] font-mono text-brand-blue font-bold px-1.5 py-0.2 bg-theme-surface border border-brand-blue/30 rounded-[2px]">
+                                  <span className="text-xs font-mono text-brand-blue font-bold px-1.5 py-0.2 bg-theme-surface border border-brand-blue/30 rounded-[2px]">
                                     {item.step}
                                   </span>
                                   <h4 className="text-xs font-semibold text-theme-text">{item.title}</h4>
-                                  <p className="text-[11px] text-theme-dim leading-relaxed">{item.description}</p>
+                                  <p className="text-xs text-theme-dim leading-relaxed">{item.description}</p>
                                 </div>
                               ))}
                             </div>
@@ -429,7 +429,7 @@ export default function EstudosPage() {
                         {/* Tri-Column Specification: Challenge, Architecture, Impact */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                           <div className="space-y-2">
-                            <span className="text-[10px] font-mono uppercase tracking-wider text-theme-muted block">
+                            <span className="text-xs font-mono uppercase tracking-wider text-theme-muted block">
                               {t('proj.label.challenge')}
                             </span>
                             <p className="text-xs sm:text-sm text-theme-dim leading-relaxed">
@@ -438,7 +438,7 @@ export default function EstudosPage() {
                           </div>
 
                           <div className="space-y-2">
-                            <span className="text-[10px] font-mono uppercase tracking-wider text-theme-muted block">
+                            <span className="text-xs font-mono uppercase tracking-wider text-theme-muted block">
                               {t('proj.label.solution')}
                             </span>
                             <p className="text-xs sm:text-sm text-theme-dim leading-relaxed">
@@ -447,7 +447,7 @@ export default function EstudosPage() {
                           </div>
 
                           <div className="space-y-2">
-                            <span className="text-[10px] font-mono uppercase tracking-wider text-theme-muted block">
+                            <span className="text-xs font-mono uppercase tracking-wider text-theme-muted block">
                               {t('proj.label.impact')}
                             </span>
                             <p className="text-xs sm:text-sm text-theme-dim leading-relaxed">
@@ -458,7 +458,7 @@ export default function EstudosPage() {
 
                         {/* Stack Checklist */}
                         <div className="pt-4 border-t border-theme-border/60">
-                          <span className="text-[10px] font-mono uppercase tracking-wider text-theme-muted block mb-2">
+                          <span className="text-xs font-mono uppercase tracking-wider text-theme-muted block mb-2">
                             {t('proj.label.stack')}
                           </span>
                           <div className="flex flex-wrap gap-2 text-xs font-mono">

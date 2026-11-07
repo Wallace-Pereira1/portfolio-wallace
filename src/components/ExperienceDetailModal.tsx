@@ -67,7 +67,7 @@ export default function ExperienceDetailModal({
             <div className="flex items-start justify-between p-5 sm:p-6 border-b border-theme-border bg-theme-surface shrink-0">
               <div className="space-y-1.5 max-w-[85%]">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-theme-muted">
+                  <span className="text-xs font-mono uppercase tracking-widest text-theme-muted">
                     {language === 'pt' ? 'Atuação Profissional Detalhada' : 'Detailed Work History'}
                   </span>
                 </div>
@@ -111,7 +111,7 @@ export default function ExperienceDetailModal({
             <div className="flex-1 min-h-0 overflow-y-auto p-5 sm:p-6 space-y-5">
               {/* Executive Summary Callout */}
               <div className="p-4 sm:p-5 rounded-[2px] bg-theme-bg border border-theme-border space-y-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-theme-muted block font-medium">
+                <span className="text-xs font-mono uppercase tracking-widest text-theme-muted block font-medium">
                   {language === 'pt' ? 'Síntese de Atuação' : 'Executive Overview'}
                 </span>
                 <p className="text-xs sm:text-sm text-theme-text leading-relaxed">
@@ -122,7 +122,7 @@ export default function ExperienceDetailModal({
               {/* Impact Callout */}
               {experience.impact && (
                 <div className="p-4 sm:p-5 rounded-[2px] bg-theme-bg/60 border-l-2 border-theme-text/80 border-r border-t border-b border-theme-border space-y-1.5">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-theme-text block font-semibold">
+                  <span className="text-xs font-mono uppercase tracking-widest text-theme-text block font-semibold">
                     {language === 'pt' ? 'Impacto Realizado' : 'Demonstrated Impact'}
                   </span>
                   <p className="text-xs sm:text-sm text-theme-dim leading-relaxed font-medium">
@@ -133,7 +133,7 @@ export default function ExperienceDetailModal({
 
               {/* Detailed Responsibilities & Deliverables */}
               <div className="space-y-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-theme-muted block">
+                <span className="text-xs font-mono uppercase tracking-widest text-theme-muted block">
                   {language === 'pt' ? 'Atividades & Entregas Principais:' : 'Key Deliverables & Responsibilities:'}
                 </span>
 
@@ -154,10 +154,10 @@ export default function ExperienceDetailModal({
               {experience.technologies && experience.technologies.length > 0 && (
                 <div className="space-y-3 pt-4 border-t border-theme-border/60">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-theme-muted block">
+                    <span className="text-xs font-mono uppercase tracking-widest text-theme-muted block">
                       {language === 'pt' ? 'Ecossistema Técnico & Ferramentas:' : 'Technical Ecosystem & Tools:'}
                     </span>
-                    <span className="text-[10px] font-mono text-theme-muted">
+                    <span className="text-xs font-mono text-theme-muted">
                       {experience.technologies.length} {language === 'pt' ? 'itens' : 'items'}
                     </span>
                   </div>
@@ -178,14 +178,14 @@ export default function ExperienceDetailModal({
 
             {/* Modal Footer */}
             <div className="p-4 sm:p-5 border-t border-theme-border bg-theme-surface flex items-center justify-between text-xs font-mono shrink-0">
-              <span className="text-theme-muted text-[11px]">
+              <span className="text-theme-muted text-xs">
                 {experience.period}
               </span>
 
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 bg-theme-text text-theme-bg font-medium rounded-[2px] hover:opacity-90 transition-opacity cursor-pointer uppercase tracking-wider text-[11px]"
+                className="px-4 py-2 bg-theme-text text-theme-bg font-medium rounded-[2px] hover:opacity-90 transition-opacity cursor-pointer uppercase tracking-wider text-xs"
               >
                 {language === 'pt' ? 'Fechar' : 'Close'}
               </button>

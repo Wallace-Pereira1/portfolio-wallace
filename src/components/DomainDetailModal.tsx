@@ -378,7 +378,7 @@ export default function DomainDetailModal({
           {/* Header */}
           <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 border-b border-theme-border bg-theme-surface shrink-0">
             <div className="space-y-0.5">
-              <span className="text-[10px] sm:text-[10.5px] font-mono uppercase tracking-widest text-theme-muted block font-medium">
+              <span className="text-xs font-mono uppercase tracking-widest text-theme-muted block font-medium">
                 {isPt ? 'Detalhes Técnicos' : 'Technical Specifications'}
               </span>
               <h2
@@ -404,7 +404,7 @@ export default function DomainDetailModal({
           <div className="flex-1 min-h-0 overflow-y-auto p-5 sm:p-6 space-y-5 text-theme-text">
             {/* 1. Application Description */}
             <div className="space-y-1.5">
-              <h3 className="text-[11px] font-mono uppercase tracking-wider text-theme-muted font-medium">
+              <h3 className="text-xs font-mono uppercase tracking-wider text-theme-muted font-medium">
                 {isPt ? 'Aplicação Prática' : 'Practical Application'}
               </h3>
               <p
@@ -417,7 +417,7 @@ export default function DomainDetailModal({
 
             {/* 2. Main Technologies (discrete text & tags) */}
             <div className="space-y-2 pt-1 border-t border-theme-border/50">
-              <h3 className="text-[11px] font-mono uppercase tracking-wider text-theme-muted font-medium">
+              <h3 className="text-xs font-mono uppercase tracking-wider text-theme-muted font-medium">
                 {isPt ? 'Tecnologias Principais' : 'Core Technologies'}
               </h3>
               <div className="flex flex-wrap gap-1.5 sm:gap-2">
@@ -435,13 +435,13 @@ export default function DomainDetailModal({
             {/* Tool & Platform Experience Groups (simple text list with small titles and natural line breaks) */}
             {detail.toolGroups && detail.toolGroups.length > 0 && (
               <div className="space-y-2 pt-1 border-t border-theme-border/50">
-                <h3 className="text-[11px] font-mono uppercase tracking-wider text-theme-muted font-medium">
+                <h3 className="text-xs font-mono uppercase tracking-wider text-theme-muted font-medium">
                   {isPt ? 'Experiências com Ferramentas & Plataformas' : 'Tools & Platforms Experience'}
                 </h3>
                 <div className="space-y-2 text-xs sm:text-[13px] leading-relaxed">
                   {detail.toolGroups.map((group, idx) => (
                     <div key={idx} className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2">
-                      <span className="font-mono text-theme-text font-medium text-[11px] sm:text-xs shrink-0">
+                      <span className="font-mono text-theme-text font-medium text-xs shrink-0">
                         {group.label}:
                       </span>
                       <span className="text-theme-dim break-words">
@@ -456,7 +456,7 @@ export default function DomainDetailModal({
             {/* 3. Confirmed Technical Practices (max 3) */}
             {detail.practices.length > 0 && (
               <div className="space-y-2 pt-1 border-t border-theme-border/50">
-                <h3 className="text-[11px] font-mono uppercase tracking-wider text-theme-muted font-medium">
+                <h3 className="text-xs font-mono uppercase tracking-wider text-theme-muted font-medium">
                   {isPt ? 'Práticas & Padrões' : 'Engineering Practices'}
                 </h3>
                 <ul className="space-y-2">
@@ -476,7 +476,7 @@ export default function DomainDetailModal({
             {/* 4. Real Related Projects (up to 2) */}
             {detail.relatedProjects.length > 0 && (
               <div className="space-y-2 pt-1 border-t border-theme-border/50">
-                <h3 className="text-[11px] font-mono uppercase tracking-wider text-theme-muted font-medium">
+                <h3 className="text-xs font-mono uppercase tracking-wider text-theme-muted font-medium">
                   {isPt ? 'Projetos Relacionados' : 'Related Projects'}
                 </h3>
                 <div className="space-y-2">
@@ -495,7 +495,7 @@ export default function DomainDetailModal({
                           <ArrowUpRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                         </Link>
                       </div>
-                      <span className="text-[11px] font-mono text-theme-muted shrink-0">
+                      <span className="text-xs font-mono text-theme-muted shrink-0">
                         {proj.highlight}
                       </span>
                     </div>
