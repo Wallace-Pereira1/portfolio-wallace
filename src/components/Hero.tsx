@@ -6,6 +6,7 @@ import { downloadResumePdf } from '../utils/generateResumePdf';
 import { trackEvent } from '../utils/analytics';
 import { currentStack } from '../data/stack';
 import type { Project } from '../types';
+import TechIcon from './TechIcon';
 
 interface HeroProps {
   projects: Project[];
@@ -169,21 +170,21 @@ export default function Hero({ projects }: HeroProps) {
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="mt-8 grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
           <Link
             to="/#contato"
             aria-label={language === 'pt' ? 'Disponibilidade e contato' : 'Availability and contact'}
             className="group relative flex min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
           >
-            <span className="font-mono text-[13px] uppercase tracking-wide text-theme-muted">
+            <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
               {language === 'pt' ? 'Disponibilidade' : 'Availability'}
             </span>
-            <span className="pr-8 text-[15px] leading-relaxed text-theme-dim">
-              <span className="block text-theme-text">
+            <span className="pr-8 leading-relaxed text-theme-dim">
+              <span className="block text-[15px] text-theme-text">
                 {language === 'pt' ? 'Aberto a vagas full stack' : 'Open to full stack roles'}
               </span>
-              <span className="block">{language === 'pt' ? 'Rio de Janeiro · remoto/híbrido' : 'Rio de Janeiro · remote/hybrid'}</span>
-              <span className="block text-theme-muted">{t('hero.stat1.val')} {language === 'pt' ? 'de experiência' : 'of experience'}</span>
+              <span className="block text-[13px]">{language === 'pt' ? 'Rio de Janeiro · remoto/híbrido' : 'Rio de Janeiro · remote/hybrid'}</span>
+              <span className="block text-[13px] text-theme-muted">{t('hero.stat1.val')} {language === 'pt' ? 'de experiência' : 'of experience'}</span>
             </span>
             <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
@@ -193,12 +194,19 @@ export default function Hero({ projects }: HeroProps) {
             aria-label={language === 'pt' ? 'Stack atual e competências' : 'Current stack and skills'}
             className="group relative flex min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
           >
-            <span className="font-mono text-[13px] uppercase tracking-wide text-theme-muted">
+            <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
               {language === 'pt' ? 'Stack atual' : 'Current stack'}
             </span>
-            <span className="pr-8 font-mono text-xs leading-relaxed text-theme-dim">
-              {currentStack.join(' · ')}
-            </span>
+            <ul className="flex flex-wrap items-center gap-x-3 gap-y-2 pr-8">
+              {currentStack.map((technology) => (
+                <li key={technology} className="flex items-center gap-2 text-[13px] text-theme-dim">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] border border-theme-border/80 bg-theme-surface">
+                    <TechIcon name={technology} className="h-4 w-4 opacity-100" colorMode="brand" />
+                  </span>
+                  <span>{technology}</span>
+                </li>
+              ))}
+            </ul>
             <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
 
@@ -207,15 +215,15 @@ export default function Hero({ projects }: HeroProps) {
             aria-label={language === 'pt' ? 'Projetos selecionados' : 'Selected projects'}
             className="group relative flex min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
           >
-            <span className="font-mono text-[13px] uppercase tracking-wide text-theme-muted">
+            <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
               {language === 'pt' ? 'Projetos' : 'Projects'}
             </span>
-            <span className="pr-8 text-[15px] leading-relaxed text-theme-dim">
-              <span className="mb-1 block text-theme-text">
+            <span className="pr-8 leading-relaxed text-theme-dim">
+              <span className="mb-1 block text-[15px] text-theme-text">
                 {projects.length} {language === 'pt' ? 'projetos' : 'projects'}
               </span>
               {projects.slice(0, 2).map((project) => (
-                <span key={project.id} className="block text-sm text-theme-muted">{project.title}</span>
+                <span key={project.id} className="block text-[13px] text-theme-muted">{project.title}</span>
               ))}
             </span>
             <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -226,12 +234,12 @@ export default function Hero({ projects }: HeroProps) {
             aria-label={language === 'pt' ? 'Trajetória profissional atual' : 'Current professional experience'}
             className="group relative flex min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
           >
-            <span className="font-mono text-[13px] uppercase tracking-wide text-theme-muted">
+            <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
               {language === 'pt' ? 'Trajetória' : 'Experience'}
             </span>
-            <span className="pr-8 text-[15px] leading-relaxed text-theme-dim">
-              <span className="block text-theme-text">Prata e Prata</span>
-              <span className="block text-sm text-theme-muted">
+            <span className="pr-8 leading-relaxed text-theme-dim">
+              <span className="block text-[15px] text-theme-text">Prata e Prata</span>
+              <span className="block text-[13px] text-theme-muted">
                 {language === 'pt'
                   ? 'Analista de Automação, Integrações e Operações Financeiras'
                   : 'Automation, Integrations & Financial Operations Analyst'}
