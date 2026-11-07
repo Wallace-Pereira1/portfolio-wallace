@@ -103,18 +103,37 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
 
   return (
     <div className="w-full space-y-7 sm:space-y-9">
-      <div className="space-y-3 border-b border-theme-border/70 pb-5 sm:flex sm:items-center sm:gap-8 sm:space-y-0 sm:pb-6">
-        <span className="shrink-0 font-mono text-xs uppercase tracking-[0.16em] text-theme-muted">
-          {isEnglish ? 'Current stack' : 'Stack atual'}
-        </span>
-        <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 sm:gap-x-7">
-          {currentStack.map((technology) => (
-            <li key={technology} className="flex items-center gap-2 text-sm text-theme-text">
-              <TechIcon name={technology} className="h-4 w-4" colorMode="brand" />
-              <span>{technology}</span>
-            </li>
-          ))}
-        </ul>
+      <div className="space-y-4 border-b border-theme-border/70 pb-5 sm:pb-6">
+        <div className="space-y-3 sm:flex sm:items-center sm:gap-8 sm:space-y-0">
+          <span className="shrink-0 font-mono text-xs uppercase tracking-[0.16em] text-theme-muted">
+            {isEnglish ? 'Current stack' : 'Stack atual'}
+          </span>
+          <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 sm:gap-x-7">
+            {currentStack.map((technology) => (
+              <li key={technology} className="flex items-center gap-2 text-sm text-theme-text">
+                <TechIcon name={technology} className="h-4 w-4" colorMode="brand" />
+                <span>{technology}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="space-y-2 sm:flex sm:items-baseline sm:gap-8 sm:space-y-0">
+          <span className="shrink-0 font-mono text-xs uppercase tracking-[0.16em] text-theme-muted">
+            {isEnglish ? 'Areas of work' : 'Atuação & Entregas'}
+          </span>
+          <p className="flex flex-wrap gap-x-2 text-[13px] leading-relaxed text-theme-dim">
+            {(isEnglish
+              ? ['Web Products', 'APIs & Data', 'Integrations', 'Automation', 'Applied AI']
+              : ['Produtos Web', 'APIs & Dados', 'Integrações', 'Automações', 'IA Aplicada']
+            ).map((area, index, areas) => (
+              <React.Fragment key={area}>
+                <span>{area}</span>
+                {index < areas.length - 1 && <span aria-hidden="true" className="text-theme-muted">·</span>}
+              </React.Fragment>
+            ))}
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-x-7 gap-y-7 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-6">
