@@ -159,6 +159,9 @@ export const getTechIcon = (name: string, className = 'w-3.5 h-3.5'): React.Reac
   }
 
   // AI & Vision
+  if (normalized === 'ai' || normalized.includes('inteligência artificial') || normalized.includes('artificial intelligence')) {
+    return renderIcon(TbBrain, 'text-[#10A37F]', className);
+  }
   if (normalized.includes('gemini')) {
     return renderIcon(TbSparkles, 'text-[#1A73E8]', className);
   }

@@ -125,7 +125,7 @@ export default function Hero({ projects }: HeroProps) {
       </div>
 
       <div className="portfolio-container relative z-10">
-        <div className="relative border border-theme-border bg-theme-surface/90 p-6 sm:p-8 md:p-10 offset-card">
+        <div className="relative border border-theme-border/80 bg-theme-surface/60 p-6 sm:p-8 md:p-10">
           <div className="max-w-3xl space-y-6 sm:space-y-7">
             <h1 className="font-serif text-[clamp(2rem,4vw,2.75rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text">
               Wallace Pereira

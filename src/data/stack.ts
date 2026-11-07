@@ -1,1 +1,1 @@
-export const currentStack = ['TypeScript', 'React', 'Node.js', 'PostgreSQL'] as const;
+export const currentStack = ['TypeScript', 'React', 'Node.js', 'PostgreSQL', 'AI', 'n8n'] as const;
