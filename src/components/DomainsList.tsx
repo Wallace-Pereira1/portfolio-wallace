@@ -36,8 +36,8 @@ const skillGroups: SkillGroup[] = [
   },
   {
     id: 'automacoes-ia',
-    namePt: 'Integrações, Automações & IA',
-    nameEn: 'Integrations, Automation & AI',
+    namePt: 'Automação & IA',
+    nameEn: 'Automation & AI',
     technologies: ['n8n', 'Webhooks', 'CRM / ERP', 'LLMs & OCR'],
     projectPt: 'Agente de IA & Pipeline de Qualificação Imobiliária',
     projectEn: 'AI Agent & Real Estate Qualification Pipeline',
@@ -103,7 +103,7 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
 
   return (
     <div className="w-full space-y-7 sm:space-y-9">
-      <div className="space-y-4 border-b border-theme-border/70 pb-5 sm:pb-6">
+      <div className="border-b border-theme-border/70 pb-5 sm:pb-6">
         <div className="space-y-3 sm:flex sm:items-center sm:gap-8 sm:space-y-0">
           <span className="shrink-0 font-mono text-xs uppercase tracking-[0.16em] text-theme-muted">
             {isEnglish ? 'Current stack' : 'Stack atual'}
@@ -111,37 +111,22 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 sm:gap-x-7">
             {currentStack.map((technology) => (
               <li key={technology} className="flex items-center gap-2 text-sm text-theme-text">
-                <TechIcon name={technology} className="h-4 w-4" colorMode="brand" />
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] border border-theme-border/80 bg-theme-surface">
+                  <TechIcon name={technology} className="h-4 w-4 opacity-100" colorMode="brand" />
+                </span>
                 <span>{technology}</span>
               </li>
             ))}
           </ul>
         </div>
-
-        <div className="space-y-2 sm:flex sm:items-baseline sm:gap-8 sm:space-y-0">
-          <span className="shrink-0 font-mono text-xs uppercase tracking-[0.16em] text-theme-muted">
-            {isEnglish ? 'Areas of work' : 'Atuação & Entregas'}
-          </span>
-          <p className="flex flex-wrap gap-x-2 text-[13px] leading-relaxed text-theme-dim">
-            {(isEnglish
-              ? ['Web Products', 'APIs & Data', 'Integrations', 'Automation', 'Applied AI']
-              : ['Produtos Web', 'APIs & Dados', 'Integrações', 'Automações', 'IA Aplicada']
-            ).map((area, index, areas) => (
-              <React.Fragment key={area}>
-                <span>{area}</span>
-                {index < areas.length - 1 && <span aria-hidden="true" className="text-theme-muted">·</span>}
-              </React.Fragment>
-            ))}
-          </p>
-        </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-x-7 gap-y-7 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-6">
+      <div className="grid grid-cols-1 items-start gap-x-7 gap-y-7 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-6">
         {skillGroups.map((group) => (
           <section key={group.id} aria-labelledby={`skill-group-${group.id}`} className="min-w-0">
             <h3
               id={`skill-group-${group.id}`}
-              className="mb-3 font-mono text-xs uppercase tracking-[0.14em] text-theme-muted"
+              className="mb-3 min-h-5 font-mono text-xs uppercase tracking-[0.06em] text-theme-muted"
             >
               {isEnglish ? group.nameEn : group.namePt}
             </h3>
@@ -150,7 +135,7 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
                 <SkillItem key={technology} technology={technology} />
               ))}
             </ul>
-            <p className="mt-3 border-t border-theme-border/60 pt-2.5 text-xs leading-relaxed text-theme-muted">
+            <p className="mt-3 border-t border-theme-border/60 pt-2.5 text-[12px] leading-relaxed text-theme-muted">
               <span>{isEnglish ? 'Used in: ' : 'Usado em: '}</span>
               <Link
                 to={group.projectUrl}

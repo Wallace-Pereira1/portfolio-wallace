@@ -19,6 +19,9 @@ export default function StackSection({ showHeader = true }: StackSectionProps) {
         {/* Section Header */}
         {showHeader && (
           <div className="space-y-3">
+            <span className="block font-mono text-xs uppercase tracking-widest text-theme-muted">
+              {language === 'pt' ? 'Stack & Domínios' : 'Stack & Domains'}
+            </span>
             <h2 className="font-serif text-2xl sm:text-[26px] leading-[1.15] font-medium text-theme-text tracking-[-0.015em]">
               {language === 'pt' ? 'Competências' : 'Skills'}
             </h2>

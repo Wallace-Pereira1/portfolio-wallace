@@ -23,6 +23,8 @@ import {
   SiGooglecalendar,
   SiVercel,
   SiLinux,
+  SiNextdotjs,
+  SiExpress,
 } from 'react-icons/si';
 import { FaSalesforce, FaJava } from 'react-icons/fa6';
 import {
@@ -96,6 +98,12 @@ export const getTechIcon = (name: string, className = 'w-3.5 h-3.5'): React.Reac
   }
   if (normalized.includes('vite')) {
     return renderIcon(SiVite, 'text-[#646CFF]', className);
+  }
+  if (normalized.includes('next')) {
+    return renderIcon(SiNextdotjs, 'text-theme-text', className);
+  }
+  if (normalized.includes('express')) {
+    return renderIcon(SiExpress, 'text-theme-text', className);
   }
   if (normalized.includes('tailwind')) {
     return renderIcon(SiTailwindcss, 'text-[#06B6D4]', className);
@@ -276,6 +284,8 @@ export default function TechIcon({
   className = 'w-3.5 h-3.5',
   colorMode = 'grayscale',
 }: TechIconProps) {
-  const iconClassName = colorMode === 'grayscale' ? `${className} grayscale` : className;
+  const iconClassName = colorMode === 'grayscale'
+    ? `${className} grayscale opacity-100`
+    : `${className} opacity-100`;
   return <>{getTechIcon(name, iconClassName)}</>;
 }
