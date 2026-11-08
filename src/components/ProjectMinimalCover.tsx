@@ -34,7 +34,7 @@ export default function ProjectMinimalCover({
 
 function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
   switch (projectId) {
-    case '01':
+    case '02':
       // Agente de IA & Qualificação Imobiliária (ARBO CRM, OCR, Webhooks)
       return (
         <div className="relative w-full h-full bg-[#f8fafc] flex items-center justify-center overflow-hidden">
@@ -134,7 +134,7 @@ function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
         </div>
       );
 
-    case '02':
+    case '03':
       // Plataforma de Consolidação de Investimentos (Dual-Engine, D3, Offline-First)
       return (
         <div className="relative w-full h-full bg-[#f8fafc] flex items-center justify-center overflow-hidden">
@@ -198,7 +198,7 @@ function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
         </div>
       );
 
-    case '03':
+    case '04':
       // Modernização ASP para Angular (Migração, 70% menos latência, componentização)
       return (
         <div className="relative w-full h-full bg-[#f8fafc] flex items-center justify-center overflow-hidden">
@@ -269,7 +269,7 @@ function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
         </div>
       );
 
-    case '04':
+    case '05':
       // Hub de Gestão de Parceiros Estratégicos (Multi-tenant, RLS, Supabase, PostgreSQL)
       return (
         <div className="relative w-full h-full bg-[#f8fafc] flex items-center justify-center overflow-hidden">
@@ -332,7 +332,7 @@ function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
         </div>
       );
 
-    case '05':
+    case '06':
       // Sistema de Gestão e Comandas para Bistrô (Mobile-first, WhatsApp API, Comandas)
       return (
         <div className="relative w-full h-full bg-[#fdfaf7] flex items-center justify-center overflow-hidden">
@@ -403,7 +403,7 @@ function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
         </div>
       );
 
-    case '06':
+    case '07':
       // Pipeline de OCR Estruturado & Validação Zod (Gemini 2.0 Flash)
       return (
         <div className="relative w-full h-full bg-[#f8fafc] flex items-center justify-center overflow-hidden">
@@ -481,7 +481,7 @@ function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
         </div>
       );
 
-    case '07':
+    case '08':
     default:
       // Fiscal Sentinel (Auditoria Fiscal, Conformidade, Daemon em Node & Postgres)
       return (
@@ -535,7 +535,7 @@ function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
         </div>
       );
 
-    case '08':
+    case '01':
     case 'capcrj':
       // CAPCRJ: Miniatura Estilizada da Home do Site Real (Navbar, Hero com Transformador e 3 Cards de Serviços)
       return (
