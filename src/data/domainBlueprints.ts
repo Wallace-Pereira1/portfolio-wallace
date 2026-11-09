@@ -60,19 +60,19 @@ export const domainBlueprintsPt: Record<string, DomainBlueprintData> = {
     ],
     provenProjects: [
       {
-        id: '02',
+        id: '03',
         title: 'Plataforma de Investimentos',
         role: 'Full Stack & UI',
         highlight: 'React · Zustand · D3 · Cálculo sub-16ms no browser',
       },
       {
-        id: '03',
+        id: '04',
         title: 'Modernização ASP → Angular',
         role: 'Front-end Engineer',
         highlight: 'Angular · TypeScript · SPA · 70% menos tempo de carga',
       },
       {
-        id: '04',
+        id: '06',
         title: 'Totem Digital Bistrô',
         role: 'Front-end & UX',
         highlight: 'React · Tailwind · Interface tátil responsiva',
@@ -116,19 +116,19 @@ export const domainBlueprintsPt: Record<string, DomainBlueprintData> = {
     ],
     provenProjects: [
       {
-        id: '02',
+        id: '03',
         title: 'Plataforma de Investimentos',
         role: 'Full Stack & DB',
         highlight: 'Supabase · PostgreSQL · Políticas RLS · Sincronização Assíncrona',
       },
       {
-        id: '06',
+        id: '08',
         title: 'Sentinela Fiscal: Auditoria',
         role: 'Back-end & DB',
         highlight: 'PostgreSQL · Auditoria relacional · Migrations e trilhas',
       },
       {
-        id: '01',
+        id: '02',
         title: 'Agente Imobiliário',
         role: 'API & Integrations',
         highlight: 'PostgreSQL / Supabase · Webhooks de mensageria · CRM REST',
@@ -172,19 +172,19 @@ export const domainBlueprintsPt: Record<string, DomainBlueprintData> = {
     ],
     provenProjects: [
       {
-        id: '01',
+        id: '02',
         title: 'Agente de Qualificação Imobiliária',
         role: 'Engenheiro de IA & Automação',
         highlight: 'n8n · LLM · CRM ARBO · OCR de Placas · Agenda Google',
       },
       {
-        id: '05',
+        id: '07',
         title: 'Pipeline de OCR & Documentos',
         role: 'Engenheiro de Automação',
         highlight: 'OCR · Visão Computacional · n8n · Extração estruturada de NF',
       },
       {
-        id: '06',
+        id: '08',
         title: 'Sentinela Fiscal: Auditoria',
         role: 'Automação de Processos',
         highlight: 'Monitoramento contínuo de webhooks e alertas automáticos',
@@ -228,19 +228,19 @@ export const domainBlueprintsPt: Record<string, DomainBlueprintData> = {
     ],
     provenProjects: [
       {
-        id: '02',
+        id: '03',
         title: 'Plataforma de Investimentos',
         role: 'DevOps & CI/CD',
         highlight: 'Vercel Edge · TypeScript build · Continuous Deployment',
       },
       {
-        id: '03',
+        id: '04',
         title: 'Modernização ASP → Angular',
         role: 'Front-end Architecture',
         highlight: 'Arquitetura modular sustentável · Redução técnica de débitos',
       },
       {
-        id: '01',
+        id: '02',
         title: 'Agente Imobiliário',
         role: 'Confiabilidade em Produção',
         highlight: 'Monitoramento 24/7 · Webhooks resilientes · Fallbacks',

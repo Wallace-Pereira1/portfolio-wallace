@@ -68,7 +68,10 @@ function AnimatedRoutes() {
 
 function ProjectRoute() {
   const { id } = useParams<{ id: string }>();
-  const isValid = [...projectsPt, ...projectsEn].some((project) => project.id === id && !project.disabled);
+  const normalizedId = id && id.length === 1 ? `0${id}` : id;
+  const isValid = [...projectsPt, ...projectsEn].some(
+    (project) => (project.id === id || project.id === normalizedId) && !project.disabled
+  );
   return isValid ? <EstudosPage /> : <NotFoundPage />;
 }
 

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { ArrowUpRight, FileDown, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -17,6 +17,45 @@ export default function Hero({ projects }: HeroProps) {
   const heroRef = useRef<HTMLElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const rafId = useRef<number | null>(null);
+
+  // Alternância suave entre Pereira e Carvalho (homenagem materna com digitação fluida)
+  const [currentSurname, setCurrentSurname] = useState('Pereira');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [surnameIndex, setSurnameIndex] = useState(0);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const surnames = ['Pereira', 'Carvalho'];
+    const currentTarget = surnames[surnameIndex % surnames.length];
+
+    let timer: NodeJS.Timeout;
+
+    if (!isDeleting && currentSurname === currentTarget) {
+      // Palavra completa: mantém visível por 3.5 segundos para leitura confortável
+      timer = setTimeout(() => {
+        setIsDeleting(true);
+      }, 3500);
+    } else if (isDeleting && currentSurname === '') {
+      // Palavra apagada: transita para o próximo sobrenome
+      setIsDeleting(false);
+      setSurnameIndex((prev) => (prev + 1) % surnames.length);
+      timer = setTimeout(() => {}, 200);
+    } else {
+      // Digitando ou apagando letra a letra em velocidade calibrada
+      const speed = isDeleting ? 46 : 82;
+      timer = setTimeout(() => {
+        setCurrentSurname((prev) =>
+          isDeleting
+            ? currentTarget.substring(0, prev.length - 1)
+            : currentTarget.substring(0, prev.length + 1)
+        );
+      }, speed);
+    }
+
+    return () => clearTimeout(timer);
+  }, [currentSurname, isDeleting, surnameIndex]);
 
   // Parallax discreto na camada decorativa de fundo (apenas mouse e sem prefers-reduced-motion)
   useEffect(() => {
@@ -127,8 +166,18 @@ export default function Hero({ projects }: HeroProps) {
       <div className="portfolio-container relative z-10">
         <div className="relative border border-theme-border/80 bg-theme-surface/60 p-6 sm:p-8 md:p-10">
           <div className="max-w-3xl space-y-6 sm:space-y-7">
-            <h1 className="font-serif text-[clamp(2rem,4vw,2.75rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text">
-              Wallace Pereira
+            <h1 className="font-serif text-[clamp(1.5rem,4.8vw,2.75rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text">
+              <span className="sr-only">Wallace de Carvalho Pereira</span>
+              <span aria-hidden="true" className="inline-flex items-baseline flex-nowrap whitespace-nowrap">
+                <span>Wallace&nbsp;</span>
+                <span className="inline-flex items-baseline">
+                  <span>{currentSurname}</span>
+                  <span
+                    className="inline-block w-[2px] h-[0.78em] bg-theme-text/80 ml-1 translate-y-[1px] animate-pulse"
+                    style={{ animationDuration: '950ms' }}
+                  />
+                </span>
+              </span>
             </h1>
 
             <p className="max-w-2xl text-[15px] sm:text-base leading-relaxed text-theme-dim">
@@ -147,10 +196,10 @@ export default function Hero({ projects }: HeroProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackEvent('whatsapp_click')}
-                className="inline-flex items-center gap-2 border border-theme-text bg-theme-text px-4 py-2.5 text-sm font-mono uppercase tracking-wider text-theme-bg transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 border border-theme-border bg-theme-text/[0.08] px-4 py-2.5 text-sm font-mono uppercase tracking-wider text-theme-text transition-colors hover:border-theme-muted hover:bg-theme-text/[0.14]"
                 title={language === 'pt' ? 'Conversar no WhatsApp com texto pronto' : 'Chat on WhatsApp with preset message'}
               >
-                <MessageCircle aria-hidden="true" className="h-4 w-4" />
+                <MessageCircle aria-hidden="true" className="h-4 w-4 text-theme-dim" />
                 <span>{language === 'pt' ? 'Conversar' : 'Get in touch'}</span>
               </a>
 

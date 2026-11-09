@@ -23,7 +23,7 @@ const skillGroups: SkillGroup[] = [
     technologies: ['React', 'TypeScript', 'Angular', 'Tailwind CSS'],
     projectPt: 'Modernização de Sistema Corporativo Legado',
     projectEn: 'Legacy Enterprise System Modernization',
-    projectUrl: '/projetos/03',
+    projectUrl: '/projetos/04',
   },
   {
     id: 'apis-dados',
@@ -32,7 +32,7 @@ const skillGroups: SkillGroup[] = [
     technologies: ['Node.js', 'PostgreSQL', 'Supabase', 'APIs REST'],
     projectPt: 'Fiscal Sentinel: Auditoria e Conformidade Fiscal',
     projectEn: 'Fiscal Sentinel: Audit & Compliance',
-    projectUrl: '/projetos/07',
+    projectUrl: '/projetos/08',
   },
   {
     id: 'automacoes-ia',
@@ -41,7 +41,7 @@ const skillGroups: SkillGroup[] = [
     technologies: ['n8n', 'Webhooks', 'CRM / ERP', 'LLMs & OCR'],
     projectPt: 'Agente de IA & Pipeline de Qualificação Imobiliária',
     projectEn: 'AI Agent & Real Estate Qualification Pipeline',
-    projectUrl: '/projetos/01',
+    projectUrl: '/projetos/02',
   },
   {
     id: 'entrega-qualidade',
@@ -50,7 +50,7 @@ const skillGroups: SkillGroup[] = [
     technologies: ['Git', 'CI/CD', 'Vercel', 'Cloudflare'],
     projectPt: 'CAPCRJ | Presença Digital & Orçamentos',
     projectEn: 'CAPCRJ | Digital Presence & Quotes',
-    projectUrl: '/projetos/08',
+    projectUrl: '/projetos/01',
   },
 ];
 

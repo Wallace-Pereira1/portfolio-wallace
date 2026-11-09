@@ -5,6 +5,7 @@
  */
 const highlights: Record<string, { pt: string; en: string }> = {
   '01': { pt: 'Engenharia elétrica traduzida em uma experiência digital.', en: 'Electrical engineering in a digital experience.' },
+  '1': { pt: 'Engenharia elétrica traduzida em uma experiência digital.', en: 'Electrical engineering in a digital experience.' },
   '02': { pt: 'Atendimento 24/7 em segundos', en: '24/7 instant lead response' },
   '03': { pt: 'Offline-first, sem travar por rede', en: 'Offline-first, no frozen UI' },
   '04': { pt: '−70% no tempo de carregamento', en: '−70% load time' },

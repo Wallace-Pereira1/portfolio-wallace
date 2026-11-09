@@ -21,7 +21,7 @@ export default function EditorialColophon({ nextRoute: _nextRoute }: EditorialCo
         {/* Colophon & Channels */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center text-xs font-mono">
           <div className="space-y-1">
-            <span className="text-theme-text font-semibold tracking-tight">Wallace Pereira</span>
+            <span className="text-theme-text font-semibold tracking-tight">Wallace Carvalho Pereira</span>
             <p className="text-theme-dim text-xs">
               {language === 'pt'
                 ? 'Engenharia de software full stack, automações e integrações de dados.'

@@ -12,13 +12,14 @@ export default function EstudosPage() {
   const { language, t } = useApp();
   const [searchParams] = useSearchParams();
   const { id: routeProjectId } = useParams<{ id?: string }>();
-  const initialParamId = routeProjectId || searchParams.get('id');
+  const rawParamId = routeProjectId || searchParams.get('id');
+  const initialParamId = rawParamId && rawParamId.length === 1 ? `0${rawParamId}` : rawParamId;
   const [activeFilter, setActiveFilter] = useState<'all' | 'web' | 'api' | 'data'>('all');
   const [expandedId, setExpandedId] = useState<string | null>(initialParamId || '01');
 
   const rawProjects = language === 'pt' ? projectsPt : projectsEn;
   const projects = rawProjects.filter((p) => !p.disabled);
-  const currentProject = routeProjectId ? projects.find((p) => p.id === routeProjectId) : null;
+  const currentProject = initialParamId ? projects.find((p) => p.id === initialParamId) : null;
 
   usePageSeo({
     title: currentProject

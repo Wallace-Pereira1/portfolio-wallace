@@ -37,15 +37,15 @@ export const domainDetailsPt: Record<string, DomainDetailData> = {
     ],
     relatedProjects: [
       {
-        id: '02',
+        id: '03',
         title: 'Plataforma de Investimentos',
-        url: '/projetos/02',
+        url: '/projetos/03',
         highlight: 'React, TypeScript e cálculo no browser',
       },
       {
-        id: '03',
+        id: '04',
         title: 'Modernização ASP → Angular',
-        url: '/projetos/03',
+        url: '/projetos/04',
         highlight: 'Migração para SPA e redução de débitos técnicos',
       },
     ],
@@ -63,15 +63,15 @@ export const domainDetailsPt: Record<string, DomainDetailData> = {
     ],
     relatedProjects: [
       {
-        id: '07',
+        id: '08',
         title: 'Auditoria Fiscal',
-        url: '/projetos/07',
+        url: '/projetos/08',
         highlight: 'PostgreSQL e trilha de auditoria relacional',
       },
       {
-        id: '02',
+        id: '03',
         title: 'Plataforma de Investimentos',
-        url: '/projetos/02',
+        url: '/projetos/03',
         highlight: 'Supabase, PostgreSQL e políticas RLS',
       },
     ],
@@ -98,15 +98,15 @@ export const domainDetailsPt: Record<string, DomainDetailData> = {
     ],
     relatedProjects: [
       {
-        id: '01',
+        id: '02',
         title: 'Agente de Qualificação Imobiliária',
-        url: '/projetos/01',
+        url: '/projetos/02',
         highlight: 'n8n, LLMs e WhatsApp Business API',
       },
       {
-        id: '05',
+        id: '07',
         title: 'Pipeline de OCR & Documentos',
-        url: '/projetos/05',
+        url: '/projetos/07',
         highlight: 'Visão computacional e extração estruturada',
       },
     ],
@@ -124,15 +124,15 @@ export const domainDetailsPt: Record<string, DomainDetailData> = {
     ],
     relatedProjects: [
       {
-        id: '03',
+        id: '04',
         title: 'Modernização ASP → Angular',
-        url: '/projetos/03',
+        url: '/projetos/04',
         highlight: 'Arquitetura modular e eliminação de débitos',
       },
       {
-        id: '02',
+        id: '03',
         title: 'Plataforma de Investimentos',
-        url: '/projetos/02',
+        url: '/projetos/03',
         highlight: 'Deploy na Vercel Edge com pipeline contínuo',
       },
     ],
@@ -153,15 +153,15 @@ export const domainDetailsEn: Record<string, DomainDetailData> = {
     ],
     relatedProjects: [
       {
-        id: '02',
+        id: '03',
         title: 'Investment Portfolio Platform',
-        url: '/projetos/02',
+        url: '/projetos/03',
         highlight: 'React, TypeScript and client-side calculations',
       },
       {
-        id: '03',
+        id: '04',
         title: 'Legacy ASP → Angular Overhaul',
-        url: '/projetos/03',
+        url: '/projetos/04',
         highlight: 'Single-page application overhaul and technical debt reduction',
       },
     ],
@@ -179,15 +179,15 @@ export const domainDetailsEn: Record<string, DomainDetailData> = {
     ],
     relatedProjects: [
       {
-        id: '07',
+        id: '08',
         title: 'Fiscal Sentinel Audit System',
-        url: '/projetos/07',
+        url: '/projetos/08',
         highlight: 'PostgreSQL and relational audit trail architecture',
       },
       {
-        id: '02',
+        id: '03',
         title: 'Investment Portfolio Platform',
-        url: '/projetos/02',
+        url: '/projetos/03',
         highlight: 'Supabase, PostgreSQL and Row Level Security',
       },
     ],
@@ -214,15 +214,15 @@ export const domainDetailsEn: Record<string, DomainDetailData> = {
     ],
     relatedProjects: [
       {
-        id: '01',
+        id: '02',
         title: 'Real Estate Autonomous Agent',
-        url: '/projetos/01',
+        url: '/projetos/02',
         highlight: 'n8n, LLMs and WhatsApp Business API',
       },
       {
-        id: '05',
+        id: '07',
         title: 'OCR & Document Processing Pipeline',
-        url: '/projetos/05',
+        url: '/projetos/07',
         highlight: 'Computer vision and structured data extraction',
       },
     ],
@@ -240,15 +240,15 @@ export const domainDetailsEn: Record<string, DomainDetailData> = {
     ],
     relatedProjects: [
       {
-        id: '03',
+        id: '04',
         title: 'Legacy ASP → Angular Overhaul',
-        url: '/projetos/03',
+        url: '/projetos/04',
         highlight: 'Sustainable modular architecture and technical modernization',
       },
       {
-        id: '02',
+        id: '03',
         title: 'Investment Portfolio Platform',
-        url: '/projetos/02',
+        url: '/projetos/03',
         highlight: 'Vercel Edge deploy with automated validation pipeline',
       },
     ],
