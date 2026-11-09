@@ -223,7 +223,7 @@ export default function Hero({ projects }: HeroProps) {
             <div className="hidden md:flex shrink-0 items-center justify-center self-center pr-2 lg:pr-6">
               <div className="relative w-36 h-36 lg:w-44 lg:h-44 xl:w-48 xl:h-48 flex items-center justify-center">
                 <img
-                  src=".\dist\f8b47661-3884-4eb7-bfe6-91b5460573dd_1b14d317.webp"
+                  src=".\f8b47661-3884-4eb7-bfe6-91b5460573dd_1b14d317.webp"
                   alt="Wallace Carvalho Pereira - Memoji"
                   className="w-full h-full object-contain pointer-events-none select-none drop-shadow-md"
                   loading="eager"
