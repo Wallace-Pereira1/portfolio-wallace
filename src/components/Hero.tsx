@@ -165,56 +165,72 @@ export default function Hero({ projects }: HeroProps) {
 
       <div className="portfolio-container relative z-10">
         <div className="relative border border-theme-border/80 bg-theme-surface/60 p-6 sm:p-8 md:p-10">
-          <div className="max-w-3xl space-y-6 sm:space-y-7">
-            <h1 className="font-serif text-[clamp(1.5rem,4.8vw,2.75rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text">
-              <span className="sr-only">Wallace de Carvalho Pereira</span>
-              <span aria-hidden="true" className="inline-flex items-baseline flex-nowrap whitespace-nowrap">
-                <span>Wallace&nbsp;</span>
-                <span className="inline-flex items-baseline">
-                  <span>{currentSurname}</span>
-                  <span
-                    className="inline-block w-[2px] h-[0.78em] bg-theme-text/80 ml-1 translate-y-[1px] animate-pulse"
-                    style={{ animationDuration: '950ms' }}
-                  />
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-10">
+            <div className="max-w-2xl space-y-6 sm:space-y-7">
+              <h1 className="font-serif text-[clamp(1.5rem,4.8vw,2.75rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text">
+                <span className="sr-only">Wallace de Carvalho Pereira</span>
+                <span aria-hidden="true" className="inline-flex items-baseline flex-nowrap whitespace-nowrap">
+                  <span>Wallace&nbsp;</span>
+                  <span className="inline-flex items-baseline">
+                    <span>{currentSurname}</span>
+                    <span
+                      className="inline-block w-[2px] h-[0.78em] bg-theme-text/80 ml-1 translate-y-[1px] animate-pulse"
+                      style={{ animationDuration: '950ms' }}
+                    />
+                  </span>
                 </span>
-              </span>
-            </h1>
+              </h1>
 
-            <p className="max-w-2xl text-[15px] sm:text-base leading-relaxed text-theme-dim">
-              {language === 'pt'
-                ? 'Desenvolvo aplicações web e integrações com React, Angular, Node.js e PostgreSQL. Também construo automações com n8n e agentes de IA para reduzir tarefas manuais e melhorar operações.'
-                : 'I build web applications and integrations with React, Angular, Node.js, and PostgreSQL. I also develop automations with n8n and AI agents to eliminate manual tasks and streamline operations.'}
-            </p>
+              <p className="max-w-xl text-[15px] sm:text-base leading-relaxed text-theme-dim">
+                {language === 'pt'
+                  ? 'Desenvolvo aplicações web e integrações com React, Angular, Node.js e PostgreSQL. Também construo automações com n8n e agentes de IA para reduzir tarefas manuais e melhorar operações.'
+                  : 'I build web applications and integrations with React, Angular, Node.js, and PostgreSQL. I also develop automations with n8n and AI agents to eliminate manual tasks and streamline operations.'}
+              </p>
 
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1">
-              <a
-                href={`https://wa.me/5521999688381?text=${encodeURIComponent(
-                  language === 'pt'
-                    ? 'Olá, Wallace! Vi seu portfólio e gostaria de conversar sobre uma oportunidade / projeto.'
-                    : 'Hello, Wallace! I came across your portfolio and would like to talk about an opportunity / project.'
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent('whatsapp_click')}
-                className="inline-flex items-center gap-2 border border-theme-border bg-theme-text/[0.08] px-4 py-2.5 text-sm font-mono uppercase tracking-wider text-theme-text transition-colors hover:border-theme-muted hover:bg-theme-text/[0.14]"
-                title={language === 'pt' ? 'Conversar no WhatsApp com texto pronto' : 'Chat on WhatsApp with preset message'}
-              >
-                <MessageCircle aria-hidden="true" className="h-4 w-4 text-theme-dim" />
-                <span>{language === 'pt' ? 'Conversar' : 'Get in touch'}</span>
-              </a>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1">
+                <a
+                  href={`https://wa.me/5521999688381?text=${encodeURIComponent(
+                    language === 'pt'
+                      ? 'Olá, Wallace! Vi seu portfólio e gostaria de conversar sobre uma oportunidade / projeto.'
+                      : 'Hello, Wallace! I came across your portfolio and would like to talk about an opportunity / project.'
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('whatsapp_click')}
+                  className="inline-flex items-center gap-2 border border-theme-border bg-theme-text/[0.08] px-4 py-2.5 text-sm font-mono uppercase tracking-wider text-theme-text transition-colors hover:border-theme-muted hover:bg-theme-text/[0.14]"
+                  title={language === 'pt' ? 'Conversar no WhatsApp com texto pronto' : 'Chat on WhatsApp with preset message'}
+                >
+                  <MessageCircle aria-hidden="true" className="h-4 w-4 text-theme-dim" />
+                  <span>{language === 'pt' ? 'Conversar' : 'Get in touch'}</span>
+                </a>
 
-              <button
-                type="button"
-                onClick={() => {
-                  trackEvent('resume_download');
-                  downloadResumePdf(language);
-                }}
-                className="inline-flex items-center gap-2 py-2 text-sm text-theme-dim underline decoration-theme-border underline-offset-4 transition-colors hover:text-theme-text hover:decoration-theme-text"
-                title={language === 'pt' ? 'Baixar Currículo em PDF' : 'Download Resume as PDF'}
-              >
-                <FileDown aria-hidden="true" className="h-4 w-4" />
-                <span>{language === 'pt' ? 'Currículo' : 'Resume'}</span>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    trackEvent('resume_download');
+                    downloadResumePdf(language);
+                  }}
+                  className="inline-flex items-center gap-2 py-2 text-sm text-theme-dim underline decoration-theme-border underline-offset-4 transition-colors hover:text-theme-text hover:decoration-theme-text"
+                  title={language === 'pt' ? 'Baixar Currículo em PDF' : 'Download Resume as PDF'}
+                >
+                  <FileDown aria-hidden="true" className="h-4 w-4" />
+                  <span>{language === 'pt' ? 'Currículo' : 'Resume'}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Memoji — Exibido apenas no desktop à direita do nome e texto */}
+            <div className="hidden md:flex shrink-0 items-center justify-center self-center pr-2 lg:pr-6">
+              <div className="relative w-36 h-36 lg:w-44 lg:h-44 xl:w-48 xl:h-48 flex items-center justify-center">
+                <img
+                  src=".\dist\f8b47661-3884-4eb7-bfe6-91b5460573dd_1b14d317.webp"
+                  alt="Wallace Carvalho Pereira - Memoji"
+                  className="w-full h-full object-contain pointer-events-none select-none drop-shadow-md"
+                  loading="eager"
+                  width={192}
+                  height={192}
+                />
+              </div>
             </div>
           </div>
         </div>
