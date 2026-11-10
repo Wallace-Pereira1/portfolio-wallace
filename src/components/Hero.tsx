@@ -8,6 +8,7 @@ import { trackEvent } from '../utils/analytics';
 import { currentStack } from '../data/stack';
 import type { Project } from '../types';
 import TechIcon from './TechIcon';
+import wallaceMemoji from '../../f8b47661-3884-4eb7-bfe6-91b5460573dd_1b14d317.webp';
 
 interface HeroProps {
   projects: Project[];
@@ -251,7 +252,7 @@ export default function Hero({ projects }: HeroProps) {
             >
               <div className="relative w-36 h-36 lg:w-44 lg:h-44 xl:w-48 xl:h-48 flex items-center justify-center">
                 <img
-                  src="/assets/aistudio/f8b47661-3884-4eb7-bfe6-91b5460573dd_1b14d317.webp"
+                  src={wallaceMemoji}
                   alt="Wallace Carvalho Pereira - Memoji"
                   className="w-full h-full object-contain pointer-events-none select-none drop-shadow-md"
                   loading="eager"
