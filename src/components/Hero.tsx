@@ -8,7 +8,6 @@ import { trackEvent } from '../utils/analytics';
 import { currentStack } from '../data/stack';
 import type { Project } from '../types';
 import TechIcon from './TechIcon';
-import wallaceMemoji from '../../f8b47661-3884-4eb7-bfe6-91b5460573dd_1b14d317.webp';
 
 interface HeroProps {
   projects: Project[];
@@ -169,19 +168,17 @@ export default function Hero({ projects }: HeroProps) {
 
       <div className="portfolio-container relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 26 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.15 }}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="relative border border-theme-border/80 bg-theme-surface/60 p-6 sm:p-8 md:p-10 rounded-2xl"
         >
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-10">
             <div className="max-w-2xl space-y-6 sm:space-y-7">
               <motion.h1
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.15 }}
-                transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.08, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.08, ease: [0.22, 1, 0.36, 1] }}
                 className="font-serif text-[clamp(1.5rem,4.8vw,2.75rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text"
               >
                 <span className="sr-only">Wallace de Carvalho Pereira</span>
@@ -198,10 +195,9 @@ export default function Hero({ projects }: HeroProps) {
               </motion.h1>
 
               <motion.p
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.15 }}
-                transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.16, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.16, ease: [0.22, 1, 0.36, 1] }}
                 className="max-w-xl text-[15px] sm:text-base leading-relaxed text-theme-dim"
               >
                 {language === 'pt'
@@ -210,10 +206,9 @@ export default function Hero({ projects }: HeroProps) {
               </motion.p>
 
               <motion.div
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.15 }}
-                transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: shouldReduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
                 className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1"
               >
                 <a
@@ -249,15 +244,14 @@ export default function Hero({ projects }: HeroProps) {
 
             {/* Memoji — Exibido apenas no desktop à direita do nome e texto com entrada suave */}
             <motion.div
-              initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.88, y: shouldReduceMotion ? 0 : 10 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.15 }}
-              transition={{ duration: 0.65, delay: shouldReduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.9, y: shouldReduceMotion ? 0 : 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="hidden md:flex shrink-0 items-center justify-center self-center pr-2 lg:pr-6"
             >
               <div className="relative w-36 h-36 lg:w-44 lg:h-44 xl:w-48 xl:h-48 flex items-center justify-center">
                 <img
-                  src={wallaceMemoji}
+                  src="/assets/aistudio/f8b47661-3884-4eb7-bfe6-91b5460573dd_1b14d317.webp"
                   alt="Wallace Carvalho Pereira - Memoji"
                   className="w-full h-full object-contain pointer-events-none select-none drop-shadow-md"
                   loading="eager"
@@ -271,10 +265,9 @@ export default function Hero({ projects }: HeroProps) {
 
         <div className="mt-8 grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
           <motion.div
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
             className="h-full"
           >
             <Link
@@ -297,10 +290,9 @@ export default function Hero({ projects }: HeroProps) {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
             className="h-full"
           >
             <Link
@@ -326,10 +318,9 @@ export default function Hero({ projects }: HeroProps) {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
             className="h-full"
           >
             <Link
@@ -353,10 +344,9 @@ export default function Hero({ projects }: HeroProps) {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="h-full"
           >
             <Link

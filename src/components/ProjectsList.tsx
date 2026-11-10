@@ -29,7 +29,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
       <motion.header
         initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="pb-4 border-b border-theme-border/60"
       >
@@ -56,7 +56,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
               key={project.id}
               initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{
                 duration: 0.5,
                 delay: reduceMotion ? 0 : (index % 4) * 0.07,

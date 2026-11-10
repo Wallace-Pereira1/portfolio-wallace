@@ -69,7 +69,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
           <motion.div
             initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="space-y-6"
           >
@@ -94,7 +94,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
           <motion.div
             initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="md:col-span-5 space-y-8"
           >
@@ -178,7 +178,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
           <motion.div
             initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="md:col-span-7"
           >

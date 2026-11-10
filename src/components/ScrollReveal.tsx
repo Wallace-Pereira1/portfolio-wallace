@@ -21,7 +21,7 @@ export default function ScrollReveal({
   distance = 24,
   direction = 'up',
   amount = 0.15,
-  once = false,
+  once = true,
   scale = 1,
 }: ScrollRevealProps) {
   const shouldReduceMotion = useReducedMotion();

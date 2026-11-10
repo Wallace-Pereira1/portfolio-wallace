@@ -108,7 +108,7 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
       <motion.div
         initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="border-b border-theme-border/70 pb-5 sm:pb-6"
       >
@@ -135,7 +135,7 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
             key={group.id}
             initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{
               duration: 0.5,
               delay: shouldReduceMotion ? 0 : index * 0.08,
