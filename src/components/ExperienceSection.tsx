@@ -223,7 +223,13 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       <div className="portfolio-container space-y-6 md:space-y-8">
         {/* Section Header or Tabs Bar */}
         {showHeader ? (
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pb-5">
+          <motion.div
+            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pb-5"
+          >
             <div className="md:col-span-8 space-y-3">
               <span className="text-xs font-mono text-theme-muted uppercase tracking-widest block">
                 {language === 'pt' ? 'Trajetória Profissional' : 'Professional Trajectory'}
@@ -261,7 +267,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
         ) : (
           <div className="flex items-center justify-between pb-6">
             <span className="text-xs font-mono uppercase tracking-wider text-theme-muted">
@@ -303,7 +309,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
             variants={timelineContainerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
+            viewport={{ once: false, amount: 0.15 }}
             className="divide-y divide-theme-border/70 border-b border-theme-border/70"
           >
             {workExperiences.map((exp) => (

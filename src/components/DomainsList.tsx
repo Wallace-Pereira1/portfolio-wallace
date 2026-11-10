@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { BrainCircuit, Boxes, Terminal, Waypoints, Workflow, Webhook } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
@@ -100,10 +101,17 @@ interface DomainsListProps {
 export default function DomainsList({ language: propLanguage }: DomainsListProps) {
   const { language: contextLanguage } = useApp();
   const isEnglish = (propLanguage || contextLanguage) === 'en';
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <div className="w-full space-y-7 sm:space-y-9">
-      <div className="border-b border-theme-border/70 pb-5 sm:pb-6">
+      <motion.div
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        className="border-b border-theme-border/70 pb-5 sm:pb-6"
+      >
         <div className="space-y-3 sm:flex sm:items-center sm:gap-8 sm:space-y-0">
           <span className="shrink-0 font-mono text-xs uppercase tracking-[0.16em] text-theme-muted">
             {isEnglish ? 'Current stack' : 'Stack atual'}
@@ -119,11 +127,23 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
             ))}
           </ul>
         </div>
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 items-start gap-x-7 gap-y-7 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-6">
-        {skillGroups.map((group) => (
-          <section key={group.id} aria-labelledby={`skill-group-${group.id}`} className="min-w-0">
+        {skillGroups.map((group, index) => (
+          <motion.section
+            key={group.id}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{
+              duration: 0.5,
+              delay: shouldReduceMotion ? 0 : index * 0.08,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            aria-labelledby={`skill-group-${group.id}`}
+            className="min-w-0"
+          >
             <h3
               id={`skill-group-${group.id}`}
               className="mb-3 min-h-5 font-mono text-xs uppercase tracking-[0.06em] text-theme-muted"
@@ -145,7 +165,7 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
                 <span aria-hidden="true"> ↗</span>
               </Link>
             </p>
-          </section>
+          </motion.section>
         ))}
       </div>
     </div>

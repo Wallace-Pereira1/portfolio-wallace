@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { useApp } from '../context/AppContext';
 import { ArrowUpRight, FileDown, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -127,6 +128,8 @@ export default function Hero({ projects }: HeroProps) {
     };
   }, []);
 
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section
       id="inicio"
@@ -165,10 +168,22 @@ export default function Hero({ projects }: HeroProps) {
       </div>
 
       <div className="portfolio-container relative z-10">
-        <div className="relative border border-theme-border/80 bg-theme-surface/60 p-6 sm:p-8 md:p-10 rounded-2xl">
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 26 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          className="relative border border-theme-border/80 bg-theme-surface/60 p-6 sm:p-8 md:p-10 rounded-2xl"
+        >
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-10">
             <div className="max-w-2xl space-y-6 sm:space-y-7">
-              <h1 className="font-serif text-[clamp(1.5rem,4.8vw,2.75rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text">
+              <motion.h1
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className="font-serif text-[clamp(1.5rem,4.8vw,2.75rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text"
+              >
                 <span className="sr-only">Wallace de Carvalho Pereira</span>
                 <span aria-hidden="true" className="inline-flex items-baseline flex-nowrap whitespace-nowrap">
                   <span>Wallace&nbsp;</span>
@@ -180,15 +195,27 @@ export default function Hero({ projects }: HeroProps) {
                     />
                   </span>
                 </span>
-              </h1>
+              </motion.h1>
 
-              <p className="max-w-xl text-[15px] sm:text-base leading-relaxed text-theme-dim">
+              <motion.p
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.16, ease: [0.22, 1, 0.36, 1] }}
+                className="max-w-xl text-[15px] sm:text-base leading-relaxed text-theme-dim"
+              >
                 {language === 'pt'
                   ? 'Desenvolvo aplicações web e integrações com React, Angular, Node.js e PostgreSQL. Também construo automações com n8n e agentes de IA para reduzir tarefas manuais e melhorar operações.'
                   : 'I build web applications and integrations with React, Angular, Node.js, and PostgreSQL. I also develop automations with n8n and AI agents to eliminate manual tasks and streamline operations.'}
-              </p>
+              </motion.p>
 
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1">
+              <motion.div
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+                className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1"
+              >
                 <a
                   href={`https://wa.me/5521999688381?text=${encodeURIComponent(
                     language === 'pt'
@@ -217,11 +244,17 @@ export default function Hero({ projects }: HeroProps) {
                   <FileDown aria-hidden="true" className="h-4 w-4" />
                   <span>{language === 'pt' ? 'Currículo' : 'Resume'}</span>
                 </button>
-              </div>
+              </motion.div>
             </div>
 
-            {/* Memoji — Exibido apenas no desktop à direita do nome e texto */}
-            <div className="hidden md:flex shrink-0 items-center justify-center self-center pr-2 lg:pr-6">
+            {/* Memoji — Exibido apenas no desktop à direita do nome e texto com entrada suave */}
+            <motion.div
+              initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.88, y: shouldReduceMotion ? 0 : 10 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.65, delay: shouldReduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="hidden md:flex shrink-0 items-center justify-center self-center pr-2 lg:pr-6"
+            >
               <div className="relative w-36 h-36 lg:w-44 lg:h-44 xl:w-48 xl:h-48 flex items-center justify-center">
                 <img
                   src={wallaceMemoji}
@@ -232,87 +265,119 @@ export default function Hero({ projects }: HeroProps) {
                   height={192}
                 />
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
         <div className="mt-8 grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
-          <Link
-            to="/#contato"
-            aria-label={language === 'pt' ? 'Disponibilidade e contato' : 'Availability and contact'}
-            className="group relative flex min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 rounded-xl transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+          <motion.div
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
+            className="h-full"
           >
-            <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
-              {language === 'pt' ? 'Disponibilidade' : 'Availability'}
-            </span>
-            <span className="pr-8 leading-relaxed text-theme-dim">
-              <span className="block text-[15px] text-theme-text">
-                {language === 'pt' ? 'Aberto a vagas full stack' : 'Open to full stack roles'}
+            <Link
+              to="/#contato"
+              aria-label={language === 'pt' ? 'Disponibilidade e contato' : 'Availability and contact'}
+              className="group relative flex h-full min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 rounded-xl transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+            >
+              <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
+                {language === 'pt' ? 'Disponibilidade' : 'Availability'}
               </span>
-              <span className="block text-[13px]">{language === 'pt' ? 'Rio de Janeiro · remoto/híbrido' : 'Rio de Janeiro · remote/hybrid'}</span>
-              <span className="block text-[13px] text-theme-muted">{t('hero.stat1.val')} {language === 'pt' ? 'de experiência' : 'of experience'}</span>
-            </span>
-            <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
-
-          <Link
-            to="/#tecnologias"
-            aria-label={language === 'pt' ? 'Stack atual e competências' : 'Current stack and skills'}
-            className="group relative flex min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 rounded-xl transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
-          >
-            <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
-              {language === 'pt' ? 'Stack atual' : 'Current stack'}
-            </span>
-            <ul className="flex flex-wrap items-center gap-x-3 gap-y-2 pr-8">
-              {currentStack.map((technology) => (
-                <li key={technology} className="flex items-center gap-2 text-[13px] text-theme-dim">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] border border-theme-border/80 bg-theme-surface">
-                    <TechIcon name={technology} className="h-4 w-4 opacity-100" colorMode="brand" />
-                  </span>
-                  <span>{technology}</span>
-                </li>
-              ))}
-            </ul>
-            <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
-
-          <Link
-            to="/#projetos"
-            aria-label={language === 'pt' ? 'Projetos selecionados' : 'Selected projects'}
-            className="group relative flex min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 rounded-xl transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
-          >
-            <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
-              {language === 'pt' ? 'Projetos' : 'Projects'}
-            </span>
-            <span className="pr-8 leading-relaxed text-theme-dim">
-              <span className="mb-1 block text-[15px] text-theme-text">
-                {projects.length} {language === 'pt' ? 'projetos' : 'projects'}
+              <span className="pr-8 leading-relaxed text-theme-dim">
+                <span className="block text-[15px] text-theme-text">
+                  {language === 'pt' ? 'Aberto a vagas full stack' : 'Open to full stack roles'}
+                </span>
+                <span className="block text-[13px]">{language === 'pt' ? 'Rio de Janeiro · remoto/híbrido' : 'Rio de Janeiro · remote/hybrid'}</span>
+                <span className="block text-[13px] text-theme-muted">{t('hero.stat1.val')} {language === 'pt' ? 'de experiência' : 'of experience'}</span>
               </span>
-              {projects.slice(0, 2).map((project) => (
-                <span key={project.id} className="block text-[13px] text-theme-muted">{project.title}</span>
-              ))}
-            </span>
-            <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
+              <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          </motion.div>
 
-          <Link
-            to="/#experiencia"
-            aria-label={language === 'pt' ? 'Trajetória profissional atual' : 'Current professional experience'}
-            className="group relative flex min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 rounded-xl transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+          <motion.div
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="h-full"
           >
-            <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
-              {language === 'pt' ? 'Trajetória' : 'Experience'}
-            </span>
-            <span className="pr-8 leading-relaxed text-theme-dim">
-              <span className="block text-[15px] text-theme-text">Prata e Prata</span>
-              <span className="block text-[13px] text-theme-muted">
-                {language === 'pt'
-                  ? 'Analista de Automação, Integrações e Operações Financeiras'
-                  : 'Automation, Integrations & Financial Operations Analyst'}
+            <Link
+              to="/#tecnologias"
+              aria-label={language === 'pt' ? 'Stack atual e competências' : 'Current stack and skills'}
+              className="group relative flex h-full min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 rounded-xl transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+            >
+              <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
+                {language === 'pt' ? 'Stack atual' : 'Current stack'}
               </span>
-            </span>
-            <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
+              <ul className="flex flex-wrap items-center gap-x-3 gap-y-2 pr-8">
+                {currentStack.map((technology) => (
+                  <li key={technology} className="flex items-center gap-2 text-[13px] text-theme-dim">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] border border-theme-border/80 bg-theme-surface">
+                      <TechIcon name={technology} className="h-4 w-4 opacity-100" colorMode="brand" />
+                    </span>
+                    <span>{technology}</span>
+                  </li>
+                ))}
+              </ul>
+              <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+            className="h-full"
+          >
+            <Link
+              to="/#projetos"
+              aria-label={language === 'pt' ? 'Projetos selecionados' : 'Selected projects'}
+              className="group relative flex h-full min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 rounded-xl transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+            >
+              <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
+                {language === 'pt' ? 'Projetos' : 'Projects'}
+              </span>
+              <span className="pr-8 leading-relaxed text-theme-dim">
+                <span className="mb-1 block text-[15px] text-theme-text">
+                  {projects.length} {language === 'pt' ? 'projetos' : 'projects'}
+                </span>
+                {projects.slice(0, 2).map((project) => (
+                  <span key={project.id} className="block text-[13px] text-theme-muted">{project.title}</span>
+                ))}
+              </span>
+              <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="h-full"
+          >
+            <Link
+              to="/#experiencia"
+              aria-label={language === 'pt' ? 'Trajetória profissional atual' : 'Current professional experience'}
+              className="group relative flex h-full min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 rounded-xl transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+            >
+              <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
+                {language === 'pt' ? 'Trajetória' : 'Experience'}
+              </span>
+              <span className="pr-8 leading-relaxed text-theme-dim">
+                <span className="block text-[15px] text-theme-text">Prata e Prata</span>
+                <span className="block text-[13px] text-theme-muted">
+                  {language === 'pt'
+                    ? 'Analista de Automação, Integrações e Operações Financeiras'
+                    : 'Automation, Integrations & Financial Operations Analyst'}
+                </span>
+              </span>
+              <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          </motion.div>
         </div>
       </div>
     </section>
