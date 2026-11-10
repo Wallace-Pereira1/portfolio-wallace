@@ -26,7 +26,13 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
       aria-labelledby="projects-heading"
       className="w-full space-y-5 sm:space-y-7"
     >
-      <header className="pb-4 border-b border-theme-border/60">
+      <motion.header
+        initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        className="pb-4 border-b border-theme-border/60"
+      >
         <span className="text-xs font-mono text-theme-muted uppercase tracking-widest block mb-3">
           {isEnglish ? 'Selected work' : 'Trabalhos selecionados'}
         </span>
@@ -36,7 +42,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
         >
           {isEnglish ? 'Projects' : 'Projetos'}
         </h2>
-      </header>
+      </motion.header>
 
       <div className="divide-y divide-theme-border/70 border-b border-theme-border/70">
         {projects.map((project, index) => {
@@ -46,7 +52,18 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
           const fullDescription = project.description || project.solution;
 
           return (
-            <article key={project.id} className="group">
+            <motion.article
+              key={project.id}
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{
+                duration: 0.5,
+                delay: reduceMotion ? 0 : (index % 4) * 0.07,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="group"
+            >
               <button
                 type="button"
                 aria-expanded={isOpen}
@@ -111,7 +128,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
                   </motion.div>
                 )}
               </AnimatePresence>
-            </article>
+            </motion.article>
           );
         })}
       </div>
