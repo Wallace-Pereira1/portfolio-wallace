@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
+import { isLightTheme } from '../data/themes';
 
 interface DitherWaveProps {
   baseColor?: string;
@@ -57,10 +58,10 @@ export default function DitherWaveBackground({
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Palette adaptation: in light mode use cold slate tones
-  const isLight = theme === 'light';
-  const effectiveBaseColor = isLight ? '#f5f5f5' : baseColor;
-  const effectiveWaveColor = isLight ? '#cfcfcf' : waveColor;
+  // Palette adaptation: in light/cream mode use light tones
+  const isLight = isLightTheme(theme);
+  const effectiveBaseColor = theme === 'cream' ? '#f4efe6' : isLight ? '#f5f5f5' : baseColor;
+  const effectiveWaveColor = theme === 'cream' ? '#dcd2c0' : isLight ? '#cfcfcf' : waveColor;
   const effectiveOpacity = isLight ? 0.18 : opacity;
 
   useEffect(() => {

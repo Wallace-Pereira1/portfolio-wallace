@@ -211,16 +211,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const [theme, setTheme] = useState<Theme>(() => {
     const stored = localStorage.getItem('theme');
-    const validThemes: Theme[] = [
-      'dark',
-      'light',
-      'pink',
-      'monochrome',
-      'purple',
-      'ocean',
-      'green',
-      'slate',
-    ];
+    const validThemes: Theme[] = ['dark', 'light', 'cream', 'graphite'];
     if (stored && validThemes.includes(stored as Theme)) {
       return stored as Theme;
     }
@@ -243,16 +234,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
 
     // 3. Atualiza as classes de tema
-    const allThemes: Theme[] = [
-      'dark',
-      'light',
-      'pink',
-      'monochrome',
-      'purple',
-      'ocean',
-      'green',
-      'slate',
-    ];
+    const allThemes: Theme[] = ['dark', 'light', 'cream', 'graphite'];
     allThemes.forEach((t) => document.documentElement.classList.remove(`theme-${t}`));
     document.documentElement.classList.add(`theme-${theme}`);
 

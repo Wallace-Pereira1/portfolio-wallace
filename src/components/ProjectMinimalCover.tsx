@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
+import { isLightTheme } from '../data/themes';
 
 interface ProjectMinimalCoverProps {
   projectId: string;
@@ -19,7 +20,7 @@ export default function ProjectMinimalCover({
   isLight,
 }: ProjectMinimalCoverProps) {
   const { theme } = useApp();
-  const light = isLight !== undefined ? isLight : theme === 'light';
+  const light = isLight !== undefined ? isLight : isLightTheme(theme);
 
   if (light) {
     return <LightCover projectId={projectId} isCenter={isCenter} />;

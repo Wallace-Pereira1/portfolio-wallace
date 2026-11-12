@@ -160,7 +160,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
 
           {/* Contact Message Form */}
           <div className="md:col-span-7">
-            <div className="p-6 sm:p-8 bg-theme-surface border border-theme-border rounded-2xl space-y-6">
+            <div className="p-6 sm:p-8 bg-theme-surface rounded-2xl space-y-6">
               <div className="space-y-1">
                 <span className="text-sm font-mono text-theme-muted uppercase tracking-wider block">
                   {t('foot.form.title')}
@@ -186,7 +186,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                       onChange={handleInputChange}
                       placeholder={t('foot.form.name.placeholder')}
                       required
-                      className="w-full bg-theme-bg border border-theme-border focus:border-theme-text focus:outline-none text-theme-text text-base px-3.5 py-2.5 rounded-lg transition-colors font-sans"
+                      className="w-full bg-theme-bg/90 border-0 focus:ring-1 focus:ring-theme-muted focus:outline-none text-theme-text text-base px-3.5 py-2.5 rounded-lg transition-colors font-sans"
                     />
                   </div>
 
@@ -202,7 +202,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                       onChange={handleInputChange}
                       placeholder="seu@email.com"
                       required
-                      className="w-full bg-theme-bg border border-theme-border focus:border-theme-text focus:outline-none text-theme-text text-base px-3.5 py-2.5 rounded-lg transition-colors font-sans"
+                      className="w-full bg-theme-bg/90 border-0 focus:ring-1 focus:ring-theme-muted focus:outline-none text-theme-text text-base px-3.5 py-2.5 rounded-lg transition-colors font-sans"
                     />
                   </div>
                 </div>
@@ -216,7 +216,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                     name="recompensa"
                     value={formData.recompensa}
                     onChange={handleInputChange}
-                    className="w-full bg-theme-bg border border-theme-border focus:border-theme-text focus:outline-none text-theme-text text-base px-3.5 py-2.5 rounded-lg transition-colors font-sans"
+                    className="w-full bg-theme-bg/90 border-0 focus:ring-1 focus:ring-theme-muted focus:outline-none text-theme-text text-base px-3.5 py-2.5 rounded-lg transition-colors font-sans"
                   >
                     <option value="Recrutamento / Oportunidade">{t('foot.form.sub.rec')}</option>
                     <option value="Projeto de Automação / APIs">{t('foot.form.sub.ai')}</option>
@@ -237,18 +237,18 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                     rows={5}
                     placeholder={t('foot.form.msg.placeholder')}
                     required
-                    className="w-full bg-theme-bg border border-theme-border focus:border-theme-text focus:outline-none text-theme-text text-base px-3.5 py-2.5 rounded-lg transition-colors font-sans resize-none"
+                    className="w-full bg-theme-bg/90 border-0 focus:ring-1 focus:ring-theme-muted focus:outline-none text-theme-text text-base px-3.5 py-2.5 rounded-lg transition-colors font-sans resize-none"
                   />
                 </div>
 
                 {errorMsg && (
-                  <div role="alert" aria-live="assertive" aria-atomic="true" className="p-3 bg-theme-surface/60 border border-theme-border text-theme-dim text-sm font-mono rounded-lg">
+                  <div role="alert" aria-live="assertive" aria-atomic="true" className="p-3 bg-theme-bg/80 text-theme-dim text-sm font-mono rounded-lg">
                     {errorMsg}
                   </div>
                 )}
 
                 {success && (
-                  <div role="status" aria-live="polite" aria-atomic="true" className="p-3 bg-theme-surface/60 border border-theme-border text-theme-dim text-sm font-mono rounded-lg flex items-center gap-2">
+                  <div role="status" aria-live="polite" aria-atomic="true" className="p-3 bg-theme-bg/80 text-theme-dim text-sm font-mono rounded-lg flex items-center gap-2">
                     <Check className="w-4 h-4 shrink-0" />
                     <span>{t('foot.form.success')}</span>
                   </div>

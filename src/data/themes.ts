@@ -1,12 +1,4 @@
-export type ThemeId =
-  | 'dark'
-  | 'light'
-  | 'pink'
-  | 'monochrome'
-  | 'purple'
-  | 'ocean'
-  | 'green'
-  | 'slate';
+export type ThemeId = 'dark' | 'light' | 'cream' | 'graphite';
 
 export interface ThemeOption {
   id: ThemeId;
@@ -15,7 +7,7 @@ export interface ThemeOption {
   descriptionPt: string;
   descriptionEn: string;
   color: string; // Cor principal para a bolinha do tema
-  swatch: string[]; // 6 cores representativas da paleta
+  swatch: string[];
   isDarkPalette: boolean;
 }
 
@@ -25,10 +17,30 @@ export const THEME_OPTIONS: ThemeOption[] = [
     namePt: 'Escuro',
     nameEn: 'Dark',
     descriptionPt: 'Padrão editorial em tons profundos de grafite e preto.',
-    descriptionEn: 'Default editorial dark with deep graphite and black tones.',
+    descriptionEn: 'Default editorial dark with deep black tones.',
     color: '#08090a',
-    swatch: ['#08090a', '#121316', '#1c1e22', '#8d93a1', '#9ea4b0', '#f2f3f5'],
+    swatch: ['#08090a', '#0d0e10', '#121316', '#8d93a1', '#9ea4b0', '#f2f3f5'],
     isDarkPalette: true,
+  },
+  {
+    id: 'graphite',
+    namePt: 'Cinza Apple',
+    nameEn: 'Graphite Dark',
+    descriptionPt: 'Modo escuro em cinza neutro elevado no estilo Apple.',
+    descriptionEn: 'Apple-inspired elevated neutral gray dark mode.',
+    color: '#3a3a3c',
+    swatch: ['#1c1c1e', '#2c2c2e', '#3a3a3c', '#8e8e93', '#aeaeb2', '#f5f5f7'],
+    isDarkPalette: true,
+  },
+  {
+    id: 'cream',
+    namePt: 'Creme (Leitura)',
+    nameEn: 'Cream (Reading)',
+    descriptionPt: 'Tom papel quente e suave para leitura confortável.',
+    descriptionEn: 'Warm paper tone designed for comfortable reading.',
+    color: '#ebe0cc',
+    swatch: ['#f4efe6', '#faf6ee', '#ebe3d3', '#756b5f', '#574e44', '#2b2620'],
+    isDarkPalette: false,
   },
   {
     id: 'light',
@@ -37,67 +49,11 @@ export const THEME_OPTIONS: ThemeOption[] = [
     descriptionPt: 'Interface nítida e minimalista com fundo claro e alto contraste.',
     descriptionEn: 'Crisp, minimalist interface with light background and high contrast.',
     color: '#ffffff',
-    swatch: ['#ffffff', '#f3f4f6', '#e5e7eb', '#4b5563', '#374151', '#111827'],
+    swatch: ['#ffffff', '#f9fafb', '#f3f4f6', '#4b5563', '#374151', '#111827'],
     isDarkPalette: false,
   },
-  {
-    id: 'pink',
-    namePt: 'Rosa',
-    nameEn: 'Pink',
-    descriptionPt: 'Vinho profundo e tons baga com contrastes quentes e toques de rosa.',
-    descriptionEn: 'Deep wine and berry hues with warm contrasts and pink highlights.',
-    color: '#C24366',
-    swatch: ['#800021', '#881144', '#243A66', '#C24366', '#FF69B4', '#FFE4D8'],
-    isDarkPalette: true,
-  },
-  {
-    id: 'monochrome',
-    namePt: 'Monocromático',
-    nameEn: 'Monochrome',
-    descriptionPt: 'Escala pura de cinzas, do ébano profundo ao branco puro.',
-    descriptionEn: 'Pure grayscale spectrum from deep ebony to crisp white.',
-    color: '#6B6B6B',
-    swatch: ['#0B0B0B', '#1A1A1A', '#333333', '#6B6B6B', '#D9D9D9', '#FFFFFF'],
-    isDarkPalette: true,
-  },
-  {
-    id: 'purple',
-    namePt: 'Roxo',
-    nameEn: 'Purple',
-    descriptionPt: 'Noite cósmica com superfícies violeta profundo e acentos lavanda.',
-    descriptionEn: 'Cosmic night palette with deep violet surfaces and lavender accents.',
-    color: '#6A2FC8',
-    swatch: ['#0B0720', '#25134D', '#6A2FC8', '#9D71E8', '#D1B8FF', '#F2E9FF'],
-    isDarkPalette: true,
-  },
-  {
-    id: 'ocean',
-    namePt: 'Azul oceano',
-    nameEn: 'Ocean Blue',
-    descriptionPt: 'Profundezas abissais com superfícies petróleo e ciano radiante.',
-    descriptionEn: 'Abyssal depths with teal surfaces and radiant cyan accents.',
-    color: '#0F969C',
-    swatch: ['#05161A', '#072E33', '#0C7075', '#0F969C', '#6DA5C0', '#294D61'],
-    isDarkPalette: true,
-  },
-  {
-    id: 'green',
-    namePt: 'Verde',
-    nameEn: 'Green',
-    descriptionPt: 'Floresta perene com superfícies pinho e sálvia suave.',
-    descriptionEn: 'Evergreen forest with pine surfaces and gentle sage mint.',
-    color: '#235347',
-    swatch: ['#051F20', '#0B2B26', '#163832', '#235347', '#8EB69B', '#DAF1DE'],
-    isDarkPalette: true,
-  },
-  {
-    id: 'slate',
-    namePt: 'Azul ardósia',
-    nameEn: 'Slate Blue',
-    descriptionPt: 'Ardósia mineral fria com superfícies tempestade e névoa prateada.',
-    descriptionEn: 'Cool mineral slate with storm surfaces and silvery mist.',
-    color: '#4A5C6A',
-    swatch: ['#06141B', '#11212D', '#253745', '#4A5C6A', '#9BA8AB', '#CCD0CF'],
-    isDarkPalette: true,
-  },
 ];
+
+export function isLightTheme(theme: ThemeId | string): boolean {
+  return theme === 'light' || theme === 'cream';
+}

@@ -90,7 +90,7 @@ export default function Hero({ projects }: HeroProps) {
       </div>
 
       <div className="portfolio-container relative z-10">
-        <div className="relative border border-theme-border/80 bg-theme-surface/60 p-6 sm:p-8 md:p-10 rounded-2xl">
+        <div className="relative bg-theme-surface/80 p-6 sm:p-8 md:p-10 rounded-2xl">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-10">
             <div className="max-w-2xl space-y-6 sm:space-y-7">
               <h1 className="font-serif text-[clamp(1.5rem,4.8vw,2.75rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text">
@@ -166,7 +166,7 @@ export default function Hero({ projects }: HeroProps) {
             <Link
               to="/#contato"
               aria-label={language === 'pt' ? 'Disponibilidade e contato' : 'Availability and contact'}
-              className="group relative flex h-full min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 rounded-xl transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+              className="group relative flex h-full min-h-[116px] flex-col gap-3 bg-theme-surface/80 hover:bg-theme-card/80 p-5 rounded-xl transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
             >
               <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
                 {language === 'pt' ? 'Disponibilidade' : 'Availability'}
@@ -186,7 +186,7 @@ export default function Hero({ projects }: HeroProps) {
             <Link
               to="/#tecnologias"
               aria-label={language === 'pt' ? 'Stack atual e competências' : 'Current stack and skills'}
-              className="group relative flex h-full min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 rounded-xl transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+              className="group relative flex h-full min-h-[116px] flex-col gap-3 bg-theme-surface/80 hover:bg-theme-card/80 p-5 rounded-xl transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
             >
               <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
                 {language === 'pt' ? 'Stack atual' : 'Current stack'}
@@ -209,7 +209,7 @@ export default function Hero({ projects }: HeroProps) {
             <Link
               to="/#projetos"
               aria-label={language === 'pt' ? 'Projetos selecionados' : 'Selected projects'}
-              className="group relative flex h-full min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 rounded-xl transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+              className="group relative flex h-full min-h-[116px] flex-col gap-3 bg-theme-surface/80 hover:bg-theme-card/80 p-5 rounded-xl transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
             >
               <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
                 {language === 'pt' ? 'Projetos' : 'Projects'}
@@ -229,18 +229,25 @@ export default function Hero({ projects }: HeroProps) {
           <div className="h-full">
             <Link
               to="/#experiencia"
-              aria-label={language === 'pt' ? 'Trajetória profissional atual' : 'Current professional experience'}
-              className="group relative flex h-full min-h-[116px] flex-col gap-3 border border-theme-border/80 bg-theme-surface/60 p-5 rounded-xl transition-colors hover:border-theme-muted focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
+              aria-label={language === 'pt' ? 'Experiências e atuações profissionais' : 'Professional experience and roles'}
+              className="group relative flex h-full min-h-[116px] flex-col gap-3 bg-theme-surface/80 hover:bg-theme-card/80 p-5 rounded-xl transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
             >
               <span className="font-mono text-xs uppercase tracking-wide text-theme-muted">
-                {language === 'pt' ? 'Trajetória' : 'Experience'}
+                {language === 'pt' ? 'Experiências' : 'Experience'}
               </span>
               <span className="pr-8 leading-relaxed text-theme-dim">
-                <span className="block text-[15px] text-theme-text">Experiências</span>
+                <span className="mb-1 block text-[15px] text-theme-text">
+                  {language === 'pt' ? 'Full Stack, Automação & IA' : 'Full Stack, Automation & AI'}
+                </span>
                 <span className="block text-[13px] text-theme-muted">
                   {language === 'pt'
-                    ? 'Analista de Automação, Integrações e Desenvolvimento Web'
-                    : 'Automation, Integrations & Web development'}
+                    ? 'Integrações via APIs, webhooks e fluxos n8n'
+                    : 'API, webhook & n8n workflow integrations'}
+                </span>
+                <span className="block text-[13px] text-theme-muted">
+                  {language === 'pt'
+                    ? 'Interfaces web com React, Angular e TypeScript'
+                    : 'Web interfaces with React, Angular & TypeScript'}
                 </span>
               </span>
               <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

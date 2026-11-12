@@ -5,6 +5,7 @@ import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Project } from '../types';
 import { getProjectHighlight } from '../data/projectHighlights';
 import { useApp } from '../context/AppContext';
+import { isLightTheme } from '../data/themes';
 import ProjectMinimalCover from './ProjectMinimalCover';
 import ProjectStudyModal from './ProjectStudyModal';
 
@@ -15,7 +16,7 @@ interface ProjectsListProps {
 
 export default function ProjectsList({ projects, language }: ProjectsListProps) {
   const { theme } = useApp();
-  const isLight = theme === 'light';
+  const isLight = isLightTheme(theme);
   const isEnglish = language === 'en';
   const reduceMotion = useReducedMotion();
   const [openProjectId, setOpenProjectId] = useState<string | null>(null);

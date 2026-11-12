@@ -15,6 +15,7 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('inicio');
   const scrollRafRef = useRef<number | null>(null);
   const desktopThemeRef = useRef<HTMLDivElement>(null);
+  const drawerThemeRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -23,8 +24,9 @@ export default function Navbar() {
   useEffect(() => {
     if (!isThemeExpanded) return;
 
-    const handlePointerDown = (e: PointerEvent) => {
-      if (desktopThemeRef.current && !desktopThemeRef.current.contains(e.target as Node)) {
+    const handleOutside = (e: Event) => {
+      const target = e.target as Node | null;
+      if (desktopThemeRef.current && (!target || !desktopThemeRef.current.contains(target))) {
         setIsThemeExpanded(false);
       }
     };
@@ -35,13 +37,48 @@ export default function Navbar() {
       }
     };
 
-    document.addEventListener('pointerdown', handlePointerDown);
-    document.addEventListener('keydown', handleKeyDown);
+    const handleBlur = () => {
+      setIsThemeExpanded(false);
+    };
+
+    document.addEventListener('pointerdown', handleOutside, true);
+    document.addEventListener('mousedown', handleOutside, true);
+    document.addEventListener('touchstart', handleOutside, true);
+    document.addEventListener('keydown', handleKeyDown, true);
+    window.addEventListener('blur', handleBlur);
+
     return () => {
-      document.removeEventListener('pointerdown', handlePointerDown);
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('pointerdown', handleOutside, true);
+      document.removeEventListener('mousedown', handleOutside, true);
+      document.removeEventListener('touchstart', handleOutside, true);
+      document.removeEventListener('keydown', handleKeyDown, true);
+      window.removeEventListener('blur', handleBlur);
     };
   }, [isThemeExpanded]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setIsDrawerThemeExpanded(false);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isDrawerThemeExpanded) return;
+
+    const handleOutsideDrawerTheme = (e: Event) => {
+      const target = e.target as Node | null;
+      if (drawerThemeRef.current && (!target || !drawerThemeRef.current.contains(target))) {
+        setIsDrawerThemeExpanded(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handleOutsideDrawerTheme, true);
+    document.addEventListener('touchstart', handleOutsideDrawerTheme, true);
+    return () => {
+      document.removeEventListener('pointerdown', handleOutsideDrawerTheme, true);
+      document.removeEventListener('touchstart', handleOutsideDrawerTheme, true);
+    };
+  }, [isDrawerThemeExpanded]);
 
   const navLinks = [
     { name: t('nav.inicio'), id: 'inicio' },
@@ -316,88 +353,76 @@ export default function Navbar() {
 
             {/* Theme selection: single circle with current theme that expands on click */}
             <div ref={desktopThemeRef} className="relative flex items-center">
-              <AnimatePresence initial={false} mode="wait">
-                {!isThemeExpanded ? (
-                  <motion.button
-                    key="collapsed-theme-btn"
-                    type="button"
-                    initial={{ opacity: 0, scale: 0.85 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.85 }}
-                    transition={{ duration: 0.14 }}
-                    onClick={() => setIsThemeExpanded(true)}
-                    title={
-                      language === 'en'
-                        ? `Theme: ${currentThemeOption.nameEn} (click to expand)`
-                        : `Tema: ${currentThemeOption.namePt} (clique para expandir)`
-                    }
-                    aria-label={
-                      language === 'en'
-                        ? `Theme: ${currentThemeOption.nameEn}`
-                        : `Tema: ${currentThemeOption.namePt}`
-                    }
-                    className="p-1 rounded-full border border-theme-border/70 bg-theme-surface/60 hover:border-theme-text/50 transition-all cursor-pointer flex items-center justify-center focus-visible:outline focus-visible:outline-1 focus-visible:outline-theme-text"
-                  >
-                    <span
-                      className="w-3.5 h-3.5 rounded-full block transition-transform hover:scale-110"
-                      style={{
-                        backgroundColor: currentThemeOption.color,
-                        boxShadow:
-                          theme === 'dark'
-                            ? 'inset 0 0 0 1px rgba(255,255,255,0.25)'
-                            : theme === 'light'
-                            ? 'inset 0 0 0 1px rgba(0,0,0,0.25)'
-                            : undefined,
-                      }}
-                    />
-                  </motion.button>
-                ) : (
-                  <motion.div
-                    key="expanded-theme-pill"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.15, ease: 'easeOut' }}
-                    role="radiogroup"
-                    aria-label={language === 'en' ? 'Select theme' : 'Selecionar tema'}
-                    className="flex items-center gap-1.5 p-1 rounded-full border border-theme-border/80 bg-theme-surface shadow-md"
-                  >
-                    {THEME_OPTIONS.map((option) => {
-                      const isSelected = theme === option.id;
-                      const label = language === 'en' ? option.nameEn : option.namePt;
+              {!isThemeExpanded ? (
+                <button
+                  type="button"
+                  onClick={() => setIsThemeExpanded(true)}
+                  aria-expanded={false}
+                  title={
+                    language === 'en'
+                      ? `Theme: ${currentThemeOption.nameEn} (click to expand)`
+                      : `Tema: ${currentThemeOption.namePt} (clique para expandir)`
+                  }
+                  aria-label={
+                    language === 'en'
+                      ? `Theme: ${currentThemeOption.nameEn}`
+                      : `Tema: ${currentThemeOption.namePt}`
+                  }
+                  className="p-1 rounded-full border border-theme-border/70 bg-theme-surface/60 hover:border-theme-text/50 transition-all cursor-pointer flex items-center justify-center focus-visible:outline focus-visible:outline-1 focus-visible:outline-theme-text"
+                >
+                  <span
+                    className="w-3.5 h-3.5 rounded-full block transition-transform hover:scale-110"
+                    style={{
+                      backgroundColor: currentThemeOption.color,
+                      boxShadow:
+                        theme === 'light' || theme === 'cream'
+                          ? 'inset 0 0 0 1px rgba(0,0,0,0.22)'
+                          : 'inset 0 0 0 1px rgba(255,255,255,0.25)',
+                    }}
+                  />
+                </button>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.92 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.14, ease: 'easeOut' }}
+                  role="radiogroup"
+                  aria-label={language === 'en' ? 'Select theme' : 'Selecionar tema'}
+                  className="flex items-center gap-1.5 p-1 rounded-full border border-theme-border/80 bg-theme-surface shadow-md"
+                >
+                  {THEME_OPTIONS.map((option) => {
+                    const isSelected = theme === option.id;
+                    const label = language === 'en' ? option.nameEn : option.namePt;
 
-                      return (
-                        <button
-                          key={option.id}
-                          type="button"
-                          role="radio"
-                          aria-checked={isSelected}
-                          onClick={() => {
-                            setTheme(option.id);
-                            setIsThemeExpanded(false);
-                          }}
-                          title={label}
-                          aria-label={label}
-                          className={`relative w-3.5 h-3.5 rounded-full transition-all cursor-pointer focus-visible:outline focus-visible:outline-1 focus-visible:outline-theme-text ${
-                            isSelected
-                              ? 'scale-125 ring-2 ring-theme-text ring-offset-2 ring-offset-theme-surface z-10'
-                              : 'opacity-70 hover:opacity-100 hover:scale-115'
-                          }`}
-                          style={{
-                            backgroundColor: option.color,
-                            boxShadow:
-                              option.id === 'dark'
-                                ? 'inset 0 0 0 1px rgba(255,255,255,0.25)'
-                                : option.id === 'light'
-                                ? 'inset 0 0 0 1px rgba(0,0,0,0.25)'
-                                : undefined,
-                          }}
-                        />
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    return (
+                      <button
+                        key={option.id}
+                        type="button"
+                        role="radio"
+                        aria-checked={isSelected}
+                        onClick={() => {
+                          setTheme(option.id);
+                          setIsThemeExpanded(false);
+                        }}
+                        title={label}
+                        aria-label={label}
+                        className={`relative w-3.5 h-3.5 rounded-full transition-all cursor-pointer focus-visible:outline focus-visible:outline-1 focus-visible:outline-theme-text ${
+                          isSelected
+                            ? 'scale-125 ring-2 ring-theme-text ring-offset-2 ring-offset-theme-surface z-10'
+                            : 'opacity-70 hover:opacity-100 hover:scale-115'
+                        }`}
+                        style={{
+                          backgroundColor: option.color,
+                          boxShadow:
+                            option.id === 'light' || option.id === 'cream'
+                              ? 'inset 0 0 0 1px rgba(0,0,0,0.22)'
+                              : 'inset 0 0 0 1px rgba(255,255,255,0.25)',
+                        }}
+                      />
+                    );
+                  })}
+                </motion.div>
+              )}
             </div>
           </div>
 
@@ -415,13 +440,11 @@ export default function Navbar() {
             <span
               className="w-4 h-4 rounded-full block"
               style={{
-                backgroundColor: THEME_OPTIONS.find((t) => t.id === theme)?.color || '#08090a',
+                backgroundColor: currentThemeOption.color,
                 boxShadow:
-                  theme === 'dark'
-                    ? 'inset 0 0 0 1px rgba(255,255,255,0.25)'
-                    : theme === 'light'
-                    ? 'inset 0 0 0 1px rgba(0,0,0,0.25)'
-                    : undefined,
+                  theme === 'light' || theme === 'cream'
+                    ? 'inset 0 0 0 1px rgba(0,0,0,0.22)'
+                    : 'inset 0 0 0 1px rgba(255,255,255,0.25)',
               }}
             />
           </button>
@@ -468,11 +491,9 @@ export default function Navbar() {
                         style={{
                           backgroundColor: option.color,
                           boxShadow:
-                            option.id === 'dark'
-                              ? 'inset 0 0 0 1px rgba(255,255,255,0.25)'
-                              : option.id === 'light'
-                              ? 'inset 0 0 0 1px rgba(0,0,0,0.25)'
-                              : undefined,
+                            option.id === 'light' || option.id === 'cream'
+                              ? 'inset 0 0 0 1px rgba(0,0,0,0.22)'
+                              : 'inset 0 0 0 1px rgba(255,255,255,0.25)',
                         }}
                       />
                     );
@@ -569,7 +590,7 @@ export default function Navbar() {
 
                 <div className="flex items-center justify-between text-xs font-mono text-theme-dim pt-3 border-t border-theme-border-subtle">
                   <span>{language === 'pt' ? 'Tema' : 'Theme'}</span>
-                  <div className="flex items-center">
+                  <div ref={drawerThemeRef} className="flex items-center">
                     <AnimatePresence initial={false} mode="wait">
                       {!isDrawerThemeExpanded ? (
                         <button
@@ -592,11 +613,9 @@ export default function Navbar() {
                             style={{
                               backgroundColor: currentThemeOption.color,
                               boxShadow:
-                                theme === 'dark'
-                                  ? 'inset 0 0 0 1px rgba(255,255,255,0.25)'
-                                  : theme === 'light'
-                                  ? 'inset 0 0 0 1px rgba(0,0,0,0.25)'
-                                  : undefined,
+                                theme === 'light' || theme === 'cream'
+                                  ? 'inset 0 0 0 1px rgba(0,0,0,0.22)'
+                                  : 'inset 0 0 0 1px rgba(255,255,255,0.25)',
                             }}
                           />
                         </button>
@@ -634,11 +653,9 @@ export default function Navbar() {
                                 style={{
                                   backgroundColor: option.color,
                                   boxShadow:
-                                    option.id === 'dark'
-                                      ? 'inset 0 0 0 1px rgba(255,255,255,0.25)'
-                                      : option.id === 'light'
-                                      ? 'inset 0 0 0 1px rgba(0,0,0,0.25)'
-                                      : undefined,
+                                    option.id === 'light' || option.id === 'cream'
+                                      ? 'inset 0 0 0 1px rgba(0,0,0,0.22)'
+                                      : 'inset 0 0 0 1px rgba(255,255,255,0.25)',
                                 }}
                               />
                             );
