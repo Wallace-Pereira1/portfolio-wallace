@@ -236,11 +236,11 @@ export default function Hero({ projects }: HeroProps) {
                 {language === 'pt' ? 'Trajetória' : 'Experience'}
               </span>
               <span className="pr-8 leading-relaxed text-theme-dim">
-                <span className="block text-[15px] text-theme-text">Prata e Prata</span>
+                <span className="block text-[15px] text-theme-text">Experiências</span>
                 <span className="block text-[13px] text-theme-muted">
                   {language === 'pt'
-                    ? 'Analista de Automação, Integrações e Operações Financeiras'
-                    : 'Automation, Integrations & Financial Operations Analyst'}
+                    ? 'Analista de Automação, Integrações e Desenvolvimento Web'
+                    : 'Automation, Integrations & Web development'}
                 </span>
               </span>
               <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
