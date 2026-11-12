@@ -1,21 +1,47 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Sun, Moon, Palette } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import AppearanceModal from './AppearanceModal';
 import { THEME_OPTIONS } from '../data/themes';
 
 export default function Navbar() {
   const { language, setLanguage, theme, setTheme, t } = useApp();
   const [isOpen, setIsOpen] = useState(false);
-  const [isAppearanceOpen, setIsAppearanceOpen] = useState(false);
+  const [isMobileThemeOpen, setIsMobileThemeOpen] = useState(false);
+  const [isThemeExpanded, setIsThemeExpanded] = useState(false);
+  const [isDrawerThemeExpanded, setIsDrawerThemeExpanded] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
   const scrollRafRef = useRef<number | null>(null);
-  const appearanceTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const desktopThemeRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
+
+  const currentThemeOption = THEME_OPTIONS.find((t) => t.id === theme) || THEME_OPTIONS[0];
+
+  useEffect(() => {
+    if (!isThemeExpanded) return;
+
+    const handlePointerDown = (e: PointerEvent) => {
+      if (desktopThemeRef.current && !desktopThemeRef.current.contains(e.target as Node)) {
+        setIsThemeExpanded(false);
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsThemeExpanded(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isThemeExpanded]);
 
   const navLinks = [
     { name: t('nav.inicio'), id: 'inicio' },
@@ -288,52 +314,174 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Quick toggle Dark / Light (Preserva o comportamento atual) */}
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-1 text-theme-muted hover:text-theme-text transition-colors cursor-pointer"
-              title={theme === 'dark' ? (language === 'en' ? 'Switch to light mode' : 'Mudar para modo claro') : (language === 'en' ? 'Switch to dark mode' : 'Mudar para modo escuro')}
-              aria-label="Toggle light dark theme"
-            >
-              {theme === 'light' ? (
-                <Moon className="w-3.5 h-3.5" />
-              ) : (
-                <Sun className="w-3.5 h-3.5" />
-              )}
-            </button>
+            {/* Theme selection: single circle with current theme that expands on click */}
+            <div ref={desktopThemeRef} className="relative flex items-center">
+              <AnimatePresence initial={false} mode="wait">
+                {!isThemeExpanded ? (
+                  <motion.button
+                    key="collapsed-theme-btn"
+                    type="button"
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.85 }}
+                    transition={{ duration: 0.14 }}
+                    onClick={() => setIsThemeExpanded(true)}
+                    title={
+                      language === 'en'
+                        ? `Theme: ${currentThemeOption.nameEn} (click to expand)`
+                        : `Tema: ${currentThemeOption.namePt} (clique para expandir)`
+                    }
+                    aria-label={
+                      language === 'en'
+                        ? `Theme: ${currentThemeOption.nameEn}`
+                        : `Tema: ${currentThemeOption.namePt}`
+                    }
+                    className="p-1 rounded-full border border-theme-border/70 bg-theme-surface/60 hover:border-theme-text/50 transition-all cursor-pointer flex items-center justify-center focus-visible:outline focus-visible:outline-1 focus-visible:outline-theme-text"
+                  >
+                    <span
+                      className="w-3.5 h-3.5 rounded-full block transition-transform hover:scale-110"
+                      style={{
+                        backgroundColor: currentThemeOption.color,
+                        boxShadow:
+                          theme === 'dark'
+                            ? 'inset 0 0 0 1px rgba(255,255,255,0.25)'
+                            : theme === 'light'
+                            ? 'inset 0 0 0 1px rgba(0,0,0,0.25)'
+                            : undefined,
+                      }}
+                    />
+                  </motion.button>
+                ) : (
+                  <motion.div
+                    key="expanded-theme-pill"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.15, ease: 'easeOut' }}
+                    role="radiogroup"
+                    aria-label={language === 'en' ? 'Select theme' : 'Selecionar tema'}
+                    className="flex items-center gap-1.5 p-1 rounded-full border border-theme-border/80 bg-theme-surface shadow-md"
+                  >
+                    {THEME_OPTIONS.map((option) => {
+                      const isSelected = theme === option.id;
+                      const label = language === 'en' ? option.nameEn : option.namePt;
 
-            {/* Configurações → Aparência (Modal de paletas e temas) */}
-            <button
-              ref={appearanceTriggerRef}
-              onClick={() => setIsAppearanceOpen(true)}
-              className="p-1 text-theme-muted hover:text-theme-text transition-colors cursor-pointer flex items-center gap-1 group/palette"
-              title={language === 'en' ? 'Settings → Appearance (Themes)' : 'Configurações → Aparência (Temas)'}
-              aria-label={language === 'en' ? 'Settings → Appearance' : 'Configurações → Aparência'}
-            >
-              <Palette className="w-3.5 h-3.5 transition-transform group-hover/palette:scale-110" />
-            </button>
+                      return (
+                        <button
+                          key={option.id}
+                          type="button"
+                          role="radio"
+                          aria-checked={isSelected}
+                          onClick={() => {
+                            setTheme(option.id);
+                            setIsThemeExpanded(false);
+                          }}
+                          title={label}
+                          aria-label={label}
+                          className={`relative w-3.5 h-3.5 rounded-full transition-all cursor-pointer focus-visible:outline focus-visible:outline-1 focus-visible:outline-theme-text ${
+                            isSelected
+                              ? 'scale-125 ring-2 ring-theme-text ring-offset-2 ring-offset-theme-surface z-10'
+                              : 'opacity-70 hover:opacity-100 hover:scale-115'
+                          }`}
+                          style={{
+                            backgroundColor: option.color,
+                            boxShadow:
+                              option.id === 'dark'
+                                ? 'inset 0 0 0 1px rgba(255,255,255,0.25)'
+                                : option.id === 'light'
+                                ? 'inset 0 0 0 1px rgba(0,0,0,0.25)'
+                                : undefined,
+                          }}
+                        />
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
         </div>
 
         {/* Mobile Menu Toggle & Theme */}
-        <div className="flex items-center gap-2 md:hidden ml-auto">
+        <div className="flex items-center gap-2.5 md:hidden ml-auto relative">
           <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-1.5 text-theme-dim hover:text-theme-text cursor-pointer"
-            aria-label="Toggle theme"
-            title={theme === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro'}
+            type="button"
+            onClick={() => setIsMobileThemeOpen(!isMobileThemeOpen)}
+            className="p-1 rounded-full border border-theme-border/80 bg-theme-surface/60 cursor-pointer flex items-center justify-center focus-visible:outline focus-visible:outline-1 focus-visible:outline-theme-text"
+            aria-label={language === 'en' ? 'Select theme' : 'Selecionar tema'}
+            title={language === 'en' ? 'Themes' : 'Temas'}
           >
-            {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+            <span
+              className="w-4 h-4 rounded-full block"
+              style={{
+                backgroundColor: THEME_OPTIONS.find((t) => t.id === theme)?.color || '#08090a',
+                boxShadow:
+                  theme === 'dark'
+                    ? 'inset 0 0 0 1px rgba(255,255,255,0.25)'
+                    : theme === 'light'
+                    ? 'inset 0 0 0 1px rgba(0,0,0,0.25)'
+                    : undefined,
+              }}
+            />
           </button>
-          <button
-            onClick={() => setIsAppearanceOpen(true)}
-            className="p-1.5 text-theme-dim hover:text-theme-text cursor-pointer"
-            aria-label={language === 'en' ? 'Appearance settings' : 'Configurações de aparência'}
-            title={language === 'en' ? 'Appearance' : 'Aparência'}
-          >
-            <Palette className="w-4 h-4" />
-          </button>
+
+          {/* Micro-popover for mobile: only the circular swatches, no text, no modal */}
+          <AnimatePresence>
+            {isMobileThemeOpen && (
+              <>
+                <div
+                  className="fixed inset-0 z-30"
+                  onClick={() => setIsMobileThemeOpen(false)}
+                  aria-hidden="true"
+                />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                  transition={{ duration: 0.15 }}
+                  role="radiogroup"
+                  aria-label={language === 'en' ? 'Themes' : 'Temas'}
+                  className="absolute top-full right-0 mt-2 z-40 flex items-center gap-2 p-2 rounded-full border border-theme-border bg-theme-surface shadow-2xl"
+                >
+                  {THEME_OPTIONS.map((option) => {
+                    const isSelected = theme === option.id;
+                    const label = language === 'en' ? option.nameEn : option.namePt;
+
+                    return (
+                      <button
+                        key={option.id}
+                        type="button"
+                        role="radio"
+                        aria-checked={isSelected}
+                        onClick={() => {
+                          setTheme(option.id);
+                          setIsMobileThemeOpen(false);
+                        }}
+                        title={label}
+                        aria-label={label}
+                        className={`w-4 h-4 rounded-full transition-all cursor-pointer ${
+                          isSelected
+                            ? 'scale-125 ring-2 ring-theme-text ring-offset-2 ring-offset-theme-surface z-10'
+                            : 'opacity-75 hover:opacity-100 hover:scale-110'
+                        }`}
+                        style={{
+                          backgroundColor: option.color,
+                          boxShadow:
+                            option.id === 'dark'
+                              ? 'inset 0 0 0 1px rgba(255,255,255,0.25)'
+                              : option.id === 'light'
+                              ? 'inset 0 0 0 1px rgba(0,0,0,0.25)'
+                              : undefined,
+                        }}
+                      />
+                    );
+                  })}
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
+
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-theme-text p-1.5 cursor-pointer"
@@ -420,32 +568,91 @@ export default function Navbar() {
                 </div>
 
                 <div className="flex items-center justify-between text-xs font-mono text-theme-dim pt-3 border-t border-theme-border-subtle">
-                  <span>{language === 'pt' ? 'Aparência' : 'Appearance'}</span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsOpen(false);
-                      setIsAppearanceOpen(true);
-                    }}
-                    className="inline-flex items-center gap-1.5 text-theme-text hover:underline cursor-pointer"
-                  >
-                    <Palette className="w-3.5 h-3.5 text-theme-muted" />
-                    <span>
-                      {THEME_OPTIONS.find((t) => t.id === theme)?.[language === 'en' ? 'nameEn' : 'namePt'] || theme}
-                    </span>
-                  </button>
+                  <span>{language === 'pt' ? 'Tema' : 'Theme'}</span>
+                  <div className="flex items-center">
+                    <AnimatePresence initial={false} mode="wait">
+                      {!isDrawerThemeExpanded ? (
+                        <button
+                          type="button"
+                          onClick={() => setIsDrawerThemeExpanded(true)}
+                          title={
+                            language === 'en'
+                              ? `Theme: ${currentThemeOption.nameEn} (click to expand)`
+                              : `Tema: ${currentThemeOption.namePt} (clique para expandir)`
+                          }
+                          aria-label={
+                            language === 'en'
+                              ? `Theme: ${currentThemeOption.nameEn}`
+                              : `Tema: ${currentThemeOption.namePt}`
+                          }
+                          className="p-1 rounded-full border border-theme-border/70 bg-theme-surface/60 cursor-pointer flex items-center justify-center"
+                        >
+                          <span
+                            className="w-4 h-4 rounded-full block"
+                            style={{
+                              backgroundColor: currentThemeOption.color,
+                              boxShadow:
+                                theme === 'dark'
+                                  ? 'inset 0 0 0 1px rgba(255,255,255,0.25)'
+                                  : theme === 'light'
+                                  ? 'inset 0 0 0 1px rgba(0,0,0,0.25)'
+                                  : undefined,
+                            }}
+                          />
+                        </button>
+                      ) : (
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.9 }}
+                          transition={{ duration: 0.15 }}
+                          role="radiogroup"
+                          aria-label={language === 'en' ? 'Select theme' : 'Selecionar tema'}
+                          className="flex items-center gap-2 p-1.5 rounded-full border border-theme-border/60 bg-theme-surface/60"
+                        >
+                          {THEME_OPTIONS.map((option) => {
+                            const isSelected = theme === option.id;
+                            const label = language === 'en' ? option.nameEn : option.namePt;
+
+                            return (
+                              <button
+                                key={option.id}
+                                type="button"
+                                role="radio"
+                                aria-checked={isSelected}
+                                onClick={() => {
+                                  setTheme(option.id);
+                                  setIsDrawerThemeExpanded(false);
+                                }}
+                                title={label}
+                                aria-label={label}
+                                className={`w-4 h-4 rounded-full transition-all cursor-pointer ${
+                                  isSelected
+                                    ? 'scale-125 ring-2 ring-theme-text ring-offset-2 ring-offset-theme-surface z-10'
+                                    : 'opacity-70 hover:opacity-100 hover:scale-110'
+                                }`}
+                                style={{
+                                  backgroundColor: option.color,
+                                  boxShadow:
+                                    option.id === 'dark'
+                                      ? 'inset 0 0 0 1px rgba(255,255,255,0.25)'
+                                      : option.id === 'light'
+                                      ? 'inset 0 0 0 1px rgba(0,0,0,0.25)'
+                                      : undefined,
+                                }}
+                              />
+                            );
+                          })}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
               </div>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
-
-      <AppearanceModal
-        isOpen={isAppearanceOpen}
-        onClose={() => setIsAppearanceOpen(false)}
-        triggerElement={appearanceTriggerRef.current}
-      />
     </nav>
   );
 }
