@@ -1,5 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { ArrowUpRight, FileDown, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -16,9 +15,6 @@ interface HeroProps {
 
 export default function Hero({ projects }: HeroProps) {
   const { language, t } = useApp();
-  const heroRef = useRef<HTMLElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
-  const rafId = useRef<number | null>(null);
 
   // Alternância suave entre Pereira e Carvalho (homenagem materna com digitação fluida)
   const [currentSurname, setCurrentSurname] = useState('Pereira');
@@ -59,90 +55,16 @@ export default function Hero({ projects }: HeroProps) {
     return () => clearTimeout(timer);
   }, [currentSurname, isDeleting, surnameIndex]);
 
-  // Parallax discreto na camada decorativa de fundo (apenas mouse e sem prefers-reduced-motion)
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-    if (prefersReducedMotion || !hasFinePointer) return;
-
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-
-    const render = () => {
-      rafId.current = null;
-      if (!bgRef.current) return;
-
-      currentX += (targetX - currentX) * 0.08;
-      currentY += (targetY - currentY) * 0.08;
-
-      bgRef.current.style.transform = `translate3d(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px, 0)`;
-
-      if (Math.abs(targetX - currentX) > 0.05 || Math.abs(targetY - currentY) > 0.05) {
-        rafId.current = requestAnimationFrame(render);
-      }
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!heroRef.current) return;
-      const rect = heroRef.current.getBoundingClientRect();
-
-      if (e.clientY < rect.top - 50 || e.clientY > rect.bottom + 50) return;
-
-      const normX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-      const normY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-
-      // Deslocamento máximo calibrado entre 5px e 8px
-      targetX = Math.max(-8, Math.min(8, normX * 8));
-      targetY = Math.max(-6, Math.min(6, normY * 6));
-
-      if (rafId.current === null) {
-        rafId.current = requestAnimationFrame(render);
-      }
-    };
-
-    const handleMouseLeave = () => {
-      targetX = 0;
-      targetY = 0;
-      if (rafId.current === null) {
-        rafId.current = requestAnimationFrame(render);
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    const heroEl = heroRef.current;
-    if (heroEl) {
-      heroEl.addEventListener('mouseleave', handleMouseLeave);
-    }
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (heroEl) {
-        heroEl.removeEventListener('mouseleave', handleMouseLeave);
-      }
-      if (rafId.current !== null) {
-        cancelAnimationFrame(rafId.current);
-      }
-    };
-  }, []);
-
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <section
       id="inicio"
-      ref={heroRef}
       className="portfolio-section portfolio-hero relative flex flex-col justify-start bg-transparent transition-colors overflow-hidden"
     >
-      {/* Camada Decorativa de Parallax Sutil de Fundo */}
+      {/* Camada Decorativa Estática de Fundo */}
       <div
-        ref={bgRef}
         aria-hidden="true"
-        className="absolute inset-[-15px] pointer-events-none overflow-hidden select-none z-0 will-change-transform opacity-60"
+        className="absolute inset-[-15px] pointer-events-none overflow-hidden select-none z-0 opacity-60"
         style={{
-          transform: 'translate3d(0, 0, 0)',
           maskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 85%)',
           WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 85%)',
         }}
@@ -168,20 +90,10 @@ export default function Hero({ projects }: HeroProps) {
       </div>
 
       <div className="portfolio-container relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="relative border border-theme-border/80 bg-theme-surface/60 p-6 sm:p-8 md:p-10 rounded-2xl"
-        >
+        <div className="relative border border-theme-border/80 bg-theme-surface/60 p-6 sm:p-8 md:p-10 rounded-2xl">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-10">
             <div className="max-w-2xl space-y-6 sm:space-y-7">
-              <motion.h1
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.08, ease: [0.22, 1, 0.36, 1] }}
-                className="font-serif text-[clamp(1.5rem,4.8vw,2.75rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text"
-              >
+              <h1 className="font-serif text-[clamp(1.5rem,4.8vw,2.75rem)] font-medium tracking-[-0.02em] leading-[1.08] text-theme-text">
                 <span className="sr-only">Wallace de Carvalho Pereira</span>
                 <span aria-hidden="true" className="inline-flex items-baseline flex-nowrap whitespace-nowrap">
                   <span>Wallace&nbsp;</span>
@@ -193,25 +105,15 @@ export default function Hero({ projects }: HeroProps) {
                     />
                   </span>
                 </span>
-              </motion.h1>
+              </h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.16, ease: [0.22, 1, 0.36, 1] }}
-                className="max-w-xl text-[15px] sm:text-base leading-relaxed text-theme-dim"
-              >
+              <p className="max-w-xl text-[15px] sm:text-base leading-relaxed text-theme-dim">
                 {language === 'pt'
                   ? 'Desenvolvo aplicações web e integrações com React, Angular, Node.js e PostgreSQL. Também construo automações com n8n e agentes de IA para reduzir tarefas manuais e melhorar operações.'
                   : 'I build web applications and integrations with React, Angular, Node.js, and PostgreSQL. I also develop automations with n8n and AI agents to eliminate manual tasks and streamline operations.'}
-              </motion.p>
+              </p>
 
-              <motion.div
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45, delay: shouldReduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
-                className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1"
-              >
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1">
                 <a
                   href={`https://wa.me/5521999688381?text=${encodeURIComponent(
                     language === 'pt'
@@ -240,18 +142,13 @@ export default function Hero({ projects }: HeroProps) {
                   <FileDown aria-hidden="true" className="h-4 w-4" />
                   <span>{language === 'pt' ? 'Currículo' : 'Resume'}</span>
                 </button>
-              </motion.div>
+              </div>
             </div>
 
-            {/* Memoji — Exibido apenas no desktop à direita do nome e texto com entrada suave */}
-            <motion.div
-              initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.9, y: shouldReduceMotion ? 0 : 8 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="hidden md:flex shrink-0 items-center justify-center self-center pr-2 lg:pr-6"
-            >
+            {/* Memoji — Exibido no desktop à direita do nome e texto */}
+            <div className="hidden md:flex shrink-0 items-center justify-center self-center pr-2 lg:pr-6">
               <div className="relative w-36 h-36 lg:w-44 lg:h-44 xl:w-48 xl:h-48 flex items-center justify-center">
-                <img
+              <img
                   src={wallaceMemoji}
                   alt="Wallace Carvalho Pereira - Memoji"
                   className="w-full h-full object-contain pointer-events-none select-none drop-shadow-md"
@@ -260,17 +157,12 @@ export default function Hero({ projects }: HeroProps) {
                   height={192}
                 />
               </div>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
         <div className="mt-8 grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
-          <motion.div
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
-            className="h-full"
-          >
+          <div className="h-full">
             <Link
               to="/#contato"
               aria-label={language === 'pt' ? 'Disponibilidade e contato' : 'Availability and contact'}
@@ -288,14 +180,9 @@ export default function Hero({ projects }: HeroProps) {
               </span>
               <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
-            className="h-full"
-          >
+          <div className="h-full">
             <Link
               to="/#tecnologias"
               aria-label={language === 'pt' ? 'Stack atual e competências' : 'Current stack and skills'}
@@ -316,14 +203,9 @@ export default function Hero({ projects }: HeroProps) {
               </ul>
               <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
-            className="h-full"
-          >
+          <div className="h-full">
             <Link
               to="/#projetos"
               aria-label={language === 'pt' ? 'Projetos selecionados' : 'Selected projects'}
@@ -342,14 +224,9 @@ export default function Hero({ projects }: HeroProps) {
               </span>
               <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="h-full"
-          >
+          <div className="h-full">
             <Link
               to="/#experiencia"
               aria-label={language === 'pt' ? 'Trajetória profissional atual' : 'Current professional experience'}
@@ -368,7 +245,7 @@ export default function Hero({ projects }: HeroProps) {
               </span>
               <ArrowUpRight aria-hidden="true" className="absolute right-5 top-5 h-4 w-4 text-theme-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

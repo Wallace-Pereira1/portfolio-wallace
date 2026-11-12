@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { Project } from '../types';
 import { getProjectHighlight } from '../data/projectHighlights';
 import { useApp } from '../context/AppContext';
 import ProjectMinimalCover from './ProjectMinimalCover';
+import ProjectStudyModal from './ProjectStudyModal';
 
 interface ProjectsListProps {
   projects: Project[];
@@ -18,6 +19,65 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
   const isEnglish = language === 'en';
   const reduceMotion = useReducedMotion();
   const [openProjectId, setOpenProjectId] = useState<string | null>(null);
+  const [selectedStudyProject, setSelectedStudyProject] = useState<Project | null>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Escuta evento global disparado quando o usuário clica em "Usado em: [Projeto]"
+  useEffect(() => {
+    const handleOpenProjectEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ projectId: string; openModal?: boolean }>;
+      const targetId = customEvent.detail?.projectId;
+      if (!targetId) return;
+
+      const found = projects.find(
+        (p) =>
+          p.id === targetId ||
+          p.id === `0${targetId}` ||
+          `0${p.id}` === targetId ||
+          p.id.toLowerCase() === targetId.toLowerCase()
+      );
+
+      if (found) {
+        setOpenProjectId(found.id);
+        if (customEvent.detail?.openModal !== false) {
+          setSelectedStudyProject(found);
+        }
+      }
+    };
+
+    window.addEventListener('open-project-study', handleOpenProjectEvent);
+    return () => {
+      window.removeEventListener('open-project-study', handleOpenProjectEvent);
+    };
+  }, [projects]);
+
+  // Se o usuário acessar /?projeto=04#projetos ou vier de um redirecionamento
+  useEffect(() => {
+    const paramId = searchParams.get('projeto');
+    if (paramId) {
+      const found = projects.find(
+        (p) =>
+          p.id === paramId ||
+          p.id === `0${paramId}` ||
+          `0${p.id}` === paramId ||
+          p.id.toLowerCase() === paramId.toLowerCase()
+      );
+
+      if (found) {
+        setOpenProjectId(found.id);
+        setSelectedStudyProject(found);
+        setTimeout(() => {
+          const el = document.getElementById(`project-item-${found.id}`) || document.getElementById('projetos');
+          el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 120);
+
+        const nextParams = new URLSearchParams(searchParams);
+        nextParams.delete('projeto');
+        setSearchParams(nextParams, { replace: true });
+      }
+    }
+  }, [searchParams, setSearchParams, projects]);
 
   if (projects.length === 0) return null;
 
@@ -26,13 +86,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
       aria-labelledby="projects-heading"
       className="w-full space-y-5 sm:space-y-7"
     >
-      <motion.header
-        initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        className="pb-4 border-b border-theme-border/60"
-      >
+      <header className="pb-4 border-b border-theme-border/60">
         <span className="text-xs font-mono text-theme-muted uppercase tracking-widest block mb-3">
           {isEnglish ? 'Selected work' : 'Trabalhos selecionados'}
         </span>
@@ -42,7 +96,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
         >
           {isEnglish ? 'Projects' : 'Projetos'}
         </h2>
-      </motion.header>
+      </header>
 
       <div className="divide-y divide-theme-border/70 border-b border-theme-border/70">
         {projects.map((project, index) => {
@@ -52,18 +106,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
           const fullDescription = project.description || project.solution;
 
           return (
-            <motion.article
-              key={project.id}
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{
-                duration: 0.5,
-                delay: reduceMotion ? 0 : (index % 4) * 0.07,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="group"
-            >
+            <article key={project.id} id={`project-item-${project.id}`} className="group scroll-mt-24">
               <button
                 type="button"
                 aria-expanded={isOpen}
@@ -116,22 +159,34 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
                         <p className="text-xs sm:text-sm font-mono text-theme-muted leading-relaxed">
                           {project.technologies.slice(0, 5).join(' · ')}
                         </p>
-                        <Link
-                          to={`/projetos/${project.id}`}
-                          className="inline-flex items-center gap-1.5 text-sm text-theme-text underline underline-offset-4 decoration-theme-border hover:decoration-theme-text transition-colors"
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            triggerRef.current = e.currentTarget;
+                            setSelectedStudyProject(project);
+                          }}
+                          className="inline-flex items-center gap-1.5 text-sm text-theme-text underline underline-offset-4 decoration-theme-border hover:decoration-theme-text transition-colors cursor-pointer group/link"
                         >
-                          {isEnglish ? 'View case study' : 'Ver estudo de caso'}
-                          <ArrowUpRight aria-hidden="true" className="w-3.5 h-3.5" />
-                        </Link>
+                          <span>{isEnglish ? 'View case study' : 'Ver estudo de caso'}</span>
+                          <ArrowUpRight aria-hidden="true" className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                        </button>
                       </div>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.article>
+            </article>
           );
         })}
       </div>
+
+      <ProjectStudyModal
+        isOpen={!!selectedStudyProject}
+        onClose={() => setSelectedStudyProject(null)}
+        project={selectedStudyProject}
+        language={language === 'en' ? 'en' : 'pt'}
+        triggerElement={triggerRef.current}
+      />
     </section>
   );
 }

@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'motion/react';
+import React from 'react';
 import { ArrowUp } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
@@ -11,20 +11,13 @@ interface EditorialColophonProps {
 
 export default function EditorialColophon({ nextRoute: _nextRoute }: EditorialColophonProps) {
   const { language } = useApp();
-  const shouldReduceMotion = useReducedMotion();
 
   const handleBackToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <motion.footer
-      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="border-t border-theme-border bg-transparent py-6 md:py-8 px-[clamp(24px,6vw,48px)] transition-colors"
-    >
+    <footer className="border-t border-theme-border bg-transparent py-6 md:py-8 px-[clamp(24px,6vw,48px)] transition-colors">
       <div className="portfolio-container">
         {/* Colophon & Channels */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center text-xs font-mono">
@@ -50,6 +43,6 @@ export default function EditorialColophon({ nextRoute: _nextRoute }: EditorialCo
           </div>
         </div>
       </div>
-    </motion.footer>
+    </footer>
   );
 }

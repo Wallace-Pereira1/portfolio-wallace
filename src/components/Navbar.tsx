@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, Palette } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import AppearanceModal from './AppearanceModal';
+import { THEME_OPTIONS } from '../data/themes';
 
 export default function Navbar() {
   const { language, setLanguage, theme, setTheme, t } = useApp();
   const [isOpen, setIsOpen] = useState(false);
+  const [isAppearanceOpen, setIsAppearanceOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
   const scrollRafRef = useRef<number | null>(null);
+  const appearanceTriggerRef = useRef<HTMLButtonElement | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -21,7 +25,9 @@ export default function Navbar() {
     { name: t('nav.contato'), id: 'contato' },
   ];
 
-  // Scroll listener to update active section reliably & sticky shadow
+  const scrolledRef = useRef(false);
+
+  // Scroll listener and IntersectionObserver to update active section reliably & sticky shadow without layout thrashing
   useEffect(() => {
     if (location.pathname !== '/') {
       setActiveSection('');
@@ -30,49 +36,85 @@ export default function Navbar() {
 
     const sectionIds = ['inicio', 'projetos', 'experiencia', 'tecnologias', 'contato'];
 
+    // 1. Smooth hysteresis scroll handler for sticky shadow and edge bounds
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-
-      if (scrollRafRef.current) return;
+      if (scrollRafRef.current !== null) return;
       scrollRafRef.current = requestAnimationFrame(() => {
         scrollRafRef.current = null;
+        const currentY = window.scrollY;
 
-        // Top of page -> inicio has absolute priority on page load and top position
-        if (window.scrollY < 120) {
+        // Sticky shadow with hysteresis to avoid re-render flapping around the threshold
+        const isScrolled = scrolledRef.current ? currentY > 15 : currentY > 35;
+        if (isScrolled !== scrolledRef.current) {
+          scrolledRef.current = isScrolled;
+          setScrolled(isScrolled);
+        }
+
+        // Top of page guarantee
+        if (currentY < 80) {
           setActiveSection('inicio');
           return;
         }
 
-        // At the document end, keep Contact active even when sections are compact.
+        // Bottom of page guarantee for contact section
         const scrollHeight = document.documentElement.scrollHeight;
         const clientHeight = window.innerHeight;
-        if (
-          window.scrollY > 0 &&
-          clientHeight + window.scrollY >= scrollHeight - 64
-        ) {
+        if (clientHeight + currentY >= scrollHeight - 70) {
           setActiveSection('contato');
-          return;
         }
-
-        const triggerPoint = Math.min(window.innerHeight * 0.35, 260);
-        let current = 'inicio';
-
-        for (const id of sectionIds) {
-          const el = document.getElementById(id);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            if (rect.top <= triggerPoint && rect.bottom > 0) {
-              current = id;
-            }
-          }
-        }
-        setActiveSection(current);
       });
     };
 
+    // 2. High-performance IntersectionObserver for active section detection
+    // Root margin creates a focused active band in the upper half of viewport
+    const observerOptions: IntersectionObserverInit = {
+      root: null,
+      rootMargin: '-15% 0px -55% 0px',
+      threshold: [0, 0.2, 0.5],
+    };
+
+    const sectionVisibilityMap = new Map<string, number>();
+
+    const observer = new IntersectionObserver((entries) => {
+      // Don't override if near the very top of page
+      if (window.scrollY < 80) {
+        setActiveSection('inicio');
+        return;
+      }
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          sectionVisibilityMap.set(entry.target.id, entry.intersectionRatio);
+        } else {
+          sectionVisibilityMap.delete(entry.target.id);
+        }
+      });
+
+      // Find the most visible section in the active band
+      let highestRatio = -1;
+      let mostVisibleId = '';
+      sectionVisibilityMap.forEach((ratio, id) => {
+        if (ratio > highestRatio) {
+          highestRatio = ratio;
+          mostVisibleId = id;
+        }
+      });
+
+      if (mostVisibleId) {
+        setActiveSection(mostVisibleId);
+      }
+    }, observerOptions);
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
+
     return () => {
+      observer.disconnect();
       window.removeEventListener('scroll', handleScroll);
       if (scrollRafRef.current !== null) {
         cancelAnimationFrame(scrollRafRef.current);
@@ -209,15 +251,7 @@ export default function Navbar() {
                   >
                     {link.name}
                     {isActive && (
-                      <motion.span
-                        layoutId="navbar-indicator"
-                        className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-theme-text pointer-events-none"
-                        transition={{
-                          type: 'tween',
-                          duration: 0.22,
-                          ease: [0.25, 1, 0.5, 1],
-                        }}
-                      />
+                      <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-theme-text pointer-events-none transition-opacity duration-150" />
                     )}
                   </a>
                 </li>
@@ -254,31 +288,51 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Theme toggle */}
+            {/* Quick toggle Dark / Light (Preserva o comportamento atual) */}
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               className="p-1 text-theme-muted hover:text-theme-text transition-colors cursor-pointer"
-              title={theme === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro'}
-              aria-label="Toggle theme"
+              title={theme === 'dark' ? (language === 'en' ? 'Switch to light mode' : 'Mudar para modo claro') : (language === 'en' ? 'Switch to dark mode' : 'Mudar para modo escuro')}
+              aria-label="Toggle light dark theme"
             >
-              {theme === 'dark' ? (
-                <Sun className="w-3.5 h-3.5" />
-              ) : (
+              {theme === 'light' ? (
                 <Moon className="w-3.5 h-3.5" />
+              ) : (
+                <Sun className="w-3.5 h-3.5" />
               )}
+            </button>
+
+            {/* Configurações → Aparência (Modal de paletas e temas) */}
+            <button
+              ref={appearanceTriggerRef}
+              onClick={() => setIsAppearanceOpen(true)}
+              className="p-1 text-theme-muted hover:text-theme-text transition-colors cursor-pointer flex items-center gap-1 group/palette"
+              title={language === 'en' ? 'Settings → Appearance (Themes)' : 'Configurações → Aparência (Temas)'}
+              aria-label={language === 'en' ? 'Settings → Appearance' : 'Configurações → Aparência'}
+            >
+              <Palette className="w-3.5 h-3.5 transition-transform group-hover/palette:scale-110" />
             </button>
           </div>
 
         </div>
 
-        {/* Mobile Menu Toggle */}
-        <div className="flex items-center gap-3 md:hidden ml-auto">
+        {/* Mobile Menu Toggle & Theme */}
+        <div className="flex items-center gap-2 md:hidden ml-auto">
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             className="p-1.5 text-theme-dim hover:text-theme-text cursor-pointer"
             aria-label="Toggle theme"
+            title={theme === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro'}
           >
-            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+          </button>
+          <button
+            onClick={() => setIsAppearanceOpen(true)}
+            className="p-1.5 text-theme-dim hover:text-theme-text cursor-pointer"
+            aria-label={language === 'en' ? 'Appearance settings' : 'Configurações de aparência'}
+            title={language === 'en' ? 'Appearance' : 'Aparência'}
+          >
+            <Palette className="w-4 h-4" />
           </button>
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -364,11 +418,34 @@ export default function Navbar() {
                     </button>
                   </div>
                 </div>
+
+                <div className="flex items-center justify-between text-xs font-mono text-theme-dim pt-3 border-t border-theme-border-subtle">
+                  <span>{language === 'pt' ? 'Aparência' : 'Appearance'}</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsOpen(false);
+                      setIsAppearanceOpen(true);
+                    }}
+                    className="inline-flex items-center gap-1.5 text-theme-text hover:underline cursor-pointer"
+                  >
+                    <Palette className="w-3.5 h-3.5 text-theme-muted" />
+                    <span>
+                      {THEME_OPTIONS.find((t) => t.id === theme)?.[language === 'en' ? 'nameEn' : 'namePt'] || theme}
+                    </span>
+                  </button>
+                </div>
               </div>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
+
+      <AppearanceModal
+        isOpen={isAppearanceOpen}
+        onClose={() => setIsAppearanceOpen(false)}
+        triggerElement={appearanceTriggerRef.current}
+      />
     </nav>
   );
 }

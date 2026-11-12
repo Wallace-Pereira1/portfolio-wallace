@@ -1,36 +1,8 @@
 import React, { useState } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Certifications from './Certifications';
 import ExperienceDetailModal, { WorkExperienceItem } from './ExperienceDetailModal';
-
-const timelineContainerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.16,
-      delayChildren: 0.08,
-    },
-  },
-};
-
-const timelineItemVariants = {
-  hidden: {
-    opacity: 0,
-    y: 26,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.55,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-};
-
 
 interface ExperienceSectionProps {
   showHeader?: boolean;
@@ -38,10 +10,6 @@ interface ExperienceSectionProps {
 
 export default function ExperienceSection({ showHeader = true }: ExperienceSectionProps) {
   const { t, language } = useApp();
-  const prefersReducedMotion = useReducedMotion();
-  const experienceVariants = prefersReducedMotion
-    ? { hidden: { opacity: 1, y: 0 }, visible: { opacity: 1, y: 0 } }
-    : timelineItemVariants;
   const [activeTab, setActiveTab] = useState<'trabalho' | 'educacao_certificados'>('trabalho');
   const [selectedExperience, setSelectedExperience] = useState<WorkExperienceItem | null>(null);
 
@@ -223,13 +191,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       <div className="portfolio-container space-y-6 md:space-y-8">
         {/* Section Header or Tabs Bar */}
         {showHeader ? (
-          <motion.div
-            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pb-5"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pb-5">
             <div className="md:col-span-8 space-y-3">
               <span className="text-xs font-mono text-theme-muted uppercase tracking-widest block">
                 {language === 'pt' ? 'Trajetória Profissional' : 'Professional Trajectory'}
@@ -267,7 +229,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
         ) : (
           <div className="flex items-center justify-between pb-6">
             <span className="text-xs font-mono uppercase tracking-wider text-theme-muted">
@@ -305,19 +267,9 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
 
         {/* Tab Content */}
         {activeTab === 'trabalho' ? (
-          <motion.div
-            variants={timelineContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            className="divide-y divide-theme-border/70 border-b border-theme-border/70"
-          >
+          <div className="divide-y divide-theme-border/70 border-b border-theme-border/70">
             {workExperiences.map((exp) => (
-              <motion.article
-                key={exp.company}
-                variants={experienceVariants}
-                className="py-5 sm:py-6"
-              >
+              <article key={exp.company} className="py-5 sm:py-6">
                 <div className="space-y-2.5">
                   <div className="space-y-1">
                     <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
@@ -361,9 +313,9 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
                     </div>
                   </details>
                 </div>
-              </motion.article>
+              </article>
             ))}
-          </motion.div>
+          </div>
         ) : (
           <div className="space-y-8 md:space-y-10">
             {/* Education & Languages (12-col Grid) */}

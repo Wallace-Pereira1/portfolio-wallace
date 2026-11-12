@@ -1,7 +1,5 @@
 import React from 'react';
-import { motion, useReducedMotion } from 'motion/react';
-import { BrainCircuit, Boxes, Terminal, Waypoints, Workflow, Webhook } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { BrainCircuit, Boxes, Terminal, Waypoints, Workflow, Webhook, ArrowUpRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { currentStack } from '../data/stack';
 import TechIcon from './TechIcon';
@@ -13,7 +11,7 @@ interface SkillGroup {
   technologies: string[];
   projectPt: string;
   projectEn: string;
-  projectUrl: string;
+  projectId: string;
 }
 
 const skillGroups: SkillGroup[] = [
@@ -24,7 +22,7 @@ const skillGroups: SkillGroup[] = [
     technologies: ['React', 'TypeScript', 'Angular', 'Tailwind CSS'],
     projectPt: 'Modernização de Sistema Corporativo Legado',
     projectEn: 'Legacy Enterprise System Modernization',
-    projectUrl: '/projetos/04',
+    projectId: '04',
   },
   {
     id: 'apis-dados',
@@ -33,7 +31,7 @@ const skillGroups: SkillGroup[] = [
     technologies: ['Node.js', 'PostgreSQL', 'Supabase', 'APIs REST'],
     projectPt: 'Fiscal Sentinel: Auditoria e Conformidade Fiscal',
     projectEn: 'Fiscal Sentinel: Audit & Compliance',
-    projectUrl: '/projetos/08',
+    projectId: '08',
   },
   {
     id: 'automacoes-ia',
@@ -42,7 +40,7 @@ const skillGroups: SkillGroup[] = [
     technologies: ['n8n', 'Webhooks', 'CRM / ERP', 'LLMs & OCR'],
     projectPt: 'Agente de IA & Pipeline de Qualificação Imobiliária',
     projectEn: 'AI Agent & Real Estate Qualification Pipeline',
-    projectUrl: '/projetos/02',
+    projectId: '02',
   },
   {
     id: 'entrega-qualidade',
@@ -51,7 +49,7 @@ const skillGroups: SkillGroup[] = [
     technologies: ['Git', 'CI/CD', 'Vercel', 'Cloudflare'],
     projectPt: 'CAPCRJ | Presença Digital & Orçamentos',
     projectEn: 'CAPCRJ | Digital Presence & Quotes',
-    projectUrl: '/projetos/01',
+    projectId: '01',
   },
 ];
 
@@ -101,17 +99,23 @@ interface DomainsListProps {
 export default function DomainsList({ language: propLanguage }: DomainsListProps) {
   const { language: contextLanguage } = useApp();
   const isEnglish = (propLanguage || contextLanguage) === 'en';
-  const shouldReduceMotion = useReducedMotion();
+
+  const handleOpenProject = (projectId: string) => {
+    // 1. Despachar evento para ProjectsList abrir o projeto e seu modal
+    window.dispatchEvent(
+      new CustomEvent('open-project-study', { detail: { projectId, openModal: true } })
+    );
+
+    // 2. Subir suavemente até a seção de projetos na página principal
+    const section = document.getElementById('projetos');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   return (
     <div className="w-full space-y-7 sm:space-y-9">
-      <motion.div
-        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        className="border-b border-theme-border/70 pb-5 sm:pb-6"
-      >
+      <div className="border-b border-theme-border/70 pb-5 sm:pb-6">
         <div className="space-y-3 sm:flex sm:items-center sm:gap-8 sm:space-y-0">
           <span className="shrink-0 font-mono text-xs uppercase tracking-[0.16em] text-theme-muted">
             {isEnglish ? 'Current stack' : 'Stack atual'}
@@ -127,20 +131,12 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
             ))}
           </ul>
         </div>
-      </motion.div>
+      </div>
 
       <div className="grid grid-cols-1 items-start gap-x-7 gap-y-7 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-6">
-        {skillGroups.map((group, index) => (
-          <motion.section
+        {skillGroups.map((group) => (
+          <section
             key={group.id}
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{
-              duration: 0.5,
-              delay: shouldReduceMotion ? 0 : index * 0.08,
-              ease: [0.22, 1, 0.36, 1],
-            }}
             aria-labelledby={`skill-group-${group.id}`}
             className="min-w-0"
           >
@@ -155,17 +151,20 @@ export default function DomainsList({ language: propLanguage }: DomainsListProps
                 <SkillItem key={technology} technology={technology} />
               ))}
             </ul>
-            <p className="mt-3 border-t border-theme-border/60 pt-2.5 text-[12px] leading-relaxed text-theme-muted">
-              <span>{isEnglish ? 'Used in: ' : 'Usado em: '}</span>
-              <Link
-                to={group.projectUrl}
-                className="text-theme-dim underline decoration-theme-border underline-offset-4 hover:text-theme-text hover:decoration-theme-text transition-colors"
+            <p className="mt-3 border-t border-theme-border/60 pt-2.5 text-[12px] leading-relaxed text-theme-muted flex flex-wrap items-baseline gap-1">
+              <span>{isEnglish ? 'Used in:' : 'Usado em:'}</span>
+              <button
+                type="button"
+                onClick={() => handleOpenProject(group.projectId)}
+                className="text-theme-dim underline decoration-theme-border underline-offset-4 hover:text-theme-text hover:decoration-theme-text transition-colors text-left inline-flex items-center gap-1 cursor-pointer group/item"
               >
-                {isEnglish ? group.projectEn : group.projectPt}
-                <span aria-hidden="true"> ↗</span>
-              </Link>
+                <span className="group-hover/item:text-theme-text transition-colors">
+                  {isEnglish ? group.projectEn : group.projectPt}
+                </span>
+                <ArrowUpRight aria-hidden="true" className="w-3 h-3 transition-transform group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 shrink-0" />
+              </button>
             </p>
-          </motion.section>
+          </section>
         ))}
       </div>
     </div>

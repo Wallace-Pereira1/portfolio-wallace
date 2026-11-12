@@ -23,7 +23,8 @@
   }
 }
 
-:root.light {
+:root.light,
+:root[data-theme="light"] {
   --bg-color: #f9fafb;
   --text-color: #111827;
   --surface-color: #ffffff;
@@ -34,6 +35,84 @@
   --text-muted: #4b5563;
   --accent-color: #111827;
   --accent-muted: #d1d5db;
+}
+
+:root[data-theme="pink"] {
+  --bg-color: #190309;
+  --surface-color: #2b0512;
+  --card-color: #3b071a;
+  --border-color: #881144;
+  --border-subtle: #4e071e;
+  --text-color: #FFE4D8;
+  --text-dim: #f3b5c6;
+  --text-muted: #C24366;
+  --accent-color: #FF69B4;
+  --accent-muted: #243A66;
+}
+
+:root[data-theme="monochrome"] {
+  --bg-color: #0B0B0B;
+  --surface-color: #1A1A1A;
+  --card-color: #242424;
+  --border-color: #333333;
+  --border-subtle: #1f1f1f;
+  --text-color: #FFFFFF;
+  --text-dim: #D9D9D9;
+  --text-muted: #6B6B6B;
+  --accent-color: #FFFFFF;
+  --accent-muted: #333333;
+}
+
+:root[data-theme="purple"] {
+  --bg-color: #0B0720;
+  --surface-color: #170d32;
+  --card-color: #25134D;
+  --border-color: #3f1e82;
+  --border-subtle: #25134D;
+  --text-color: #F2E9FF;
+  --text-dim: #D1B8FF;
+  --text-muted: #9D71E8;
+  --accent-color: #9D71E8;
+  --accent-muted: #6A2FC8;
+}
+
+:root[data-theme="ocean"] {
+  --bg-color: #05161A;
+  --surface-color: #072E33;
+  --card-color: #0c3e45;
+  --border-color: #17545b;
+  --border-subtle: #0d383e;
+  --text-color: #ecfafc;
+  --text-dim: #a8d5e8;
+  --text-muted: #6DA5C0;
+  --accent-color: #0F969C;
+  --accent-muted: #294D61;
+}
+
+:root[data-theme="green"] {
+  --bg-color: #051F20;
+  --surface-color: #0B2B26;
+  --card-color: #163832;
+  --border-color: #235347;
+  --border-subtle: #14352f;
+  --text-color: #DAF1DE;
+  --text-dim: #b8dec4;
+  --text-muted: #8EB69B;
+  --accent-color: #8EB69B;
+  --accent-muted: #235347;
+}
+
+:root[data-theme="slate"] {
+  --bg-color: #06141B;
+  --surface-color: #11212D;
+  --card-color: #1a2e3d;
+  --border-color: #2d4354;
+  --border-subtle: #1c2b36;
+  --text-color: #f1f5f6;
+  --text-dim: #CCD0CF;
+  --text-muted: #9BA8AB;
+  --accent-color: #CCD0CF;
+  --accent-muted: #4A5C6A;
 }
 
 @theme {

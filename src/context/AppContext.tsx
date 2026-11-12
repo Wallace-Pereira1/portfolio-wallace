@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { ThemeId } from '../data/themes';
 
 type Language = 'pt' | 'en';
-type Theme = 'dark' | 'light';
+export type Theme = ThemeId;
 
 interface AppContextProps {
   language: Language;
@@ -210,7 +211,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const [theme, setTheme] = useState<Theme>(() => {
     const stored = localStorage.getItem('theme');
-    return (stored as Theme) || 'dark';
+    const validThemes: Theme[] = [
+      'dark',
+      'light',
+      'pink',
+      'monochrome',
+      'purple',
+      'ocean',
+      'green',
+      'slate',
+    ];
+    if (stored && validThemes.includes(stored as Theme)) {
+      return stored as Theme;
+    }
+    return 'dark';
   });
 
   useEffect(() => {
@@ -218,11 +232,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [language]);
 
   useEffect(() => {
+    // 1. Aplica o atributo data-theme ao elemento raiz
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 2. Mantém compatibilidade com a classe .light
     if (theme === 'light') {
       document.documentElement.classList.add('light');
     } else {
       document.documentElement.classList.remove('light');
     }
+
+    // 3. Atualiza as classes de tema
+    const allThemes: Theme[] = [
+      'dark',
+      'light',
+      'pink',
+      'monochrome',
+      'purple',
+      'ocean',
+      'green',
+      'slate',
+    ];
+    allThemes.forEach((t) => document.documentElement.classList.remove(`theme-${t}`));
+    document.documentElement.classList.add(`theme-${theme}`);
+
+    // 4. Salva a preferência
     localStorage.setItem('theme', theme);
   }, [theme]);
 

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
 import { ArrowUpRight, Send, Check, Loader2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { trackEvent } from '../utils/analytics';
@@ -57,8 +56,6 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
     }
   };
 
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <section
       id="contato"
@@ -66,13 +63,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
     >
       <div className="portfolio-container space-y-8 md:space-y-10">
         {showHeader && (
-          <motion.div
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-6"
-          >
+          <div className="space-y-6">
             <div className="space-y-3">
               <span className="text-xs font-mono text-theme-muted uppercase tracking-widest block">
                 {language === 'pt' ? 'Contato & Disponibilidade' : 'Contact & Availability'}
@@ -86,18 +77,12 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                 ? 'Pronto para colaborar em novos desafios de engenharia full-time (remoto/híbrido no RJ) ou estruturação de produtos web e integrações complexas.'
                 : 'Available for full-time software engineering roles and strategic web product/integration architectures.'}
             </p>
-          </motion.div>
+          </div>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
           {/* Official Channels & Coordinates */}
-          <motion.div
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="md:col-span-5 space-y-8"
-          >
+          <div className="md:col-span-5 space-y-8">
             <div className="space-y-2">
               <span className="text-xs font-mono uppercase tracking-widest text-theme-muted block">
                 {language === 'pt' ? 'Canais' : 'Channels'}
@@ -171,17 +156,10 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                 <ArrowUpRight className="w-3.5 h-3.5 text-theme-muted group-hover:text-theme-text group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
             </div>
-
-          </motion.div>
+          </div>
 
           {/* Contact Message Form */}
-          <motion.div
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="md:col-span-7"
-          >
+          <div className="md:col-span-7">
             <div className="p-6 sm:p-8 bg-theme-surface border border-theme-border rounded-2xl space-y-6">
               <div className="space-y-1">
                 <span className="text-sm font-mono text-theme-muted uppercase tracking-wider block">
@@ -298,10 +276,9 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                     </>
                   )}
                 </button>
-
               </form>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
