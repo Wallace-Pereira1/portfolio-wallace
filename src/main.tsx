@@ -8,9 +8,6 @@ if (typeof window !== 'undefined') {
   if ('scrollRestoration' in window.history) {
     window.history.scrollRestoration = 'manual';
   }
-  if (window.location.pathname === '/') {
-    window.scrollTo(0, 0);
-  }
 }
 
 createRoot(document.getElementById('root')!).render(

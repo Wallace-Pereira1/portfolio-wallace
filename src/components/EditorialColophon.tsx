@@ -29,7 +29,7 @@ export default function EditorialColophon({ nextRoute: _nextRoute }: EditorialCo
                 : 'Full stack software engineering, automation, and data integrations.'}
             </p>
           </div>
-          <div className="flex items-center justify-between sm:justify-end gap-4 text-theme-muted">
+          <div className="flex items-center justify-between sm:justify-end gap-4 text-theme-muted pr-12 sm:pr-0">
             <span className="text-xs">© 2026 Rio de Janeiro</span>
             <button
               type="button"
