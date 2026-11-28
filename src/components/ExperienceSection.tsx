@@ -17,7 +17,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
     {
       company: 'Prata e Prata',
       role: 'Analista de Automação, Integrações e Operações Financeiras',
-      period: 'Junho de 2026 — Presente',
+      period: 'Junho de 2026 - Presente',
       location: 'Rio de Janeiro, RJ · Remoto',
       summary: 'Responsável técnico pelo e-commerce e pelas integrações que conectam ERP, CRM, WhatsApp e as 10 lojas da marca, mantendo pedidos, estoque e cadastros de clientes sincronizados.',
       impact: 'Conectei pedidos, estoque e cadastros de clientes de 10 lojas e do e-commerce por APIs e webhooks, com tratamento de falhas e monitoramento.',
@@ -36,7 +36,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
     {
       company: 'Conversão.ai',
       role: 'Desenvolvedor de IA & Full Stack',
-      period: 'Junho de 2024 — Presente',
+      period: 'Junho de 2024 - Presente',
       location: 'Rio de Janeiro, RJ · Remoto',
       summary: 'Desenvolvi agentes de IA conversacionais e automações em n8n para atender e qualificar leads, integrando vendas, e-commerce e CRM, do mapeamento do escopo até a produção.',
       impact: 'Automatizei etapas manuais do atendimento e da qualificação de leads, com integrações em produção com Olist, Salesforce e RD Station.',
@@ -56,7 +56,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
     {
       company: 'Mestra Informática e Tecnologia',
       role: 'Desenvolvedor Front-end',
-      period: 'Março de 2022 — Março de 2023',
+      period: 'Março de 2022 - Março de 2023',
       location: 'Rio de Janeiro, RJ',
       summary: 'Desenvolvimento e sustentação de interfaces empresariais com Angular e TypeScript, integradas a APIs REST e orientadas à evolução gradual de sistemas corporativos.',
       impact: 'Contribuí para modernizar o sistema legado ASP em uma arquitetura modular, com redução reportada de mais de 70% no tempo de carregamento.',
@@ -76,7 +76,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
     {
       company: 'FORSOFT Academy',
       role: 'Bolsista de Desenvolvimento de Software',
-      period: 'Abril de 2021 — Dezembro de 2021',
+      period: 'Abril de 2021 - Dezembro de 2021',
       location: 'Rio de Janeiro, Brasil',
       summary: 'Formação prática em fundamentos de computação, algoritmos, estruturas de dados e desenvolvimento com Java e JavaScript.',
       impact: 'Construí uma base técnica com exercícios práticos, lógica de programação e desenvolvimento orientado a objetos.',
@@ -93,7 +93,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
     {
       company: 'Prata e Prata',
       role: 'Automation, Integrations & Financial Operations Analyst',
-      period: 'June 2026 — Present',
+      period: 'June 2026 - Present',
       location: 'Rio de Janeiro, RJ · Remote',
       summary: 'Technical owner of the e-commerce platform and of the integrations connecting ERP, CRM, WhatsApp and the brand’s 10 stores, keeping orders, inventory and customer records in sync.',
       impact: 'Connected orders, inventory and customer records across 10 stores and the online shop through APIs and webhooks, with failure handling and monitoring.',
@@ -112,7 +112,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
     {
       company: 'Conversão.ai',
       role: 'AI & Full Stack Developer',
-      period: 'June 2024 — Present',
+      period: 'June 2024 - Present',
       location: 'Rio de Janeiro, RJ · Remote',
       summary: 'Built conversational AI agents and n8n automations to handle and qualify leads, integrating sales, e-commerce and CRM, from scoping to production.',
       impact: 'Automated manual steps in customer service and lead qualification, with live integrations with Olist, Salesforce and RD Station.',
@@ -132,7 +132,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
     {
       company: 'Mestra Informática e Tecnologia',
       role: 'Front-end Developer',
-      period: 'March 2022 — March 2023',
+      period: 'March 2022 - March 2023',
       location: 'Rio de Janeiro, RJ',
       summary: 'Development and maintenance of enterprise interfaces with Angular and TypeScript, integrated with REST APIs and focused on the gradual evolution of corporate systems.',
       impact: 'Contributed to modernizing a legacy ASP system into a modular architecture, with a reported 70%+ reduction in loading time.',
@@ -152,7 +152,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
     {
       company: 'FORSOFT Academy',
       role: 'Software Development Fellow',
-      period: 'April 2021 — December 2021',
+      period: 'April 2021 - December 2021',
       location: 'Rio de Janeiro, Brazil',
       summary: 'Hands-on training in computer science fundamentals, algorithms, data structures, and development with Java and JavaScript.',
       impact: 'Built a technical foundation through practical coding, computational logic, and object-oriented development.',
@@ -274,7 +274,7 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
                   <div className="space-y-1">
                     <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                       <h3 className="text-base sm:text-lg font-medium text-theme-text">{exp.company}</h3>
-                      <span aria-hidden="true" className="text-theme-muted">—</span>
+                      <span aria-hidden="true" className="text-theme-muted">-</span>
                       <p className="text-sm sm:text-[15px] text-theme-dim">{exp.role}</p>
                     </div>
                     <p className="text-[12px] font-mono text-theme-muted">

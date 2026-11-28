@@ -34,6 +34,9 @@ export default function ProjectMinimalCover({
    ========================================================================== */
 
 function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
+  if (projectId === '02') return <RealEstateCover isLight />;
+  if (projectId === '06') return <BistroCover isLight />;
+
   switch (projectId) {
     case '01':
     case '1':
@@ -692,6 +695,9 @@ function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
         </div>
       );
 
+    case '09':
+      return <SacManagerCover isLight />;
+
     case '08':
     default:
       // Fiscal Sentinel (Auditoria Fiscal, Conformidade, Daemon em Node & Postgres)
@@ -753,6 +759,9 @@ function LightCover({ projectId }: { projectId: string; isCenter: boolean }) {
    ========================================================================== */
 
 function DarkCover({ projectId }: { projectId: string; isCenter: boolean }) {
+  if (projectId === '02') return <RealEstateCover isLight={false} />;
+  if (projectId === '06') return <BistroCover isLight={false} />;
+
   switch (projectId) {
     case '01':
     case '1':
@@ -1444,6 +1453,9 @@ function DarkCover({ projectId }: { projectId: string; isCenter: boolean }) {
         </div>
       );
 
+    case '09':
+      return <SacManagerCover isLight={false} />;
+
     case '08':
     default:
       // Fiscal Sentinel (Auditoria Fiscal, Conformidade, Daemon em Node & Postgres)
@@ -1503,4 +1515,194 @@ function DarkCover({ projectId }: { projectId: string; isCenter: boolean }) {
         </div>
       );
   }
+}
+
+function BistroCover({ isLight }: { isLight: boolean }) {
+  const colors = isLight
+    ? { bg: '#fdfaf7', grid: '#c8b9a6', panel: '#ffffff', raised: '#f8f5f0', line: '#e7ddd1', text: '#29231e', muted: '#82766b', accent: '#b45309', accentBg: '#fef3c7', green: '#15803d', greenBg: '#dcfce7' }
+    : { bg: '#110e0c', grid: '#57534e', panel: '#1c1917', raised: '#292524', line: '#44403c', text: '#f5f5f4', muted: '#a8a29e', accent: '#fbbf24', accentBg: '#422006', green: '#86efac', greenBg: '#052e16' };
+  const gridId = `bistro-grid-${isLight ? 'light' : 'dark'}`;
+  const menuItems = [
+    { name: 'Risoto da casa', detail: 'Parmesão · ervas frescas', price: 'R$ 42', tone: colors.accent },
+    { name: 'Pasta artesanal', detail: 'Tomate assado · manjericão', price: 'R$ 36', tone: colors.green },
+    { name: 'Bruschetta', detail: 'Pão rústico · tomate', price: 'R$ 24', tone: colors.accent },
+  ];
+
+  return (
+    <div role="img" aria-label="Capa do sistema de comandas com cardápio de um lado e painel de pedidos da cozinha do outro" className="relative flex h-full w-full items-center justify-center overflow-hidden" style={{ backgroundColor: colors.bg }}>
+      <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-25" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <defs><pattern id={gridId} width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke={colors.grid} strokeWidth="0.5" /></pattern></defs>
+        <rect width="100%" height="100%" fill={`url(#${gridId})`} />
+      </svg>
+      <svg viewBox="0 0 380 180" className="relative z-10 h-full w-full p-3" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        {/* Menu / customer ordering screen */}
+        <rect x="17" y="14" width="154" height="152" rx="4" fill={colors.panel} stroke={colors.line} strokeWidth="1.1" />
+        <path d="M21 18a4 4 0 0 1 4-4h146v22H21z" fill={colors.raised} />
+        <circle cx="31" cy="25" r="2.5" fill="#ef4444" /><circle cx="40" cy="25" r="2.5" fill="#f59e0b" /><circle cx="49" cy="25" r="2.5" fill="#22c55e" />
+        <text x="61" y="27" fill={colors.muted} fontSize="5.5" fontFamily="monospace">BISTRÔ · CARDÁPIO</text>
+        <text x="29" y="51" fill={colors.text} fontSize="9" fontFamily="monospace" fontWeight="700">MENU DA CASA</text>
+        <text x="29" y="60" fill={colors.muted} fontSize="5.5" fontFamily="sans-serif">Feito na hora, com ingredientes frescos</text>
+        {menuItems.map((item, index) => {
+          const y = 70 + index * 29;
+          return <g key={item.name}>
+            <rect x="27" y={y} width="134" height="24" rx="2.5" fill={colors.raised} stroke={colors.line} strokeWidth="0.6" />
+            <circle cx="40" cy={y + 12} r="7" fill={item.tone} fillOpacity="0.14" stroke={item.tone} strokeWidth="0.7" />
+            <circle cx="40" cy={y + 12} r="2.5" fill={item.tone} />
+            <text x="52" y={y + 9} fill={colors.text} fontSize="6" fontFamily="sans-serif" fontWeight="700">{item.name}</text>
+            <text x="52" y={y + 17} fill={colors.muted} fontSize="4.7" fontFamily="sans-serif">{item.detail}</text>
+            <text x="154" y={y + 13} textAnchor="end" fill={item.tone} fontSize="5.5" fontFamily="monospace" fontWeight="700">{item.price}</text>
+          </g>;
+        })}
+        <rect x="27" y="160" width="134" height="0" fill="none" />
+
+        {/* Order flow connecting the menu to kitchen */}
+        <path d="M176 90h24" stroke={colors.accent} strokeWidth="1.4" strokeDasharray="3 3" />
+        <path d="m196 86 5 4-5 4" stroke={colors.accent} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="188" cy="90" r="2.5" fill={colors.accent} />
+
+        {/* Kitchen order management screen */}
+        <rect x="208" y="14" width="155" height="152" rx="4" fill={colors.panel} stroke={colors.line} strokeWidth="1.1" />
+        <path d="M212 18a4 4 0 0 1 4-4h147v22H212z" fill={colors.raised} />
+        <text x="222" y="27" fill={colors.text} fontSize="7" fontFamily="monospace" fontWeight="700">PEDIDOS · COZINHA</text>
+        <rect x="325" y="20" width="30" height="11" rx="2" fill={colors.accentBg} stroke={colors.accent} strokeWidth="0.6" />
+        <text x="340" y="27.5" textAnchor="middle" fill={colors.accent} fontSize="5" fontFamily="monospace" fontWeight="700">AO VIVO</text>
+        <text x="221" y="49" fill={colors.muted} fontSize="5.2" fontFamily="monospace">EM PREPARO · 03</text>
+        <rect x="220" y="55" width="131" height="36" rx="2.5" fill={colors.raised} stroke={colors.line} strokeWidth="0.7" />
+        <circle cx="231" cy="66" r="3" fill={colors.accent} />
+        <text x="239" y="68" fill={colors.text} fontSize="6" fontFamily="monospace" fontWeight="700">#084 · MESA 02</text>
+        <text x="229" y="79" fill={colors.muted} fontSize="5.5" fontFamily="sans-serif">1× Risoto da casa</text>
+        <text x="229" y="87" fill={colors.muted} fontSize="5.5" fontFamily="sans-serif">1× Suco natural</text>
+        <rect x="220" y="97" width="131" height="36" rx="2.5" fill={colors.raised} stroke={colors.line} strokeWidth="0.7" />
+        <circle cx="231" cy="108" r="3" fill={colors.green} />
+        <text x="239" y="110" fill={colors.text} fontSize="6" fontFamily="monospace" fontWeight="700">#085 · MESA 04</text>
+        <text x="229" y="121" fill={colors.muted} fontSize="5.5" fontFamily="sans-serif">2× Pasta artesanal</text>
+        <text x="229" y="129" fill={colors.muted} fontSize="5.5" fontFamily="sans-serif">Sem lactose</text>
+        <rect x="220" y="140" width="131" height="16" rx="2" fill={colors.greenBg} stroke={colors.green} strokeWidth="0.7" />
+        <text x="285.5" y="150.5" textAnchor="middle" fill={colors.green} fontSize="5.5" fontFamily="monospace" fontWeight="700">PEDIDO SINCRONIZADO</text>
+      </svg>
+    </div>
+  );
+}
+
+function RealEstateCover({ isLight }: { isLight: boolean }) {
+  const colors = isLight
+    ? { bg: '#f8fafc', grid: '#94a3b8', panel: '#ffffff', raised: '#f1f5f9', line: '#cbd5e1', text: '#0f172a', muted: '#64748b', accent: '#2563eb', accentBg: '#dbeafe', accent2: '#0f766e', accent2Bg: '#ccfbf1' }
+    : { bg: '#090b10', grid: '#334155', panel: '#0f172a', raised: '#111c2a', line: '#334155', text: '#e2e8f0', muted: '#94a3b8', accent: '#60a5fa', accentBg: '#172554', accent2: '#5eead4', accent2Bg: '#042f2e' };
+  const gridId = `real-estate-grid-${isLight ? 'light' : 'dark'}`;
+  const days: Array<number | null> = [null, ...Array.from({ length: 30 }, (_, index) => index + 1)];
+
+  return (
+    <div role="img" aria-label="Capa do agente imobiliário com conversa no celular e visita agendada no calendário" className="relative flex h-full w-full items-center justify-center overflow-hidden" style={{ backgroundColor: colors.bg }}>
+      <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-25" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <defs><pattern id={gridId} width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke={colors.grid} strokeWidth="0.5" /></pattern></defs>
+        <rect width="100%" height="100%" fill={`url(#${gridId})`} />
+      </svg>
+      <svg viewBox="0 0 380 180" className="relative z-10 h-full w-full p-3" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        {/* Phone chat panel */}
+        <rect x="30" y="13" width="132" height="154" rx="10" fill={colors.panel} stroke={colors.line} strokeWidth="1.2" />
+        <rect x="74" y="18" width="44" height="4" rx="2" fill={colors.line} />
+        <circle cx="47" cy="33" r="7" fill={colors.accentBg} stroke={colors.accent} strokeWidth="0.8" />
+        <path d="M44 33h6M47 30v6" stroke={colors.accent} strokeWidth="1" strokeLinecap="round" />
+        <text x="60" y="32" fill={colors.text} fontSize="7" fontFamily="monospace" fontWeight="700">ATENDIMENTO IA</text>
+        <text x="60" y="40" fill={colors.muted} fontSize="5.5" fontFamily="monospace">IMÓVEIS · ONLINE</text>
+        <line x1="38" y1="47" x2="154" y2="47" stroke={colors.line} strokeWidth="0.8" />
+        <rect x="39" y="54" width="89" height="23" rx="4" fill={colors.raised} stroke={colors.line} strokeWidth="0.6" />
+        <text x="46" y="64" fill={colors.text} fontSize="6" fontFamily="sans-serif">Oi! Vi o apartamento</text>
+        <text x="46" y="72" fill={colors.muted} fontSize="6" fontFamily="sans-serif">em Copacabana. Está livre?</text>
+        <rect x="67" y="83" width="85" height="25" rx="4" fill={colors.accentBg} stroke={colors.accent} strokeWidth="0.6" />
+        <text x="74" y="94" fill={colors.accent} fontSize="6" fontFamily="sans-serif">Sim! Posso agendar uma</text>
+        <text x="74" y="102" fill={colors.accent} fontSize="6" fontFamily="sans-serif">visita para você.</text>
+        <rect x="39" y="114" width="100" height="23" rx="4" fill={colors.raised} stroke={colors.line} strokeWidth="0.6" />
+        <text x="46" y="124" fill={colors.text} fontSize="6" fontFamily="sans-serif">Amanhã às 14h funciona?</text>
+        <text x="46" y="132" fill={colors.muted} fontSize="5.5" fontFamily="sans-serif">Disponibilidade confirmada ✓</text>
+        <rect x="39" y="145" width="113" height="13" rx="6" fill={colors.panel} stroke={colors.line} strokeWidth="0.7" />
+        <text x="47" y="154" fill={colors.muted} fontSize="5.5" fontFamily="sans-serif">Mensagem enviada</text>
+        <circle cx="143" cy="151.5" r="4" fill={colors.accent} />
+
+        {/* Connector from qualified chat to calendar */}
+        <path d="M170 90H198" stroke={colors.accent2} strokeWidth="1.4" strokeDasharray="3 3" />
+        <path d="m194 86 5 4-5 4" stroke={colors.accent2} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="184" cy="90" r="3" fill={colors.accent2} />
+
+        {/* Calendar / scheduled property visit */}
+        <rect x="211" y="19" width="139" height="144" rx="4" fill={colors.panel} stroke={colors.line} strokeWidth="1.2" />
+        <path d="M215 23a4 4 0 0 1 4-4h131v27H215z" fill={colors.raised} />
+        <text x="224" y="32" fill={colors.text} fontSize="7" fontFamily="monospace" fontWeight="700">AGENDA DE VISITAS</text>
+        <text x="224" y="40" fill={colors.muted} fontSize="5.5" fontFamily="monospace">JUNHO 2026</text>
+        <text x="226" y="58" textAnchor="middle" fill={colors.muted} fontSize="5" fontFamily="monospace">D</text><text x="244" y="58" textAnchor="middle" fill={colors.muted} fontSize="5" fontFamily="monospace">S</text><text x="262" y="58" textAnchor="middle" fill={colors.muted} fontSize="5" fontFamily="monospace">T</text><text x="280" y="58" textAnchor="middle" fill={colors.muted} fontSize="5" fontFamily="monospace">Q</text><text x="298" y="58" textAnchor="middle" fill={colors.muted} fontSize="5" fontFamily="monospace">Q</text><text x="316" y="58" textAnchor="middle" fill={colors.muted} fontSize="5" fontFamily="monospace">S</text><text x="334" y="58" textAnchor="middle" fill={colors.muted} fontSize="5" fontFamily="monospace">S</text>
+        {days.map((day, index) => {
+          const x = 226 + (index % 7) * 18;
+          const y = 68 + Math.floor(index / 7) * 8;
+          const active = day === 29;
+          if (day === null) return null;
+          return <g key={`${day}-${index}`}>
+            {active && <rect x={x - 6} y={y - 6} width="12" height="9" rx="3" fill={colors.accent} />}
+            <text x={x} y={y + 1} textAnchor="middle" fill={active ? (isLight ? '#ffffff' : '#082f49') : colors.text} fontSize="5" fontFamily="monospace" fontWeight={active ? '700' : '400'}>{day}</text>
+          </g>;
+        })}
+        <line x1="221" y1="106" x2="340" y2="106" stroke={colors.line} strokeWidth="0.8" />
+        <rect x="221" y="112" width="119" height="40" rx="3" fill={colors.accent2Bg} stroke={colors.accent2} strokeWidth="0.8" />
+        <circle cx="231" cy="122" r="2.5" fill={colors.accent2} />
+        <text x="238" y="124" fill={colors.accent2} fontSize="6" fontFamily="monospace" fontWeight="700">VISITA CONFIRMADA</text>
+        <text x="228" y="136" fill={colors.text} fontSize="6" fontFamily="sans-serif">29 jun · 14:00</text>
+        <text x="228" y="146" fill={colors.muted} fontSize="5.5" fontFamily="sans-serif">Apto. Copacabana · Corretor</text>
+      </svg>
+    </div>
+  );
+}
+
+function SacManagerCover({ isLight }: { isLight: boolean }) {
+  const colors = isLight
+    ? { bg: '#f8fafc', grid: '#94a3b8', panel: '#ffffff', raised: '#f1f5f9', line: '#cbd5e1', text: '#0f172a', muted: '#64748b', accent: '#0f766e', accentBg: '#ccfbf1', warning: '#b45309', warningBg: '#fef3c7' }
+    : { bg: '#080d11', grid: '#334155', panel: '#0f172a', raised: '#111c2a', line: '#334155', text: '#e2e8f0', muted: '#94a3b8', accent: '#5eead4', accentBg: '#042f2e', warning: '#fbbf24', warningBg: '#422006' };
+  const gridId = `sac-manager-grid-${isLight ? 'light' : 'dark'}`;
+
+  return (
+    <div role="img" aria-label="Capa ilustrada do painel SAC Manager" className="relative flex h-full w-full items-center justify-center overflow-hidden" style={{ backgroundColor: colors.bg }}>
+      <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-25" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <defs><pattern id={gridId} width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke={colors.grid} strokeWidth="0.5" /></pattern></defs>
+        <rect width="100%" height="100%" fill={`url(#${gridId})`} />
+      </svg>
+      <svg viewBox="0 0 380 180" className="relative z-10 h-full w-full p-3" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <rect x="14" y="12" width="352" height="156" rx="4" fill={colors.panel} stroke={colors.line} strokeWidth="1.2" />
+        <path d="M18 16a4 4 0 0 1 4-4h344v20H18z" fill={colors.raised} />
+        <circle cx="29" cy="22" r="3" fill="#ef4444" /><circle cx="40" cy="22" r="3" fill="#f59e0b" /><circle cx="51" cy="22" r="3" fill="#22c55e" />
+        <rect x="68" y="17" width="116" height="10" rx="2" fill={colors.panel} stroke={colors.line} strokeWidth="0.7" />
+        <text x="126" y="24" textAnchor="middle" fill={colors.muted} fontSize="6" fontFamily="monospace">SAC MANAGER / ATENDIMENTOS</text>
+        <rect x="18" y="32" width="56" height="132" fill={colors.raised} />
+        <rect x="25" y="43" width="42" height="12" rx="2" fill={colors.accentBg} stroke={colors.accent} strokeWidth="0.7" />
+        <text x="46" y="51" textAnchor="middle" fill={colors.accent} fontSize="6.5" fontFamily="monospace" fontWeight="700">SAC</text>
+        <line x1="28" y1="68" x2="60" y2="68" stroke={colors.muted} strokeWidth="1.4" strokeLinecap="round" />
+        <line x1="28" y1="82" x2="56" y2="82" stroke={colors.muted} strokeWidth="1.4" strokeLinecap="round" opacity="0.7" />
+        <line x1="28" y1="96" x2="59" y2="96" stroke={colors.muted} strokeWidth="1.4" strokeLinecap="round" opacity="0.7" />
+        <line x1="28" y1="110" x2="52" y2="110" stroke={colors.muted} strokeWidth="1.4" strokeLinecap="round" opacity="0.7" />
+        <line x1="28" y1="124" x2="58" y2="124" stroke={colors.muted} strokeWidth="1.4" strokeLinecap="round" opacity="0.7" />
+        <text x="88" y="49" fill={colors.text} fontSize="9" fontFamily="monospace" fontWeight="700">ATENDIMENTOS</text>
+        <text x="88" y="60" fill={colors.muted} fontSize="5.5" fontFamily="monospace">VISÃO OPERACIONAL · SLAs · PÓS-VENDA</text>
+        <rect x="300" y="39" width="52" height="15" rx="2" fill={colors.accentBg} stroke={colors.accent} strokeWidth="0.8" />
+        <text x="326" y="49" textAnchor="middle" fill={colors.accent} fontSize="5.5" fontFamily="monospace" fontWeight="700">+ NOVO CASO</text>
+        <rect x="88" y="68" width="77" height="26" rx="2" fill={colors.raised} stroke={colors.line} strokeWidth="0.7" />
+        <text x="96" y="79" fill={colors.muted} fontSize="5.5" fontFamily="monospace">ABERTOS</text><text x="96" y="89" fill={colors.text} fontSize="9" fontFamily="monospace" fontWeight="700">24</text>
+        <rect x="171" y="68" width="77" height="26" rx="2" fill={colors.raised} stroke={colors.line} strokeWidth="0.7" />
+        <text x="179" y="79" fill={colors.muted} fontSize="5.5" fontFamily="monospace">EM SLA</text><text x="179" y="89" fill={colors.accent} fontSize="9" fontFamily="monospace" fontWeight="700">92%</text>
+        <rect x="254" y="68" width="98" height="26" rx="2" fill={colors.raised} stroke={colors.line} strokeWidth="0.7" />
+        <text x="262" y="79" fill={colors.muted} fontSize="5.5" fontFamily="monospace">LOGÍSTICA REVERSA</text><text x="262" y="89" fill={colors.warning} fontSize="9" fontFamily="monospace" fontWeight="700">08 ETAPAS</text>
+        <rect x="88" y="101" width="264" height="53" rx="2" fill={colors.panel} stroke={colors.line} strokeWidth="0.8" />
+        <rect x="88" y="101" width="264" height="12" fill={colors.raised} />
+        <text x="96" y="109" fill={colors.muted} fontSize="5" fontFamily="monospace">PROTOCOLO</text><text x="156" y="109" fill={colors.muted} fontSize="5" fontFamily="monospace">CLIENTE / PEDIDO</text><text x="245" y="109" fill={colors.muted} fontSize="5" fontFamily="monospace">STATUS</text><text x="319" y="109" fill={colors.muted} fontSize="5" fontFamily="monospace">SLA</text>
+        {[0, 1, 2].map((row) => {
+          const y = 125 + row * 13;
+          const statusColor = row === 1 ? colors.warning : colors.accent;
+          return <g key={row}>
+            <line x1="88" y1={y - 4} x2="352" y2={y - 4} stroke={colors.line} strokeWidth="0.6" />
+            <text x="96" y={y + 1} fill={colors.text} fontSize="5.5" fontFamily="monospace">SAC-2026-00{row + 4}</text>
+            <text x="156" y={y + 1} fill={colors.muted} fontSize="5.5" fontFamily="monospace">PEDIDO · CLIENTE</text>
+            <circle cx="247" cy={y - 1} r="2" fill={statusColor} />
+            <text x="253" y={y + 1} fill={statusColor} fontSize="5.5" fontFamily="monospace">{row === 1 ? 'EM ANÁLISE' : 'EM ANDAMENTO'}</text>
+            <text x="319" y={y + 1} fill={statusColor} fontSize="5.5" fontFamily="monospace">{row === 1 ? '02h' : '1d'}</text>
+          </g>;
+        })}
+      </svg>
+    </div>
+  );
 }

@@ -45,7 +45,7 @@ export default function ProjectStudyModal({
             aria-hidden="true"
           />
 
-          {/* Modal Container — max-w-[680px] strictly respected for comfortable reading */}
+          {/* Modal Container - max-w-[680px] strictly respected for comfortable reading */}
           <motion.div
             ref={dialogRef}
             initial={{ opacity: 0, scale: 0.97, y: 10 }}

@@ -122,7 +122,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
             className="grid gap-5 border border-theme-border/70 bg-theme-surface/35 p-4 sm:p-5 md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:items-center md:gap-6"
           >
             <div className="aspect-[16/9] overflow-hidden border border-theme-border/70 bg-theme-surface">
-              {project.imageUrl ? (
+              {project.imageUrl && project.id !== '09' ? (
                 <img
                   src={project.imageUrl}
                   alt={isEnglish ? `${project.title} interface` : `Interface do projeto ${project.title}`}

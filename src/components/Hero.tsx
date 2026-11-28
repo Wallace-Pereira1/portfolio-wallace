@@ -145,7 +145,7 @@ export default function Hero({ projects }: HeroProps) {
               </div>
             </div>
 
-            {/* Memoji — Exibido no desktop à direita do nome e texto */}
+            {/* Memoji - Exibido no desktop à direita do nome e texto */}
             <div className="hidden md:flex shrink-0 items-center justify-center self-center pr-2 lg:pr-6">
               <div className="relative w-36 h-36 lg:w-44 lg:h-44 xl:w-48 xl:h-48 flex items-center justify-center">
               <img
