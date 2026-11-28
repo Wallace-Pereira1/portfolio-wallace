@@ -61,7 +61,7 @@ export default function ChatAssistantWindow({
   const [inlineError, setInlineError] = useState<string | null>(null);
   const [liveAnnouncement, setLiveAnnouncement] = useState('');
 
-  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const wasOpenRef = useRef(isOpen);
@@ -100,7 +100,22 @@ export default function ChatAssistantWindow({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
-  // Keep latest message scrolled into view without moving focus away from textarea
+  // Close when a pointer press lands outside the panel and its launcher.
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleOutsidePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (dialogRef.current?.contains(target) || triggerRef.current?.contains(target)) return;
+      onClose();
+    };
+
+    document.addEventListener('pointerdown', handleOutsidePointerDown, true);
+    return () => document.removeEventListener('pointerdown', handleOutsidePointerDown, true);
+  }, [isOpen, onClose, triggerRef]);
+
+  // Keep latest message scrolled into view without moving focus away from the input
   useEffect(() => {
     if (!isOpen) return;
     messagesEndRef.current?.scrollIntoView({ behavior: 'auto', block: 'end' });
@@ -166,13 +181,6 @@ export default function ChatAssistantWindow({
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     void sendMessage(input);
-  };
-
-  const handleTextareaKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      void sendMessage(input);
-    }
   };
 
   const handleClearConversation = () => {
@@ -350,23 +358,22 @@ export default function ChatAssistantWindow({
           <label htmlFor="wallace-chat-input" className="sr-only">
             {isPt ? 'Escreva sua pergunta sobre o Wallace' : 'Write your question about Wallace'}
           </label>
-          <textarea
+          <input
             id="wallace-chat-input"
+            type="text"
             ref={inputRef}
-            rows={1}
             value={input}
             maxLength={MAX_INPUT_CHARS}
             onChange={(e) => {
               setInput(e.target.value);
               if (inlineError) setInlineError(null);
             }}
-            onKeyDown={handleTextareaKeyDown}
             placeholder={
               isPt
-                ? 'Pergunte sobre projetos, stack ou contato...'
-                : 'Ask about projects, stack, or contact...'
+                ? 'Escreva sua pergunta...'
+                : 'Ask a question...'
             }
-            className="flex-1 min-h-[40px] max-h-24 resize-none rounded-xl border border-theme-border bg-theme-surface px-3 py-2 text-base sm:text-sm text-theme-text placeholder:text-theme-muted focus:border-theme-muted focus:outline-none disabled:opacity-60"
+            className="flex-1 min-w-0 h-10 rounded-xl border border-theme-border bg-theme-surface px-3 py-2 text-base sm:text-sm text-theme-text placeholder:text-theme-muted focus:border-theme-muted focus:outline-none"
           />
           <button
             type="submit"
