@@ -90,6 +90,17 @@ export default function ProjectStudyModal({
 
             {/* Conteúdo Estruturado e Objetivo com Rolagem Interna */}
             <div className="flex-1 min-h-0 overflow-y-auto p-5 sm:p-6 space-y-5 bg-theme-bg/40">
+              {project.imageUrl && (
+                <figure className="overflow-hidden border border-theme-border bg-theme-surface">
+                  <img
+                    src={project.imageUrl}
+                    alt={isEnglish ? `${project.title} interface` : `Interface do projeto ${project.title}`}
+                    className="block max-h-56 w-full object-contain"
+                    loading="lazy"
+                  />
+                </figure>
+              )}
+
               {/* 1. O Desafio */}
               <section className="space-y-2">
                 <div className="flex items-center gap-2">
