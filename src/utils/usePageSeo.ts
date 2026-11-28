@@ -55,10 +55,17 @@ export function usePageSeo({ title, description, path, jsonLd, noIndex }: PageSe
     setMeta('property', 'og:description', description);
     setMeta('property', 'og:url', absoluteCanonical);
     setMeta('property', 'og:image', OG_IMAGE_URL);
+    setMeta('property', 'og:locale', language === 'pt' ? 'pt_BR' : 'en_US');
+    setMeta('property', 'og:image:alt', language === 'pt'
+      ? 'Wallace Pereira, desenvolvedor full stack, ao lado de TypeScript, React, Node.js, PostgreSQL, n8n e IA.'
+      : 'Wallace Pereira, full stack developer, alongside TypeScript, React, Node.js, PostgreSQL, n8n, and AI.');
     setMeta('name', 'twitter:card', 'summary_large_image');
     setMeta('name', 'twitter:title', title);
     setMeta('name', 'twitter:description', description);
     setMeta('name', 'twitter:image', OG_IMAGE_URL);
+    setMeta('name', 'twitter:image:alt', language === 'pt'
+      ? 'Wallace Pereira, desenvolvedor full stack, ao lado de TypeScript, React, Node.js, PostgreSQL, n8n e IA.'
+      : 'Wallace Pereira, full stack developer, alongside TypeScript, React, Node.js, PostgreSQL, n8n, and AI.');
 
     // 7. Inject or Update Page-Specific JSON-LD Script
     const jsonLdId = 'page-json-ld';
