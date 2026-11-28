@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Certifications from './Certifications';
-import ExperienceDetailModal, { WorkExperienceItem } from './ExperienceDetailModal';
+import type { WorkExperienceItem } from './ExperienceDetailModal';
+
+const ExperienceDetailModal = lazy(() => import('./ExperienceDetailModal'));
 
 interface ExperienceSectionProps {
   showHeader?: boolean;
@@ -367,12 +369,16 @@ export default function ExperienceSection({ showHeader = true }: ExperienceSecti
       </div>
 
       {/* Detailed Experience Read More Modal */}
-      <ExperienceDetailModal
-        isOpen={!!selectedExperience}
-        onClose={() => setSelectedExperience(null)}
-        experience={selectedExperience}
-        language={language}
-      />
+      {selectedExperience && (
+        <Suspense fallback={null}>
+          <ExperienceDetailModal
+            isOpen
+            onClose={() => setSelectedExperience(null)}
+            experience={selectedExperience}
+            language={language}
+          />
+        </Suspense>
+      )}
     </section>
   );
 }

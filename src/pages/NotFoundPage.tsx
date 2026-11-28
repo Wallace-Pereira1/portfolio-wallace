@@ -26,7 +26,7 @@ export default function NotFoundPage() {
     <div className="w-full flex flex-col justify-between min-h-[calc(100dvh-5rem)]">
       <div className="w-full">
         <PageHeader
-          eyebrow="HTTP 404"
+          eyebrow={language === 'pt' ? 'ROTA NÃO ENCONTRADA' : 'ROUTE NOT FOUND'}
           title={language === 'pt' ? 'Página não encontrada.' : 'Page not found.'}
           description={
             language === 'pt'
@@ -34,7 +34,6 @@ export default function NotFoundPage() {
               : 'The requested address does not exist, has been moved, or is temporarily unavailable.'
           }
           meta={[
-            { label: 'Status', value: '404 Not Found' },
             { label: language === 'pt' ? 'Destino Sugerido' : 'Suggested Destination', value: 'Início (/)' },
           ]}
         />

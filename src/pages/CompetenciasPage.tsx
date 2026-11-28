@@ -40,9 +40,9 @@ export default function CompetenciasPage() {
       />
 
       {/* Competencies Body */}
-      <main className="bg-transparent">
+      <div className="bg-transparent">
         <StackSection showHeader={false} />
-      </main>
+      </div>
 
       {/* Editorial Colophon */}
       <EditorialColophon

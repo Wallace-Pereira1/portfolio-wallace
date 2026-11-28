@@ -40,9 +40,9 @@ export default function TrajetoriaPage() {
       />
 
       {/* Trajectory Body Content */}
-      <main className="bg-transparent">
+      <div className="bg-transparent">
         <ExperienceSection showHeader={false} />
-      </main>
+      </div>
 
       {/* Editorial Colophon */}
       <EditorialColophon

@@ -64,7 +64,7 @@ export default function ChatAssistantWindow({
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
-  const wasOpenRef = useRef(isOpen);
+  const wasOpenRef = useRef(false);
 
   const hasUserMessages = messages.some((m) => m.role === 'user');
   const suggestions = isPt ? SUGGESTIONS_PT : SUGGESTIONS_EN;
@@ -206,7 +206,7 @@ export default function ChatAssistantWindow({
           <h2 className="text-sm font-medium text-theme-text truncate">
             {isPt ? 'Assistente do Wallace' : "Wallace's Assistant"}
           </h2>
-          <p className="text-[11px] font-mono text-theme-muted truncate">
+          <p className="text-xs font-mono text-theme-muted truncate">
             {isPt ? 'Busca local · perfil e projetos' : 'Local search · profile & projects'}
           </p>
         </div>
@@ -264,7 +264,7 @@ export default function ChatAssistantWindow({
                 <div className="mt-3 pt-2.5 border-t border-theme-border/70 flex flex-wrap gap-1.5">
                   <a
                     href="mailto:wcps2001@gmail.com"
-                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-theme-border bg-theme-surface text-[11px] font-mono text-theme-text hover:border-theme-muted transition-colors"
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-theme-border bg-theme-surface text-xs font-mono text-theme-text hover:border-theme-muted transition-colors"
                   >
                     <Mail className="w-3 h-3" aria-hidden="true" />
                     <span>E-mail</span>
@@ -273,7 +273,7 @@ export default function ChatAssistantWindow({
                     href="https://wa.me/5521999688381"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-theme-border bg-theme-surface text-[11px] font-mono text-theme-text hover:border-theme-muted transition-colors"
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-theme-border bg-theme-surface text-xs font-mono text-theme-text hover:border-theme-muted transition-colors"
                   >
                     <MessageCircle className="w-3 h-3" aria-hidden="true" />
                     <span>WhatsApp</span>
@@ -284,7 +284,7 @@ export default function ChatAssistantWindow({
                       e.preventDefault();
                       handleInternalNavigate('/#projetos');
                     }}
-                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-theme-border bg-theme-surface text-[11px] font-mono text-theme-text hover:border-theme-muted transition-colors"
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-theme-border bg-theme-surface text-xs font-mono text-theme-text hover:border-theme-muted transition-colors"
                   >
                     <span>{isPt ? 'Projetos' : 'Projects'}</span>
                     <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
@@ -295,7 +295,7 @@ export default function ChatAssistantWindow({
                       e.preventDefault();
                       handleInternalNavigate('/#contato');
                     }}
-                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-theme-border bg-theme-surface text-[11px] font-mono text-theme-text hover:border-theme-muted transition-colors"
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-theme-border bg-theme-surface text-xs font-mono text-theme-text hover:border-theme-muted transition-colors"
                   >
                     <span>{isPt ? 'Contato' : 'Contact'}</span>
                     <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
@@ -303,7 +303,7 @@ export default function ChatAssistantWindow({
                   <button
                     type="button"
                     onClick={() => downloadResumePdf(language)}
-                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-theme-border bg-theme-surface text-[11px] font-mono text-theme-text hover:border-theme-muted transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-theme-border bg-theme-surface text-xs font-mono text-theme-text hover:border-theme-muted transition-colors cursor-pointer"
                   >
                     <FileDown className="w-3 h-3" aria-hidden="true" />
                     <span>{isPt ? 'Currículo PDF' : 'Resume PDF'}</span>
@@ -317,7 +317,7 @@ export default function ChatAssistantWindow({
         {/* Initial suggestions before first send (max 3) */}
         {!hasUserMessages && (
           <div className="pt-1 space-y-1.5">
-            <span className="block text-[11px] font-mono text-theme-muted">
+            <span className="block text-xs font-mono text-theme-muted">
               {isPt ? 'Sugestões:' : 'Suggestions:'}
             </span>
             <div className="flex flex-col items-start gap-1.5">
@@ -341,7 +341,7 @@ export default function ChatAssistantWindow({
       {/* Privacy notice + Input composer */}
       <footer className="shrink-0 border-t border-theme-border bg-theme-bg/70 px-3.5 py-2.5 space-y-2">
         {!hasUserMessages && (
-          <p className="text-[11px] leading-snug text-theme-muted">
+          <p className="text-xs leading-snug text-theme-muted">
             {isPt
               ? 'Respostas locais baseadas no portfólio. Suas mensagens não são enviadas a uma API de IA.'
               : 'Answers are generated locally from the portfolio. Your messages are not sent to an AI API.'}
@@ -349,7 +349,7 @@ export default function ChatAssistantWindow({
         )}
 
         {inlineError && (
-          <p role="alert" className="text-[11px] font-mono text-theme-dim">
+          <p role="alert" className="text-xs font-mono text-theme-dim">
             {inlineError}
           </p>
         )}

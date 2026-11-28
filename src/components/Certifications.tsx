@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Award, ExternalLink, Search, X, Brain, Database, Code } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export interface Certificate {
   id: string;
@@ -298,6 +299,9 @@ const featuredCertificateIds = ['ai-3', 'soft-1', 'data-1'];
 export default function Certifications() {
   const { language } = useApp();
   const [isOpen, setIsOpen] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'software' | 'automation_ai' | 'data_infra'>('all');
 
@@ -346,20 +350,7 @@ export default function Certifications() {
 
   const labels = language === 'pt' ? labelsPt : labelsEn;
 
-  // Handle escape key to close modal
-  useEffect(() => {
-    if (isOpen) {
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') setIsOpen(false);
-      };
-      window.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-      return () => {
-        window.removeEventListener('keydown', handleKeyDown);
-        document.body.style.overflow = '';
-      };
-    }
-  }, [isOpen]);
+  useModalAccessibility(isOpen, () => setIsOpen(false), dialogRef, closeButtonRef, triggerRef.current);
 
   const filteredCertificates = certificatesData.filter(cert => {
     const matchesCategory = selectedCategory === 'all' || cert.category === selectedCategory;
@@ -434,7 +425,11 @@ export default function Certifications() {
       {/* Button to read all certificates */}
       <div className="mt-8 flex justify-center">
         <button
-          onClick={() => setIsOpen(true)}
+          type="button"
+          onClick={(event) => {
+            triggerRef.current = event.currentTarget;
+            setIsOpen(true);
+          }}
           className="inline-flex items-center gap-2 px-5 py-2.5 border border-theme-border hover:border-theme-text/40 bg-theme-surface text-theme-text text-xs tracking-wider uppercase font-mono rounded-[2px] transition-colors"
         >
           <Award className="w-3.5 h-3.5 shrink-0 text-theme-muted" />
@@ -457,21 +452,26 @@ export default function Certifications() {
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
               className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+              aria-hidden="true"
             />
 
             {/* Modal Body Container */}
             <motion.div
+              ref={dialogRef}
               initial={{ opacity: 0, scale: 0.98, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: 10 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
               className="relative w-full max-w-4xl max-h-[85vh] overflow-hidden flex flex-col bg-theme-surface border border-theme-border rounded-[2px] shadow-2xl z-20"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="certifications-modal-title"
             >
               
               {/* Header Title Bar */}
               <div className="flex items-center justify-between p-6 border-b border-theme-border bg-theme-bg">
                 <div>
-                  <h3 className="font-semibold text-lg text-theme-text flex items-center gap-2.5">
+                  <h3 id="certifications-modal-title" className="font-semibold text-lg text-theme-text flex items-center gap-2.5">
                     <Award className="w-5 h-5 text-theme-text" />
                     <span>{labels.title}</span>
                   </h3>
@@ -480,6 +480,8 @@ export default function Certifications() {
                   </p>
                 </div>
                 <button
+                  ref={closeButtonRef}
+                  type="button"
                   onClick={() => setIsOpen(false)}
                   className="p-1.5 rounded-[2px] bg-theme-surface hover:bg-theme-border text-theme-dim hover:text-theme-text border border-theme-border transition-colors"
                   aria-label={labels.closed}
@@ -498,6 +500,7 @@ export default function Certifications() {
                   </span>
                   <input
                     type="text"
+                    aria-label={labels.searchPlaceholder}
                     placeholder={labels.searchPlaceholder}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -505,6 +508,8 @@ export default function Certifications() {
                   />
                   {searchQuery && (
                     <button
+                      type="button"
+                      aria-label={language === 'pt' ? 'Limpar busca' : 'Clear search'}
                       onClick={() => setSearchQuery('')}
                       className="absolute right-3.5 top-1/2 -translate-y-1/2 p-0.5 text-theme-dim hover:text-theme-text transition-colors"
                     >
@@ -518,6 +523,8 @@ export default function Certifications() {
                   {(['all', 'software', 'automation_ai', 'data_infra'] as const).map((cat) => (
                     <button
                       key={cat}
+                      type="button"
+                      aria-pressed={selectedCategory === cat}
                       onClick={() => setSelectedCategory(cat)}
                       className={`px-3 py-1 rounded-[2px] text-xs font-mono tracking-wide uppercase transition-colors border ${
                         selectedCategory === cat
@@ -586,6 +593,7 @@ export default function Certifications() {
               {/* Footer Panel */}
               <div className="flex justify-end p-4 border-t border-theme-border bg-theme-surface">
                 <button
+                  type="button"
                   onClick={() => setIsOpen(false)}
                   className="px-4 py-2 bg-theme-bg hover:bg-theme-border border border-theme-border text-theme-text font-mono text-xs uppercase tracking-wider rounded-[2px] transition-colors"
                 >

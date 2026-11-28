@@ -224,13 +224,13 @@ export default function EstudosPage() {
         title={language === 'pt' ? 'Projetos.' : 'Projects.'}
         description={
           language === 'pt'
-            ? 'Estudos de caso e arquitetura de sistemas: projetos reais com problemas de negócio concretos, decisões arquiteturais documentadas e código em produção.'
-            : 'Case studies and system architecture: production systems solving tangible business problems with documented architectural tradeoffs and live deployments.'
+            ? 'Projetos publicados, demonstrações e estudos de caso: desafios, decisões técnicas e soluções desenvolvidas para contextos reais.'
+            : 'Published projects, demos, and case studies: challenges, technical decisions, and solutions developed for real-world contexts.'
         }
         meta={[
           { label: language === 'pt' ? 'Escopo' : 'Scope', value: language === 'pt' ? 'Full Stack & APIs' : 'Full Stack & APIs' },
           { label: language === 'pt' ? 'Casos Documentados' : 'Documented Cases', value: `${projects.length} Sistemas` },
-          { label: language === 'pt' ? 'Padrão' : 'Standard', value: 'Service Layer / Dual-Engine' },
+          { label: language === 'pt' ? 'Foco' : 'Focus', value: language === 'pt' ? 'Produtos, APIs & automação' : 'Products, APIs & automation' },
         ]}
       />
 
@@ -309,7 +309,10 @@ export default function EstudosPage() {
       </section>
 
       {/* Case Studies Detailed Document Flow */}
-      <main className="py-10 md:py-14 px-6 md:px-12 bg-transparent transition-colors">
+      <section
+        aria-label={language === 'pt' ? 'Lista de estudos de caso' : 'Case studies'}
+        className="py-10 md:py-14 px-6 md:px-12 bg-transparent transition-colors"
+      >
         <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
           {filteredProjects.map((project) => {
             const isExpanded = expandedId === project.id;
@@ -371,6 +374,9 @@ export default function EstudosPage() {
                     )}
 
                     <button
+                      type="button"
+                      aria-expanded={isExpanded}
+                      aria-controls={isExpanded ? `project-detail-${project.id}` : undefined}
                       onClick={() => setExpandedId(isExpanded ? null : project.id)}
                       className="ml-auto inline-flex items-center gap-1 text-xs font-mono text-theme-dim hover:text-theme-text transition-colors py-1.5"
                     >
@@ -384,6 +390,7 @@ export default function EstudosPage() {
                 <AnimatePresence>
                   {isExpanded && (
                     <motion.div
+                      id={`project-detail-${project.id}`}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
@@ -481,7 +488,7 @@ export default function EstudosPage() {
             );
           })}
         </div>
-      </main>
+      </section>
 
       {/* Editorial Colophon */}
       <EditorialColophon

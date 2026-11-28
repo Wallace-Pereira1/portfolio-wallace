@@ -1,11 +1,12 @@
-import { useState, useRef, useEffect } from 'react';
+import { lazy, Suspense, useState, useRef, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ArrowUpRight, ChevronDown, ExternalLink } from 'lucide-react';
 import { Project } from '../types';
 import { useApp } from '../context/AppContext';
 import { isLightTheme } from '../data/themes';
 import ProjectMinimalCover from './ProjectMinimalCover';
-import ProjectStudyModal from './ProjectStudyModal';
+
+const ProjectStudyModal = lazy(() => import('./ProjectStudyModal'));
 
 interface ProjectsListProps {
   projects: Project[];
@@ -208,13 +209,17 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
         </button>
       )}
 
-      <ProjectStudyModal
-        isOpen={!!selectedStudyProject}
-        onClose={() => setSelectedStudyProject(null)}
-        project={selectedStudyProject}
-        language={language === 'en' ? 'en' : 'pt'}
-        triggerElement={triggerRef.current}
-      />
+      {selectedStudyProject && (
+        <Suspense fallback={null}>
+          <ProjectStudyModal
+            isOpen
+            onClose={() => setSelectedStudyProject(null)}
+            project={selectedStudyProject}
+            language={language === 'en' ? 'en' : 'pt'}
+            triggerElement={triggerRef.current}
+          />
+        </Suspense>
+      )}
     </section>
   );
 }

@@ -96,8 +96,8 @@ function getProjectList(language: Language) {
 
 function getExperienceAnswer(language: Language) {
   return language === 'pt'
-    ? `Wallace atua com desenvolvimento full stack, automação e integrações.\n\n- **Prata e Prata:** integra e-commerce, ERP, CRM, WhatsApp e 10 lojas usando APIs e webhooks.\n- **Conversão.ai:** desenvolve agentes conversacionais e automações com n8n, Node.js, Salesforce e RD Station.\n- **Mestra Informática:** trabalhou com Angular e TypeScript na modernização de sistema legado, com redução reportada de mais de 70% no tempo de carregamento.\n\n[Ver trajetória](#experiencia)`
-    : `Wallace works across full-stack development, automation, and integrations.\n\n- **Prata e Prata:** connects e-commerce, ERP, CRM, WhatsApp, and 10 stores through APIs and webhooks.\n- **Conversão.ai:** builds conversational agents and n8n automations with Node.js, Salesforce, and RD Station.\n- **Mestra Informática:** worked with Angular and TypeScript on a legacy-system modernization, with a reported load-time reduction above 70%.\n\n[View experience](#experiencia)`;
+        ? `Wallace atua com desenvolvimento full stack, automação e integrações.\n\n- **Prata e Prata:** integra e-commerce, ERP, CRM, WhatsApp e 10 lojas usando APIs e webhooks.\n- **Conversão.ai:** desenvolve agentes conversacionais e automações com n8n, Node.js, Salesforce e RD Station.\n- **Mestra Informática:** trabalhou com Angular e TypeScript na modernização de sistema legado; a redução de carregamento acima de 70% foi reportada no projeto.\n\n[Ver trajetória](#experiencia)`
+    : `Wallace works across full-stack development, automation, and integrations.\n\n- **Prata e Prata:** connects e-commerce, ERP, CRM, WhatsApp, and 10 stores through APIs and webhooks.\n- **Conversão.ai:** builds conversational agents and n8n automations with Node.js, Salesforce, and RD Station.\n- **Mestra Informática:** worked with Angular and TypeScript on a legacy-system modernization; the load-time reduction above 70% was reported by the project.\n\n[View experience](#experiencia)`;
 }
 
 function getContactAnswer(language: Language) {

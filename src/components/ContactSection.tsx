@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ArrowUpRight, Send, Check, Loader2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { trackEvent } from '../utils/analytics';
@@ -19,6 +19,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -29,6 +30,10 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (honeypotRef.current?.value.trim()) {
+      setErrorMsg(language === 'pt' ? 'Não foi possível enviar. Tente novamente.' : 'Unable to send. Please try again.');
+      return;
+    }
     if (!formData.nome || !formData.email || !formData.mensagem) return;
 
     setLoading(true);
@@ -170,9 +175,25 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                     ? 'Preencha o formulário abaixo para envio direto à minha caixa de entrada profissional.'
                     : 'Fill in the form below to send a message directly to my professional inbox.'}
                 </p>
+                <p className="text-xs leading-relaxed text-theme-muted">
+                  {language === 'pt'
+                    ? 'Os dados informados são enviados pelo Web3Forms para encaminhar sua mensagem. Não inclua informações sensíveis.'
+                    : 'The information you provide is sent through Web3Forms to deliver your message. Do not include sensitive information.'}
+                </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+                  <label htmlFor="contact-company-website">Website</label>
+                  <input
+                    ref={honeypotRef}
+                    id="contact-company-website"
+                    name="company_website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label htmlFor="contact-nome" className="text-xs font-mono text-theme-muted uppercase tracking-wider">
@@ -208,7 +229,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                 </div>
 
                 <div className="space-y-1">
-                  <label htmlFor="contact-recompensa" className="text-xs font-mono text-theme-muted uppercase tracking-wider">
+                  <label htmlFor="contact-recompensa" className="block text-xs font-mono text-theme-muted uppercase tracking-normal leading-snug">
                     {t('foot.form.subject')}
                   </label>
                   <select
@@ -216,7 +237,7 @@ export default function ContactSection({ showHeader = true }: ContactSectionProp
                     name="recompensa"
                     value={formData.recompensa}
                     onChange={handleInputChange}
-                    className="w-full bg-theme-bg/90 border-0 focus:ring-1 focus:ring-theme-muted focus:outline-none text-theme-text text-base px-3.5 py-2.5 rounded-lg transition-colors font-sans"
+                    className="w-full min-w-0 bg-theme-bg/90 border-0 focus:ring-1 focus:ring-theme-muted focus:outline-none text-theme-text text-sm px-3.5 py-2.5 rounded-lg transition-colors font-sans"
                   >
                     <option value="Recrutamento / Oportunidade">{t('foot.form.sub.rec')}</option>
                     <option value="Projeto de Automação / APIs">{t('foot.form.sub.ai')}</option>

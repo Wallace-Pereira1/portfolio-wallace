@@ -118,7 +118,7 @@ export default function AppearanceModal({
                         >
                           {isEnglish ? option.nameEn : option.namePt}
                         </span>
-                        <span className="block text-[11px] text-theme-muted line-clamp-1 mt-0.5">
+                        <span className="block text-xs text-theme-muted line-clamp-1 mt-0.5">
                           {isEnglish ? option.descriptionEn : option.descriptionPt}
                         </span>
                       </div>
