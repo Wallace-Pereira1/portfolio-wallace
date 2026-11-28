@@ -1,9 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, ExternalLink } from 'lucide-react';
 import { Project } from '../types';
-import { getProjectHighlight } from '../data/projectHighlights';
 import { useApp } from '../context/AppContext';
 import { isLightTheme } from '../data/themes';
 import ProjectMinimalCover from './ProjectMinimalCover';
@@ -18,8 +16,12 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
   const { theme } = useApp();
   const isLight = isLightTheme(theme);
   const isEnglish = language === 'en';
-  const reduceMotion = useReducedMotion();
-  const [openProjectId, setOpenProjectId] = useState<string | null>(null);
+  const featuredOrder = ['02', '09', '01'];
+  const featuredProjects = featuredOrder
+    .map((id) => projects.find((project) => project.id === id))
+    .filter((project): project is Project => Boolean(project));
+  const remainingProjects = projects.filter((project) => !featuredOrder.includes(project.id));
+  const [showAllProjects, setShowAllProjects] = useState(false);
   const [selectedStudyProject, setSelectedStudyProject] = useState<Project | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,7 +42,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
       );
 
       if (found) {
-        setOpenProjectId(found.id);
+        if (!featuredOrder.includes(found.id)) setShowAllProjects(true);
         if (customEvent.detail?.openModal !== false) {
           setSelectedStudyProject(found);
         }
@@ -66,7 +68,7 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
       );
 
       if (found) {
-        setOpenProjectId(found.id);
+        if (!featuredOrder.includes(found.id)) setShowAllProjects(true);
         setSelectedStudyProject(found);
         setTimeout(() => {
           const el = document.getElementById(`project-item-${found.id}`) || document.getElementById('projetos');
@@ -81,6 +83,19 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
   }, [searchParams, setSearchParams, projects]);
 
   if (projects.length === 0) return null;
+
+  const displayedProjects = showAllProjects
+    ? [...featuredProjects, ...remainingProjects]
+    : featuredProjects;
+
+  const categoryLabel = (project: Project) => {
+    const labels = {
+      web_product: isEnglish ? 'WEB PRODUCT' : 'PRODUTO WEB',
+      integration_api: isEnglish ? 'INTEGRATIONS & APIs' : 'INTEGRAÇÕES & APIs',
+      data_backend: isEnglish ? 'DATA & BACKEND' : 'DADOS & BACKEND',
+    };
+    return labels[project.category];
+  };
 
   return (
     <section
@@ -99,87 +114,99 @@ export default function ProjectsList({ projects, language }: ProjectsListProps) 
         </h2>
       </header>
 
-      <div className="divide-y divide-theme-border/70 border-b border-theme-border/70">
-        {projects.map((project, index) => {
-          const isOpen = openProjectId === project.id;
-          const panelId = `project-details-${project.id}`;
-          const shortDescription = project.subtitle || getProjectHighlight(project.id, language) || project.tagline;
-          const fullDescription = project.description || project.solution;
-
-          return (
-            <article key={project.id} id={`project-item-${project.id}`} className="group scroll-mt-24">
-              <button
-                type="button"
-                aria-expanded={isOpen}
-                aria-controls={panelId}
-                onClick={() => setOpenProjectId(isOpen ? null : project.id)}
-                className="w-full py-4 sm:py-5 grid grid-cols-[2.5rem_minmax(0,1fr)_1.5rem] sm:grid-cols-[3rem_minmax(0,1fr)_1.5rem] gap-3 sm:gap-4 text-left cursor-pointer focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-theme-text"
-              >
-                <span className="font-mono text-xs sm:text-sm text-theme-muted pt-0.5">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span className="min-w-0 space-y-1.5">
-                  <span className="block text-base sm:text-lg font-medium text-theme-text group-hover:text-theme-text transition-colors">
-                    {project.title}
-                  </span>
-                  <span className="block text-sm sm:text-[15px] text-theme-dim leading-relaxed">
-                    {shortDescription}
-                  </span>
-                </span>
-                <ChevronDown
-                  aria-hidden="true"
-                  className={`w-4 h-4 mt-1 text-theme-muted transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+      <div className="space-y-5 sm:space-y-7">
+        {displayedProjects.map((project, index) => (
+          <article
+            key={project.id}
+            id={`project-item-${project.id}`}
+            className="grid gap-5 border border-theme-border/70 bg-theme-surface/35 p-4 sm:p-5 md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:items-center md:gap-6"
+          >
+            <div className="aspect-[16/9] overflow-hidden border border-theme-border/70 bg-theme-surface">
+              {project.imageUrl ? (
+                <img
+                  src={project.imageUrl}
+                  alt={isEnglish ? `${project.title} interface` : `Interface do projeto ${project.title}`}
+                  className="h-full w-full object-contain"
+                  loading={index < 3 ? 'eager' : 'lazy'}
                 />
-              </button>
+              ) : (
+                <ProjectMinimalCover projectId={project.id} isCenter isLight={isLight} />
+              )}
+            </div>
 
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div
-                    id={panelId}
-                    role="region"
-                    aria-label={`${project.title} ${isEnglish ? 'details' : 'detalhes'}`}
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: reduceMotion ? 0 : 0.2, ease: 'easeOut' }}
-                    className="overflow-hidden"
+            <div className="flex min-w-0 flex-col items-start gap-3 sm:gap-3.5">
+              <span className="font-mono text-xs uppercase tracking-[0.16em] text-theme-muted">
+                {categoryLabel(project)}
+              </span>
+              <h3 className="text-lg font-medium leading-snug text-theme-text sm:text-xl">
+                {project.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-theme-dim">
+                {project.subtitle || project.tagline}
+              </p>
+
+              {project.workflow && project.workflow.length > 0 && (
+                <ul className="space-y-1 text-xs text-theme-muted">
+                  {project.workflow.slice(0, 3).map((item) => (
+                    <li key={item.step} className="flex gap-2">
+                      <span aria-hidden="true" className="mt-[0.45rem] h-1 w-1 shrink-0 rounded-full bg-theme-muted" />
+                      <span>{item.title}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <p className="font-mono text-xs leading-relaxed text-theme-muted">
+                {project.technologies.slice(0, 5).join(' · ')}
+              </p>
+
+              <div className="mt-1 flex flex-wrap items-center gap-4">
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wide text-theme-text underline decoration-theme-border underline-offset-4 transition-colors hover:decoration-theme-text"
                   >
-                    <div className="pl-[2.5rem] sm:pl-[3rem] pb-6 sm:pb-8 grid gap-5 sm:gap-7 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-                      <div className="aspect-[16/9] overflow-hidden border border-theme-border/70 bg-theme-surface grayscale">
-                        <ProjectMinimalCover
-                          projectId={project.id}
-                          isCenter
-                          isLight={isLight}
-                        />
-                      </div>
-
-                      <div className="flex flex-col items-start gap-4 sm:gap-5">
-                        <p className="text-sm sm:text-[15px] text-theme-dim leading-relaxed">
-                          {fullDescription}
-                        </p>
-                        <p className="text-xs sm:text-sm font-mono text-theme-muted leading-relaxed">
-                          {project.technologies.slice(0, 5).join(' · ')}
-                        </p>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            triggerRef.current = e.currentTarget;
-                            setSelectedStudyProject(project);
-                          }}
-                          className="inline-flex items-center gap-1.5 text-sm text-theme-text underline underline-offset-4 decoration-theme-border hover:decoration-theme-text transition-colors cursor-pointer group/link"
-                        >
-                          <span>{isEnglish ? 'View case study' : 'Ver estudo de caso'}</span>
-                          <ArrowUpRight aria-hidden="true" className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                        </button>
-                      </div>
-                    </div>
-                  </motion.div>
+                    {isEnglish ? 'Live' : 'Acessar'}
+                    <ExternalLink aria-hidden="true" className="h-3.5 w-3.5" />
+                  </a>
                 )}
-              </AnimatePresence>
-            </article>
-          );
-        })}
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    triggerRef.current = event.currentTarget;
+                    setSelectedStudyProject(project);
+                  }}
+                  className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wide text-theme-dim underline decoration-theme-border underline-offset-4 transition-colors hover:text-theme-text hover:decoration-theme-text"
+                >
+                  {isEnglish ? 'Case study' : 'Estudo de caso'}
+                  <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
+          </article>
+        ))}
       </div>
+
+      {remainingProjects.length > 0 && (
+        <button
+          type="button"
+          aria-expanded={showAllProjects}
+          onClick={() => setShowAllProjects((current) => !current)}
+          className="group flex w-full items-center justify-between border border-theme-border/70 bg-theme-surface/35 px-4 py-3 text-left font-mono text-xs uppercase tracking-wide text-theme-dim transition-colors hover:border-theme-muted hover:text-theme-text sm:px-5"
+        >
+          <span>
+            {showAllProjects
+              ? isEnglish ? 'Show fewer projects' : 'Ver menos projetos'
+              : isEnglish ? `View all projects (${remainingProjects.length})` : `Ver mais projetos (${remainingProjects.length})`}
+          </span>
+          <ArrowUpRight
+            aria-hidden="true"
+            className={`h-4 w-4 transition-transform ${showAllProjects ? 'rotate-[-45deg]' : 'group-hover:translate-x-0.5 group-hover:-translate-y-0.5'}`}
+          />
+        </button>
+      )}
 
       <ProjectStudyModal
         isOpen={!!selectedStudyProject}
