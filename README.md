@@ -10,6 +10,12 @@ Portfolio profissional desenvolvido com foco em alta performance, design minimal
 - **Motion for React** para micro-interações e animações de transição
 - **Lucide React** para ícones vetoriais responsivos e modernos
 
+## Assistente do portfólio
+
+O assistente consulta localmente os dados públicos do portfólio no próprio navegador. Não chama `/api/chat`, não usa chave de modelo e não envia as perguntas a um provedor externo. As mensagens ficam somente na memória da aba e são apagadas ao recarregar ou fechar a página.
+
+As respostas são guiadas por busca e regras sobre projetos, experiência, tecnologias e contato; não são texto gerado por um LLM. Por isso, o recurso não cria custos de inferência ou funções serverless e não requer configuração adicional de segredo na Vercel ou no GitHub. O site continua sujeito aos limites do plano de hospedagem escolhido.
+
 ## 🚀 Como Executar o Projeto Localmente
 
 1. **Instalar as dependências:**

@@ -11,8 +11,8 @@ function getInitialGreeting(language: 'pt' | 'en'): ChatUiMessage {
     role: 'assistant',
     content:
       language === 'pt'
-        ? 'Olá! Sou o assistente de IA do Wallace. Posso ajudar você a conhecer seus projetos, experiência e tecnologias. O que gostaria de saber?'
-        : "Hello! I'm Wallace's AI assistant. I can help you explore his projects, experience, and technologies. What would you like to know?",
+        ? 'Olá! Sou o assistente local do Wallace. Posso ajudar você a conhecer projetos, experiência e tecnologias. Suas mensagens ficam no navegador. O que gostaria de saber?'
+        : "Hello! I'm Wallace's local assistant. I can help you explore his projects, experience, and technologies. Your messages stay in this browser. What would you like to know?",
   };
 }
 
@@ -36,7 +36,7 @@ export default function ChatAssistantLauncher() {
     });
   }, [language]);
 
-  // Build-time kill switch option; server also enforces CHAT_ASSISTANT_ENABLED at runtime.
+  // Optional build-time switch for hiding the assistant.
   if (isDisabledAtBuild) {
     return null;
   }

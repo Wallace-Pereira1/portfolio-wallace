@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import {
   ArrowUpRight,
   FileDown,
-  Loader2,
   Mail,
   MessageCircle,
   RotateCcw,
@@ -12,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { downloadResumePdf } from '../utils/generateResumePdf';
+import { answerPortfolioQuestion } from '../utils/localPortfolioAssistant';
 import { SafeChatText } from '../utils/safeChatText';
 
 export interface ChatUiMessage {
@@ -58,7 +58,6 @@ export default function ChatAssistantWindow({
   const location = useLocation();
 
   const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [inlineError, setInlineError] = useState<string | null>(null);
   const [liveAnnouncement, setLiveAnnouncement] = useState('');
 
@@ -105,7 +104,7 @@ export default function ChatAssistantWindow({
   useEffect(() => {
     if (!isOpen) return;
     messagesEndRef.current?.scrollIntoView({ behavior: 'auto', block: 'end' });
-  }, [messages, isLoading, isOpen]);
+  }, [messages, isOpen]);
 
   const handleInternalNavigate = (href: string) => {
     const hash = href.startsWith('/') ? href.slice(1) : href;
@@ -129,9 +128,9 @@ export default function ChatAssistantWindow({
     }
   };
 
-  const sendMessage = async (rawText: string) => {
+  const sendMessage = (rawText: string) => {
     const trimmed = rawText.trim();
-    if (!trimmed || isLoading) return;
+    if (!trimmed) return;
 
     if (trimmed.length > MAX_INPUT_CHARS) {
       setInlineError(
@@ -153,74 +152,15 @@ export default function ChatAssistantWindow({
     const nextMessages = [...messages, userMsg];
     setMessages(nextMessages);
     setInput('');
-    setIsLoading(true);
-
-    // Build API payload excluding static greeting/error banners unless needed,
-    // preserving recent valid conversational turns cleanly
-    const apiMessages = nextMessages
-      .filter((m) => m.id !== 'initial-greeting' && !m.isErrorFallback)
-      .slice(-6)
-      .map((m) => ({ role: m.role, content: m.content }));
-
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: apiMessages,
-          language,
-        }),
-      });
-
-      const data = (await response.json().catch(() => null)) as
-        | { ok: true; reply: string }
-        | { ok: false; errorCode?: string; message?: string }
-        | null;
-
-      if (!response.ok || !data || data.ok === false) {
-        const serverMessage = data && data.ok === false ? data.message : undefined;
-        const fallbackMessage =
-          serverMessage ||
-          (isPt
-            ? 'O assistente está temporariamente indisponível no momento. Você pode falar diretamente com o Wallace pelos canais abaixo.'
-            : 'The assistant is temporarily unavailable right now. You can contact Wallace directly using the channels below.');
-
-        const errorReply: ChatUiMessage = {
-          id: `err-${Date.now()}`,
-          role: 'assistant',
-          content: fallbackMessage,
-          isErrorFallback: true,
-        };
-        setMessages((prev) => [...prev, errorReply]);
-        setLiveAnnouncement(fallbackMessage);
-        return;
-      }
-
-      const assistantReply: ChatUiMessage = {
-        id: `a-${Date.now()}`,
-        role: 'assistant',
-        content: data.reply,
-      };
-      setMessages((prev) => [...prev, assistantReply]);
-      setLiveAnnouncement(data.reply);
-    } catch {
-      const networkFallback = isPt
-        ? 'Não foi possível conectar ao assistente agora. Utilize os canais diretos do Wallace abaixo.'
-        : 'Could not reach the assistant right now. Please use Wallace’s direct channels below.';
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: `err-${Date.now()}`,
-          role: 'assistant',
-          content: networkFallback,
-          isErrorFallback: true,
-        },
-      ]);
-      setLiveAnnouncement(networkFallback);
-    } finally {
-      setIsLoading(false);
-    }
+    const previousQuestion = [...messages].reverse().find((message) => message.role === 'user')?.content || '';
+    const reply = answerPortfolioQuestion(trimmed, language, previousQuestion);
+    const assistantReply: ChatUiMessage = {
+      id: `a-${Date.now()}`,
+      role: 'assistant',
+      content: reply,
+    };
+    setMessages([...nextMessages, assistantReply]);
+    setLiveAnnouncement(reply);
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -259,7 +199,7 @@ export default function ChatAssistantWindow({
             {isPt ? 'Assistente do Wallace' : "Wallace's Assistant"}
           </h2>
           <p className="text-[11px] font-mono text-theme-muted truncate">
-            {isPt ? 'IA sobre meu perfil e projetos' : 'AI about his profile & projects'}
+            {isPt ? 'Busca local · perfil e projetos' : 'Local search · profile & projects'}
           </p>
         </div>
 
@@ -268,7 +208,6 @@ export default function ChatAssistantWindow({
             <button
               type="button"
               onClick={handleClearConversation}
-              disabled={isLoading}
               title={isPt ? 'Limpar conversa' : 'Clear conversation'}
               aria-label={isPt ? 'Limpar conversa' : 'Clear conversation'}
               className="p-1.5 rounded-lg text-theme-muted hover:text-theme-text hover:bg-theme-card/70 disabled:opacity-40 transition-colors cursor-pointer focus-visible:outline focus-visible:outline-1 focus-visible:outline-theme-text"
@@ -368,7 +307,7 @@ export default function ChatAssistantWindow({
         ))}
 
         {/* Initial suggestions before first send (max 3) */}
-        {!hasUserMessages && !isLoading && (
+        {!hasUserMessages && (
           <div className="pt-1 space-y-1.5">
             <span className="block text-[11px] font-mono text-theme-muted">
               {isPt ? 'Sugestões:' : 'Suggestions:'}
@@ -388,15 +327,6 @@ export default function ChatAssistantWindow({
           </div>
         )}
 
-        {isLoading && (
-          <div className="flex items-start">
-            <div className="inline-flex items-center gap-2 rounded-xl px-3.5 py-2 bg-theme-bg/85 border border-theme-border/80 text-xs font-mono text-theme-muted">
-              <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" />
-              <span>{isPt ? 'Elaborando resposta...' : 'Thinking...'}</span>
-            </div>
-          </div>
-        )}
-
         <div ref={messagesEndRef} />
       </div>
 
@@ -405,16 +335,8 @@ export default function ChatAssistantWindow({
         {!hasUserMessages && (
           <p className="text-[11px] leading-snug text-theme-muted">
             {isPt
-              ? 'As mensagens são processadas por um serviço de IA. Não envie dados pessoais sensíveis. '
-              : 'Messages are processed by an AI service. Do not send sensitive personal data. '}
-            <a
-              href="https://ai.google.dev/gemini-api/terms"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline decoration-theme-border underline-offset-2 hover:text-theme-dim"
-            >
-              {isPt ? 'Privacidade da IA' : 'AI Terms'}
-            </a>
+              ? 'Respostas locais baseadas no portfólio. Suas mensagens não são enviadas a uma API de IA.'
+              : 'Answers are generated locally from the portfolio. Your messages are not sent to an AI API.'}
           </p>
         )}
 
@@ -444,12 +366,11 @@ export default function ChatAssistantWindow({
                 ? 'Pergunte sobre projetos, stack ou contato...'
                 : 'Ask about projects, stack, or contact...'
             }
-            disabled={isLoading}
             className="flex-1 min-h-[40px] max-h-24 resize-none rounded-xl border border-theme-border bg-theme-surface px-3 py-2 text-base sm:text-sm text-theme-text placeholder:text-theme-muted focus:border-theme-muted focus:outline-none disabled:opacity-60"
           />
           <button
             type="submit"
-            disabled={isLoading || !input.trim()}
+            disabled={!input.trim()}
             aria-label={isPt ? 'Enviar mensagem' : 'Send message'}
             title={isPt ? 'Enviar mensagem' : 'Send message'}
             className="h-10 w-10 shrink-0 rounded-xl bg-theme-text text-theme-bg flex items-center justify-center hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity cursor-pointer focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-theme-text"
